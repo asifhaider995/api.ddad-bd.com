@@ -1,0 +1,68 @@
+<!-- Start Sidebar Nav -->
+<div class="st_side st_fixed_side st_dark_side st_overlay_scroll">
+    <div class="st_side_toggle"><span></span></div>
+    <div class="st_site_branding">
+        <a href="{{ config('dashboard.today') }}" class="st_branding_logo"><img src="{{ asset('assets/img/ddad.png') }}" alt="AdminFold"></a>
+    </div>
+    <div class="st_side_nav">
+        <ul class="st_side_nav_list">
+            <li class="st_side_nav_item">
+                <a href="{{ route('dashboard.today') }}" class="st_side_nav_link active">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">dashboard</i></span>
+                    <span class="st_side_nav_text">Dashboard</span>
+                </a>
+            </li>
+            <li class="st_side_nav_item">
+                <a href="#" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">insert_chart</i></span>
+                    <span class="st_side_nav_text">Statistics</span>
+                </a>
+            </li>
+            <li class="st_side_nav_item">
+                <a href="#" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
+                    <span class="st_side_nav_text">Campaigns</span>
+                </a>
+            </li>
+
+            <li class="st_side_nav_item st_side_nav_has_children">
+                <a href="#" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">devices</i></span>
+                    <span class="st_side_nav_text">Shops & Devices</span>
+                    <i class="st_right st_submenu_arrow"><span class="st_submenu_arrow_in"></span></i>
+                    <span class="badge badge-danger st_right"></span>
+                </a>
+                <ul class="st_side_nav_submenu">
+                    <li><a href="{{ route('shops.index') }}" class="st_side_nav_link">Shops</a></li>
+                    <li><a href="{{ route('devices.index') }}" class="st_side_nav_link">Devices</a></li>
+                </ul>
+            </li>
+
+            <li class="st_side_nav_item">
+                <a href="" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">local_atm</i></span>
+                    <span class="st_side_nav_text">Accounts & Billing</span>
+                </a>
+            </li>
+            <li class="st_side_nav_item">
+                <a href="" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">people</i></span>
+                    <span class="st_side_nav_text">Clients</span>
+                </a>
+            </li>
+            <li class="st_side_nav_item">
+                <a href="" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">map</i></span>
+                    <span class="st_side_nav_text">Zone Management</span>
+                </a>
+            </li>
+            <li class="st_side_nav_item">
+                <a href="" class="st_side_nav_link">
+                    <span class="st_side_nav_icon"><i class="material-icons-outlined">settings</i></span>
+                    <span class="st_side_nav_text">Configuration</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- End Sidebar Nav -->
