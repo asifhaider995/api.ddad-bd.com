@@ -1,0 +1,47 @@
+.st_iconbox.st_style1 {
+    background-color: $white;
+    position: relative;
+    padding: 20px 25px;
+    min-height: 150px;
+
+    .st_iconbox_title {
+        font-size: 12px;
+        line-height: 1.5em;
+        text-transform: uppercase;
+        color: $black3;
+    }
+
+    .st_iconbox_number {
+        font-size: 28px;
+        color: $black1;
+        font-weight: 500;
+        line-height: 1.2em;
+    }
+
+    .st_iconbox_footer {
+        display: flex;
+        position: absolute;
+        bottom: 18px;
+        left: 25px;
+        font-size: 14px;
+
+        .st_text_badge {
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+            font-size: inherit;
+
+            i {
+                font-size: 24px;
+                margin-left: -7px;
+                margin-right: -3px;
+            }
+        }
+    }
+
+    .st_iconbox_icon {
+        position: absolute;
+        right: 25px;
+        top: 25px;
+    }
+}

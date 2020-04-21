@@ -1,0 +1,416 @@
+// Color Classes
+
+.st_blue_bg {
+    background-color: $blue;
+}
+
+.st_indigo_bg {
+    background-color: $indigo;
+}
+
+.st_green_bg {
+    background-color: $green;
+}
+
+.st_orange_bg {
+    background-color: $orange;
+}
+
+.st_pink_bg {
+    background-color: $pink;
+}
+
+.st_purple_bg {
+    background-color: $purple;
+}
+
+.st_red_bg {
+    background-color: $red;
+}
+
+.st_teal_bg {
+    background-color: $teal;
+}
+
+.st_yellow_bg {
+    background-color: $yellow;
+}
+
+.st_dip_gray_bg {
+    background-color: $gray;
+}
+
+.st_gray_bg {
+    background-color: $black5;
+}
+
+.st_blue_color {
+    color: $blue;
+}
+
+.st_indigo_color {
+    color: $indigo;
+}
+
+.st_green_color {
+    color: $green;
+}
+
+.st_orange_color {
+    color: $orange;
+}
+
+.st_pink_color {
+    color: $pink;
+}
+
+.st_purple_color {
+    color: $purple;
+}
+
+.st_red_color {
+    color: $red;
+}
+
+.st_teal_color {
+    color: $teal;
+}
+
+.st_yellow_color {
+    color: $yellow;
+}
+
+.st_gray_color {
+    color: $gray;
+}
+
+.st_blue_box {
+    background-color: rgba($blue, 0.1);
+    color: $blue;
+}
+
+.st_indigo_box {
+    background-color: rgba($indigo, 0.1);
+    color: $indigo;
+}
+
+.st_green_box {
+    background-color: rgba($green, 0.1);
+    color: $green;
+}
+
+.st_orange_box {
+    background-color: rgba($orange, 0.1);
+    color: $orange;
+}
+
+.st_pink_box {
+    background-color: rgba($pink, 0.1);
+    color: $pink;
+}
+
+.st_purple_box {
+    background-color: rgba($purple, 0.1);
+    color: $purple;
+}
+
+.st_red_box {
+    background-color: rgba($red, 0.1);
+    color: $red;
+}
+
+.st_teal_box {
+    background-color: rgba($teal, 0.1);
+    color: $teal;
+}
+
+.st_yellow_box {
+    background-color: rgba($yellow, 0.1);
+    color: $yellow;
+}
+
+.st_gray_box {
+    background-color: rgba($gray, 0.1);
+    color: $gray;
+}
+
+.st_blue_box_fill {
+    background-color: $blue;
+    color: $white;
+}
+
+.st_indigo_box_fill {
+    background-color: $indigo;
+    color: $white;
+}
+
+.st_green_box_fill {
+    background-color: $green;
+    color: $white;
+}
+
+.st_orange_box_fill {
+    background-color: $orange;
+    color: $white;
+}
+
+.st_pink_box_fill {
+    background-color: $pink;
+    color: $white;
+}
+
+.st_purple_box_fill {
+    background-color: $purple;
+    color: $white;
+}
+
+.st_red_box_fill {
+    background-color: $red;
+    color: $white;
+}
+
+.st_teal_box_fill {
+    background-color: $teal;
+    color: $white;
+}
+
+.st_yellow_box_fill {
+    background-color: $yellow;
+    color: $white;
+}
+
+.st_gray_box_fill {
+    background-color: $gray;
+    color: $white;
+}
+
+// Border Radius Classes
+.st_radius_1 {
+    border-radius: 1px;
+}
+
+.st_radius_2 {
+    border-radius: 2px;
+}
+
+.st_radius_3 {
+    border-radius: 3px;
+}
+
+.st_radius_4 {
+    border-radius: 5px;
+}
+
+.st_radius_5 {
+    border-radius: 5px;
+}
+
+.st_radius_6 {
+    border-radius: 6px;
+}
+
+.st_radius_7 {
+    border-radius: 7px;
+}
+
+.st_radius_8 {
+    border-radius: 8px;
+}
+
+.st_radius_9 {
+    border-radius: 9px;
+}
+
+.st_radius_10 {
+    border-radius: 10px;
+}
+
+.st_radius_15 {
+    border-radius: 15px;
+}
+
+.st_radius_20 {
+    border-radius: 20px;
+}
+
+.st_radius_50p {
+    border-radius: 50%;
+}
+
+.st_clear_list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+
+.st_box_md,
+.st_box_sm,
+.st_box_lg {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        height: 100%;
+        width: 100%;
+        border-radius: inherit;
+        object-fit: cover;
+    }
+}
+
+.st_box_sm {
+    font-size: 24px;
+    height: 30px;
+    width: 30px;
+}
+
+.st_box_md {
+    font-size: 24px;
+    height: 42px;
+    width: 42px;
+}
+
+.st_box_lg {
+    font-size: 28px;
+    height: 65px;
+    width: 65px;
+}
+
+.st_boxshadow {
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.07);
+}
+
+.st_border {
+    border: 1px solid $black4;
+}
+
+.st_max_height_395 {
+    max-height: 395px;
+}
+
+.st_online_status {
+    height: 8px;
+    width: 8px;
+    background-color: $black3;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.st_online_status.st_live {
+    background-color: $green;
+}
+
+.container-fluid {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+hr {
+    margin: 0;
+    border-color: $black4;
+}
+
+.st_vertical_middle {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .st_vertical_middle_in {
+        width: 100%;
+    }
+}
+
+.st_dropdown_parent {
+    position: relative;
+}
+
+.st_dropdown_btn_body.active {
+    display: block;
+}
+
+.row {
+    margin-top: -15px;
+    margin-bottom: -15px;
+
+    >[class*=col-] {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+.st_card {
+    .row {
+        margin-top: 0px;
+        margin-bottom: 0px;
+
+        >[class*=col-] {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+    }
+}
+
+.st_check_mark,
+.st_check_mark_all {
+    height: 18px;
+    width: 18px;
+    border: 1px solid $black3;
+    border-radius: 2px;
+    position: relative;
+    background-color: $white;
+
+    &:before {
+        content: '';
+        top: 1px;
+        left: 5px;
+        height: 11px;
+        width: 6px;
+        border-radius: 0;
+        border: 2px solid $white;
+        transform: rotate(45deg);
+        border-left: none;
+        border-top: none;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1;
+        position: absolute;
+    }
+
+    &.active,
+    &.active-all {
+        border-color: $indigo;
+        background-color: $indigo;
+
+        &:before {
+            opacity: 1;
+        }
+    }
+}
+
+.st_check_mark_all {
+
+    .st_first,
+    .st_last {
+        position: absolute;
+        height: calc(100% + 4px);
+        width: calc(100% + 4px);
+        left: -2px;
+        top: -2px;
+    }
+
+    .st_first {
+        z-index: 3;
+    }
+
+    &.active {
+        .st_last {
+            z-index: 4
+        }
+    }
+}

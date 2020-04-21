@@ -1,0 +1,33 @@
+.tw-content {
+
+    &.st_style1,
+    &.st_style2 {
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &.st_style1 {
+        min-height: calc(100vh - 61px);
+    }
+    &.st_style2 {
+        min-height: calc(100vh - 81px);
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .tw-content.st_style1 {
+        margin-left: 260px;
+    }
+
+    .tw-content.st_style2 {
+        margin-left: 140px;
+    }
+
+    .st_side_nav_minimize {
+        .tw-content.st_style1 {
+            margin-left: 75px;
+        }
+    }
+}

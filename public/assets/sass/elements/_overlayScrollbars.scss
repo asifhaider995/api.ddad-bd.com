@@ -1,0 +1,52 @@
+.os-scrollbar-vertical {
+    top: 0;
+    right: 4px;
+}
+
+.os-theme-dark {
+
+    >.os-scrollbar,
+    >.os-scrollbar {
+        padding: 5px 2px;
+        opacity: 0;
+    }
+
+    &:hover {
+
+        >.os-scrollbar,
+        >.os-scrollbar {
+            opacity: 1;
+        }
+    }
+}
+
+.st_overlay_scroll:hover {
+
+    .os-theme-dark>.os-scrollbar,
+    .os-theme-light>.os-scrollbar {
+        opacity: 1;
+    }
+}
+
+.os-theme-dark.st_dark_side {
+    >.os-scrollbar {
+        padding: 10px 3px;
+        right: 3px;
+
+        >.os-scrollbar-track>.os-scrollbar-handle {
+            background-color: rgba($white, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        &:hover>.os-scrollbar-track>.os-scrollbar-handle {
+            background-color: rgba($white, 0.5);
+        }
+    }
+
+    &:hover {
+        >.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle {
+            opacity: 1;
+        }
+    }
+}

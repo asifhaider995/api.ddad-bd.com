@@ -1,0 +1,43 @@
+.page-link {
+    border-color: $black4;
+    min-height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    color: $black2;
+
+    i {
+        font-size: 18px;
+    }
+
+    &:hover {
+        color: $indigo;
+        background-color: $black5;
+        border-color: $black4;
+    }
+}
+
+.page-item {
+    &.active {
+        .page-link {
+            background-color: rgba($indigo, 0.2);
+            color: $indigo;
+            border-color: $black4;
+
+            &:hover {
+                background-color: rgba($indigo, 0.2);
+                color: $indigo;
+                border-color: $black4;
+            }
+        }
+    }
+
+    &.disabled {
+        .page-link {
+            color: $black3;
+            border-color: $black4;
+        }
+    }
+}

@@ -1,0 +1,137 @@
+.st_timeline_list.st_style1 {
+    list-style: none;
+    margin: 0;
+    padding: 25px;
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        height: calc(100% - 50px);
+        left: 32px;
+        top: 30px;
+        border-left: 2px solid $black4;
+    }
+
+    li {
+        margin-bottom: 25px;
+        position: relative;
+
+        &:last-child {
+            margin-bottom: 0;
+
+            &:before {
+                content: '';
+                position: absolute;
+                height: 100%;
+                width: 10px;
+                background-color: $white;
+                top: 15px;
+                left: 3px;
+            }
+        }
+    }
+}
+
+.st_timeline.st_style1 {
+    padding-left: 36px;
+    position: relative;
+    z-index: 1;
+
+    .st_timeline_time {
+        font-size: 14px;
+        line-height: 1.6em;
+        color: $black1;
+        margin-bottom: 4px;
+        font-weight: 500;
+
+        span {
+            color: $black3;
+        }
+    }
+
+    .st_timeline_title {
+        font-size: 14px;
+        line-height: 1.6em;
+        color: $black2;
+        margin-bottom: 3px;
+        font-weight: 300;
+    }
+
+    a {
+        color: $indigo;
+        font-weight: 500;
+
+        &:hover {
+            color: $indigo;
+            text-decoration: underline;
+        }
+    }
+
+    .st_circle_alert {
+        position: absolute;
+        top: 3px;
+        left: 0;
+    }
+}
+
+.st_circle_alert {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border: 2px solid $black4;
+    background-color: $white;
+    border-radius: 50%;
+
+    &:before {
+        content: '';
+        height: 7px;
+        width: 7px;
+        border-radius: inherit;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: currentColor;
+    }
+}
+
+.st_circle_indigo {
+    color: $indigo;
+}
+
+.st_circle_blue {
+    color: $blue;
+}
+
+.st_circle_green {
+    color: $green;
+}
+
+.st_circle_orange {
+    color: $orange;
+}
+
+.st_circle_pink {
+    color: $pink;
+}
+
+.st_circle_purple {
+    color: $purple;
+}
+
+.st_circle_red {
+    color: $red;
+}
+
+.st_circle_teal {
+    color: $teal;
+}
+
+.st_circle_yellow {
+    color: $yellow;
+}
+
+.st_circle_gray {
+    color: $gray;
+}

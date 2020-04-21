@@ -1,0 +1,35 @@
+.st_footer {
+    border-top: 1px solid $black4;
+    background-color: $white;
+}
+
+.st_footer_in {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0px;
+}
+
+.st_copyright {
+    font-size: 13px;
+    line-height: 1.6em;
+}
+
+.st_footer_nav {
+    display: flex;
+
+    a {
+        font-size: 13px;
+        font-weight: 500;
+        color: $black2;
+        margin-right: 30px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &:hover {
+            text-decoration: underline;
+            color: $indigo;
+        }
+    }
+}

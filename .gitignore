@@ -4,10 +4,6 @@
 /storage/*.key
 /vendor
 /.idea
-/public/assets
-/public/plugins
-/public/js
-/public/css
 package-lock.json
 composer-lock.json
 .env

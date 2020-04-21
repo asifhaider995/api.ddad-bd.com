@@ -1,0 +1,124 @@
+.st_card.st_style1 {
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+
+    .st_card_body {
+        flex: 1;
+    }
+
+    .st_card_footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 25px;
+        border-top: 1px solid $black4;
+
+        .btn i {
+            margin-left: -4px;
+            margin-right: 5px;
+        }
+        .pagination {
+            margin: 0;
+        }
+    }
+
+    .st_card_head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 25px;
+        min-height: 54px;
+        border-bottom: 1px solid $black4;
+    }
+
+    .st_card_title {
+        font-size: 16px;
+        margin: 0;
+        font-weight: 500;
+        line-height: 1.2em;
+    }
+
+    .st_media_info {
+        text-align: right;
+        position: absolute;
+        right: 0;
+        transform: translateY(-50%);
+        top: 50%;
+
+        .st_media_info_title {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.4em;
+        }
+    }
+}
+
+.st_card_fill {
+    height: 100%;
+}
+
+.st_card_head_btns {
+    display: flex;
+    align-items: center;
+    margin-right: -10px;
+
+    .st_card_head_btn {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $black3;
+        padding: 0;
+        margin: 0;
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        height: 30px;
+        width: 30px;
+        transition: all 0.3s ease;
+
+        &:after {
+            display: none;
+        }
+
+        &:hover {
+            color: $black2;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
+
+.st_card_head_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    padding: 0.155em 1.2em;
+    font-weight: 500;
+    border: 1px solid $black4;
+    border-radius: 5px;
+    color: $black2;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: rgba($indigo, 0.1);
+        border-color: rgba($indigo, 0.3);
+        color: $indigo;
+    }
+}
+.st_card_padd_25 {
+    padding: 0 25px;
+}
+.st_card_subheading.st_style1 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2em;
+    color: $black2;
+}

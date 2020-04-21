@@ -1,0 +1,49 @@
+.st_tabs_style1 {
+    border-color: $black4;
+
+    .nav-item {
+        margin: 0;
+        flex: 1;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        color: $black2;
+        border: none;
+        font-size: 14px;
+	    padding: 13px 20px;
+	    position: relative;
+	    font-weight: 500;
+        &:before {
+        	content: '';
+        	position: absolute;
+        	bottom: -1px;
+        	left: 50%;
+        	transform: translateX(-50%);
+        	height: 3px;
+        	background-color: $indigo;
+        	width: 0;
+        	transition: all 0.3s ease;
+        }
+
+        i {
+            font-size: 24px;
+            color: $black3;
+            margin-right: 10px;
+        }
+        &.active {
+        	color: $indigo;
+        	i {
+        		color: $indigo;
+        	}
+        	&:before {
+        		width: 100%;
+        	}
+        }
+    }
+}
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc {
+    background-image: initial;
+}
