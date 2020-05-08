@@ -15,5 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DeviceSeeder::class);
         $this->call(ShopSeeder::class);
         $this->call(ZoneSeeder::class);
+        $this->call(AndroidBoxSeeder::class);
+        $this->call(DetectorSeeder::class);
+        $this->call(ISPSeeder::class);
+        $this->call(TVSeeder::class);
     }
 }

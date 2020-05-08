@@ -22,6 +22,7 @@ class CreateShopsTable extends Migration
             $table->string('iot_id')->nullable();
             $table->string('android_box_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
