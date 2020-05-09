@@ -121,7 +121,7 @@
                                                 <label class="form-label" for="detector_id">Detector</label>
                                                 <select class="st_selectpicker2 mb-3" name="detector_id" id="detector_id" data-size="7" required>
                                                     @foreach($detectors as $detector)
-                                                        <option value="{{ $detector->id }}" @if(old('detector_id') == $detector->id) selected @endif>{{ $detector->unique_id }}</option>
+                                                        <option value="{{ $detector->id }}" @if(old('detector_id') == $detector->id) selected @endif>{{ $detector->label }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="st_error_message"></div>

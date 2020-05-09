@@ -53,14 +53,14 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->define(\App\Models\Ddad\Detector::class, function (Faker $faker) {
     return [
         'unique_id' => $faker->numerify('################'),
-        'label' => $faker->lastName,
+        'label' => $faker->numerify('iot####'),
         'status' => rand(0,1)? 'active' : 'inactive',
     ];
 });
 
 $factory->define(\App\Models\Ddad\TV::class, function (Faker $faker) {
     return [
-        'serial_number' => $faker->name,
+        'serial_number' => $faker->numerify('tv######'),
         'size' => rand(0,1)? '32 inch' : '28 inch',
         'status' => rand(0,1)? 'active' : 'inactive',
     ];
@@ -69,7 +69,7 @@ $factory->define(\App\Models\Ddad\TV::class, function (Faker $faker) {
 $factory->define(\App\Models\Ddad\AndroidBox::class, function (Faker $faker) {
     return [
         'imei' => $faker->numerify('################'),
-        'label' => $faker->lastName,
+        'label' => $faker->numerify('adb####'),
         'status' => rand(0,1)? 'active' : 'inactive',
     ];
 });
