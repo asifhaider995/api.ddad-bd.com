@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('campaign/index', 'Ddad\CampaignController@index');
+Route::get('campaign/contents', 'Ddad\CampaignController@contentList');
+Route::post('campaign', 'Ddad\CampaignController@store');
