@@ -86,7 +86,7 @@
             <div class="st_footer_in">
                 <div class="st_footer_left">
                     <div class="st_copyright">
-                        © 2020 AdminFolder. All rights reserved.
+                        © 2020 DDAD. All rights reserved.
                     </div>
                 </div>
                 <div class="st_footer_right">
@@ -110,12 +110,9 @@
 <script src="{{ asset('plugins/bootstrap-select-1.13.9/js/bootstrap-select.js') }}"></script>
 <script src="{{ asset('plugins/dataTable/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
-{{--hide flash message--}}
-<script>
-    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-</script>
+
+<script src="{{ asset('js/ddad.js') }}"></script>
 
 @stack('script')
-{{--<script src="{{ asset('js/ddad.js') }}"></script>--}}
 </body>
 </html>

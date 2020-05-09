@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(UsersTableSeeder::class);
         $user = new \App\Models\User();
         $user->name = "Shahadat";
         $user->email = "admin@example.com";
@@ -20,7 +21,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(DeviceSeeder::class);
         $this->call(ShopSeeder::class);
-
-        $this->command->info("Login: admin@example.com/test1234");
+        $this->call(ZoneSeeder::class);
+        $this->call(AndroidBoxSeeder::class);
+        $this->call(DetectorSeeder::class);
+        $this->call(ISPSeeder::class);
+        $this->call(TVSeeder::class);
     }
 }

@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "overlayscrollbars": "^1.12.0"
+        "overlayscrollbars": "^1.12.0",
+        "select2": "^4.1.0-beta.0",
+        "toastr": "^2.1.4"
     }
 }
