@@ -16,18 +16,19 @@ class ShopController extends Controller
     public function index()
     {
         $this->viewData['shops'] = Shop::all();
-        $this->viewData['zones'] = Zone::all();
-        $this->viewData['detectors'] = Detector::all();
-        $this->viewData['tvs'] = TV::all();
-        $this->viewData['android_boxs'] = AndroidBox::all();
-        $this->viewData['isps'] = ISP::all();
 
         return view('ddad.shops.index', $this->viewData);
     }
 
     public function create()
     {
-        //
+        $this->viewData['zones'] = Zone::all();
+        $this->viewData['detectors'] = Detector::all();
+        $this->viewData['tvs'] = TV::all();
+        $this->viewData['android_boxes'] = AndroidBox::all();
+        $this->viewData['isps'] = ISP::all();
+
+        return view('ddad.shops.create', $this->viewData);
     }
 
     public function store(ShopRequest $request)
@@ -47,7 +48,7 @@ class ShopController extends Controller
         $this->viewData['zones'] = Zone::all();
         $this->viewData['detectors'] = Detector::all();
         $this->viewData['tvs'] = TV::all();
-        $this->viewData['android_boxs'] = AndroidBox::all();
+        $this->viewData['android_boxes'] = AndroidBox::all();
         $this->viewData['isps'] = ISP::all();
 
         return view('ddad.shops.edit', $this->viewData);

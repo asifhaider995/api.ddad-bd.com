@@ -6,11 +6,11 @@
             <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                 <div class="st_card_head">
                     <div class="st_card_head_left">
-                        <h2 class="st_card_title">Edit Shop</h2>
+                        <h2 class="st_card_title">New shop form</h2>
                     </div>
                 </div>
                 <div class="st_card_body">
-                    <form action="{{ route('shops.update', $shop) }}" id="edit-form" method="post" enctype="multipart/form-data" class="form-horizontal" autocomplete="off">
+                    <form action="{{ route('shops.store') }}" id="edit-form" method="post" enctype="multipart/form-data" class="form-horizontal" autocomplete="off">
                         @csrf
                         @method('put')
                         <div class="st_height_25 st_height_lg_25"></div>
@@ -21,17 +21,17 @@
                                         <div class="col-lg-6">
                                             <div class="st_level_up form-group">
                                                 <label for="name">Shop Name *</label>
-                                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', $shop->name) }}" required >
+                                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}" required >
                                                 <div class="st_error_message"></div>
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="owner_name">Owner's Name *</label>
-                                                <input type="text" name="owner_name" class="form-control @error('owner_name') is-invalid @enderror" id="owner_name" value="{{ old('owner_name', $shop->owner_name) }}" required >
+                                                <input type="text" name="owner_name" class="form-control @error('owner_name') is-invalid @enderror" id="owner_name" value="{{ old('owner_name') }}" required >
                                                 <div class="st_error_message"></div>
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="kcp_name">KCP Name *</label>
-                                                <input type="text" name="kcp_name" class="form-control @error('kcp_name') is-invalid @enderror" id="kcp_name" value="{{ old('kcp_name', $shop->kcp_name) }}" required >
+                                                <input type="text" name="kcp_name" class="form-control @error('kcp_name') is-invalid @enderror" id="kcp_name" value="{{ old('kcp_name') }}" required >
                                                 <div class="st_error_message"></div>
                                             </div>
                                         </div>
@@ -39,17 +39,17 @@
                                         <div class="col-lg-6">
                                             <div class="st_level_up form-group">
                                                 <label>Payment Per Ad *</label>
-                                                <input name="payment_per_ad" type="number" min="0" value="{{ old('payment_per_ad', $shop->payment_per_ad) }}" class="form-control">
+                                                <input name="payment_per_ad" type="number" min="0" value="{{ old('payment_per_ad', 0) }}" class="form-control">
                                                 <div class="st_error_message"></div>
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="owner_nid">Owner's NID *</label>
-                                                <input type="text" name="owner_nid" class="form-control @error('owner_nid') is-invalid @enderror" id="owner_nid" value="{{ old('owner_nid', $shop->owner_nid) }}" required >
+                                                <input type="text" name="owner_nid" class="form-control @error('owner_nid') is-invalid @enderror" id="owner_nid" value="{{ old('owner_nid') }}" required >
                                                 <div class="st_error_message"></div>
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="kcp_mobile_number">KCP Mobile *</label>
-                                                <input type="text" name="kcp_mobile_number" class="form-control @error('kcp_mobile_number') is-invalid @enderror" id="kcp_mobile_number" value="{{ old('kcp_mobile_number', $shop->kcp_mobile_number) }}" required >
+                                                <input type="text" name="kcp_mobile_number" class="form-control @error('kcp_mobile_number') is-invalid @enderror" id="kcp_mobile_number" value="{{ old('kcp_mobile_number') }}" required >
                                                 <div class="st_error_message"></div>
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                                     <div>
                                         <div class="st_level_up form-group">
                                             <label for="address">Shop Address</label>
-                                            <textarea name="address" class=" form-control @error('address') is-invalid @enderror" style="height: 92px;" rows="5" id="address" required>{{ old('address', $shop->address) }}</textarea>
+                                            <textarea name="address" class=" form-control @error('address') is-invalid @enderror" style="height: 92px;" rows="5" id="address" required>{{ old('address') }}</textarea>
                                             <div class="st_error_message"></div>
                                         </div>
                                     </div>
@@ -105,35 +105,62 @@
                                 <div class="col-sm-1 st_npcsf"></div>
 
                                 <div class="col-lg-3">
-                                    <div class="col">
-                                        <label class="form-label" for="tv_id">TV</label>
-                                        <select class="st_selectpicker2 mb-3" name="tv_id" id="tv_id" data-size="7" required>
-                                            @foreach($tvs as $tv)
-                                                <option value="{{ $tv->id }}" @if(old('tv_id') == $tv->id) selected @endif>{{ $tv->serial_number }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="st_error_message"></div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div>
+                                                <label class="form-label" for="tv_id">TV</label>
+                                                <select class="st_selectpicker2 mb-3" name="tv_id" id="tv_id" data-size="7" required>
+                                                    @foreach($tvs as $tv)
+                                                        <option value="{{ $tv->id }}" @if(old('tv_id') == $tv->id) selected @endif>{{ $tv->serial_number }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="st_error_message"></div>
+                                            </div>
+
+                                            <div>
+                                                <label class="form-label" for="detector_id">Detector</label>
+                                                <select class="st_selectpicker2 mb-3" name="detector_id" id="detector_id" data-size="7" required>
+                                                    @foreach($detectors as $detector)
+                                                        <option value="{{ $detector->id }}" @if(old('detector_id') == $detector->id) selected @endif>{{ $detector->unique_id }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="st_error_message"></div>
+                                            </div>
+
+                                            <div>
+                                                <label class="form-label" for="android_box_id">Android Box</label>
+                                                <select class="st_selectpicker2 mb-3" name="android_box_id" id="android_box_id" data-size="7" required>
+                                                    @foreach($android_boxes as $android_box)
+                                                        <option value="{{ $android_box->id }}" @if(old('android_box_id') == $android_box->id) selected @endif>{{ $android_box->label }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="st_error_message"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="st_height_25 st_height_lg_25"></div>
+                                            <div class="st_card_head_right">
+                                                <button data-toggle="modal" data-target="#tv-create-modal" class="btn btn-primary btn-sm">
+                                                    <i class="material-icons">add</i>New
+                                                </button>
+                                            </div>
+
+                                            <div class="st_height_45 st_height_lg_45"></div>
+                                            <div class="st_card_head_right">
+                                                <button data-toggle="modal" data-target="#detector-create-modal" class="btn btn-primary btn-sm">
+                                                    <i class="material-icons">add</i>New
+                                                </button>
+                                            </div>
+
+                                            <div class="st_height_45 st_height_lg_45"></div>
+                                            <div class="st_card_head_right">
+                                                <button data-toggle="modal" data-target="#android-create-modal" class="btn btn-primary btn-sm">
+                                                    <i class="material-icons">add</i>New
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="col">
-                                        <label class="form-label" for="detector_id">Detector</label>
-                                        <select class="st_selectpicker2 mb-3" name="detector_id" id="detector_id" data-size="7" required>
-                                            @foreach($detectors as $detector)
-                                                <option value="{{ $detector->id }}" @if(old('detector_id') == $detector->id) selected @endif>{{ $detector->unique_id }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="st_error_message"></div>
-                                    </div>
-
-                                    <div class="col">
-                                        <label class="form-label" for="android_box_id">Android Box</label>
-                                        <select class="st_selectpicker2 mb-3" name="android_box_id" id="android_box_id" data-size="7" required>
-                                            @foreach($android_boxes as $android_box)
-                                                <option value="{{ $android_box->id }}" @if(old('android_box_id') == $android_box->id) selected @endif>{{ $android_box->label }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="st_error_message"></div>
-                                    </div>
 
                                 </div>
                             </div>
@@ -154,5 +181,8 @@
         </div>
     </div>
 
+    @include('ddad.shops.android-create-modal', ['after_success' => 'add_to_list'])
+    @include('ddad.shops.detector-create-modal', ['after_success' => 'add_to_list'])
+    @include('ddad.shops.tv-create-modal', ['after_success' => 'add_to_list'])
 @endsection
 
