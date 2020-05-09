@@ -67,9 +67,9 @@
                                     <td><span class="st_table_text">{{ $shop->id }}</span></td>
                                     <td><span class="st_table_text">{{ Str::upper($shop->status) }}</span></td>
                                     <td><span class="st_table_text">{{ $shop->average_visit }}</span></td>
-                                    <td><span class="st_table_text">{{ $shop->payment_due }}</span></td>
+                                    <td><span class="st_table_text">{{ $shop->payment_due_date }}</span></td>
                                     <td><span class="st_table_text">{{ Str::upper($shop->tv_id) }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($shop->iot_id) }}</span></td>
+                                    <td><span class="st_table_text">{{ Str::upper($shop->detector_id) }}</span></td>
                                     <td><span class="st_table_text">{{ Str::upper($shop->android_box_id) }}</span></td>
 
                                     <td>
@@ -77,8 +77,8 @@
                                             <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
                                             <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
                                                 <a class="dropdown-item" href=""><i class="material-icons-outlined">visibility</i>View</a>
-                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
-                                                <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                                <a class="dropdown-item" href="{{ route('shops.edit', $shop) }}"><i class="material-icons-outlined">create</i>Edit</a>
+                                                <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('shops.destroy', $shop) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -94,6 +94,5 @@
         </div>
     </div>
 
-{{--    @include('ddad.shops.create-modal', ['after_success' => 'close_modal'])--}}
+    @include('ddad.shops.create-modal', ['after_success' => 'reload_page'])
 @endsection
-

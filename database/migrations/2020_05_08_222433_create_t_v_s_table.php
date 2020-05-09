@@ -17,7 +17,7 @@ class CreateTVSTable extends Migration
             $table->bigIncrements('id');
             $table->string('serial_number');
             $table->string('size');
-            $table->string('status');
+            $table->enum('status', ['active', 'inactive'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,4 +4,11 @@
 // Variables
 @import 'variables';
 
+@import "~toastr";
+
 // Bootstrap
+
+//Create modal separator column
+.st_npcsf{
+    background: linear-gradient(to left, rgba(0, 0, 0, .04) , transparent);
+}
