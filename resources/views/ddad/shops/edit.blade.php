@@ -109,7 +109,7 @@
                                         <label class="form-label" for="tv_id">TV</label>
                                         <select class="st_selectpicker2 mb-3" name="tv_id" id="tv_id" data-size="7" required>
                                             @foreach($tvs as $tv)
-                                                <option value="{{ $tv->id }}" @if(old('tv_id') == $tv->id) selected @endif>{{ $tv->serial_number }}</option>
+                                                <option value="{{ $tv->id }}" @if(old('tv_id', $shop->tv_id) == $tv->id) selected @endif>{{ $tv->serial_number }}</option>
                                             @endforeach
                                         </select>
                                         <div class="st_error_message"></div>
@@ -119,7 +119,7 @@
                                         <label class="form-label" for="detector_id">Detector</label>
                                         <select class="st_selectpicker2 mb-3" name="detector_id" id="detector_id" data-size="7" required>
                                             @foreach($detectors as $detector)
-                                                <option value="{{ $detector->id }}" @if(old('detector_id') == $detector->id) selected @endif>{{ $detector->label }}</option>
+                                                <option value="{{ $detector->id }}" @if(old('detector_id', $shop->detector_id) == $detector->id) selected @endif>{{ $detector->label }}</option>
                                             @endforeach
                                         </select>
                                         <div class="st_error_message"></div>
@@ -129,12 +129,26 @@
                                         <label class="form-label" for="android_box_id">Android Box</label>
                                         <select class="st_selectpicker2 mb-3" name="android_box_id" id="android_box_id" data-size="7" required>
                                             @foreach($android_boxes as $android_box)
-                                                <option value="{{ $android_box->id }}" @if(old('android_box_id') == $android_box->id) selected @endif>{{ $android_box->label }}</option>
+                                                <option value="{{ $android_box->id }}" @if(old('android_box_id', $shop->android_box_id) == $android_box->id) selected @endif>{{ $android_box->label }}</option>
                                             @endforeach
                                         </select>
                                         <div class="st_error_message"></div>
                                     </div>
 
+                                    <div class="st_height_50 st_height_lg_50"></div>
+                                    <div class="row">
+                                        <label class="col-3 col-form-label pl-4">Status:</label>
+                                        <div class="col">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input id="active" type="radio" name="status" value="active" class="custom-control-input" @if($shop->status == 'active') checked @endif >
+                                                <label class="custom-control-label" for="active">Active</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input id="inactive" type="radio" name="status" value="inactive" class="custom-control-input" @if($shop->status == 'inactive') checked @endif >
+                                                <label class="custom-control-label" for="inactive">Inactive</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

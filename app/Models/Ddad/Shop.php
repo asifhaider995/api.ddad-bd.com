@@ -12,26 +12,26 @@ class Shop extends Model
 
     public function isp()
     {
-        return $this->hasOne(ISP::class);
+        return $this->belongsTo(ISP::class);
     }
 
     public function zone()
     {
-        return $this->hasOne(Zone::class);
+        return $this->belongsTo(Zone::class);
     }
 
     public function androidBox()
     {
-        return $this->hasOne(AndroidBox::class);
+        return $this->belongsTo(AndroidBox::class);
     }
 
     public function detector()
     {
-        return $this->hasOne(Detector::class);
+        return $this->belongsTo(Detector::class);
     }
 
     public function tv()
     {
-        return $this->hasOne(TV::class);
+        return $this->belongsTo(TV::class);
     }
 }

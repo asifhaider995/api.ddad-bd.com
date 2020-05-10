@@ -69,23 +69,23 @@
                                     <td>
                                         @if($shop->tv_id && rand(0,1))
                                             <span class="material-icons text-success">check_circle_outline</span>
-                                            <span class="st_table_text">{{ Str::upper($shop->tv_id) }}</span>
+                                            <span class="st_table_text">{{ Str::upper($shop->tv->serial_number) }}</span>
                                         @else
                                             <span class="material-icons text-danger">cancel</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if($shop->detector_id && rand(0,1))
-                                            <span class="st_table_text">{{ Str::upper($shop->detector_id) }}</span>
                                             <span class="material-icons text-success">check_circle_outline</span>
+                                            <span class="st_table_text">{{ Str::upper($shop->detector->label) }}</span>
                                         @else
                                             <span class="material-icons text-danger">cancel</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if($shop->android_box_id && rand(0,1))
-                                            <span class="st_table_text">{{ Str::upper($shop->android_box_id) }}</span>
                                             <span class="material-icons text-success">check_circle_outline</span>
+                                            <span class="st_table_text">{{ Str::upper($shop->androidBox->label) }}</span>
                                         @else
                                             <span class="material-icons text-danger">cancel</span>
                                         @endif
