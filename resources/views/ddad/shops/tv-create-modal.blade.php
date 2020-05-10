@@ -52,6 +52,14 @@
 
 @push('script')
     <script type="text/javascript">
+        //show modal without form submit
+        $('#tv-modal-trigger').on('click', function (event) {
+            event.preventDefault();
+            $('#tv-create-modal').modal('show');
+        });
+    </script>
+
+    <script type="text/javascript">
         // this is the id of the form
         $("#tv-create-modal-form").submit(function(e) {
 
@@ -75,7 +83,10 @@
                             $('#tv-create-modal-form').trigger('reset')
                             $('#tv-create-modal').modal('hide');
                         @elseif($after_success == 'add_to_list')
-                            location.reload(true);
+                            $('#tv-create-modal-form').trigger('reset')
+                            $('#tv-create-modal').modal('hide');
+                            var newOption = new Option(response.tv.serial_number, response.tv.id, false, true);
+                            $('[name="tv_id"]').append(newOption).trigger('change');
                         @endif
                     }, 1000)
                 },

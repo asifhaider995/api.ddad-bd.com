@@ -12,7 +12,6 @@
                 <div class="st_card_body">
                     <form action="{{ route('shops.store') }}" id="edit-form" method="post" enctype="multipart/form-data" class="form-horizontal" autocomplete="off">
                         @csrf
-                        @method('put')
                         <div class="st_height_25 st_height_lg_25"></div>
                         <div class="st_card_padd_25">
                             <div class="row">
@@ -96,7 +95,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                     </div>
@@ -140,28 +138,40 @@
                                         <div class="col-4">
                                             <div class="st_height_25 st_height_lg_25"></div>
                                             <div class="st_card_head_right">
-                                                <button data-toggle="modal" data-target="#tv-create-modal" class="btn btn-primary btn-sm">
+                                                <button id="tv-modal-trigger" class="btn btn-primary btn-sm">
                                                     <i class="material-icons">add</i>New
                                                 </button>
                                             </div>
 
                                             <div class="st_height_45 st_height_lg_45"></div>
                                             <div class="st_card_head_right">
-                                                <button data-toggle="modal" data-target="#detector-create-modal" class="btn btn-primary btn-sm">
+                                                <button id="detector-modal-trigger" class="btn btn-primary btn-sm">
                                                     <i class="material-icons">add</i>New
                                                 </button>
                                             </div>
 
                                             <div class="st_height_45 st_height_lg_45"></div>
                                             <div class="st_card_head_right">
-                                                <button data-toggle="modal" data-target="#android-create-modal" class="btn btn-primary btn-sm">
+                                                <button id="androidBox-modal-trigger" class="btn btn-primary btn-sm">
                                                     <i class="material-icons">add</i>New
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-
-
+                                    <div class="st_height_50 st_height_lg_50"></div>
+                                    <div class="row">
+                                        <label class="col-3 col-form-label pl-3">Status:</label>
+                                        <div class="col">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input id="active" type="radio" name="status" value="active" class="custom-control-input">
+                                                <label class="custom-control-label" for="active">Active</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input id="inactive" type="radio" name="status" value="inactive" class="custom-control-input" checked="">
+                                                <label class="custom-control-label" for="inactive">Inactive</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -181,7 +191,7 @@
         </div>
     </div>
 
-    @include('ddad.shops.android-create-modal', ['after_success' => 'add_to_list'])
+    @include('ddad.shops.androidBox-create-modal', ['after_success' => 'add_to_list'])
     @include('ddad.shops.detector-create-modal', ['after_success' => 'add_to_list'])
     @include('ddad.shops.tv-create-modal', ['after_success' => 'add_to_list'])
 @endsection

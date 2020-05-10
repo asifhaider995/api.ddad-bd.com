@@ -15,15 +15,16 @@ class PermissionController extends Controller
     {
         $permissions = Permission::paginate(40);
         $roles = Role::all();
-        $users = User::select('id', 'name', 'email')->take(20)->latest()->get();
+        $users = User::select('id', 'first_name', 'last_name', 'email')->take(20)->latest()->get();
         return view('configuration.permissions.index', compact('roles', 'users', 'permissions'));
     }
 
 
     public function attachableUsers(Request $request, Permission $permission)
     {
-        $users = User::select('id', 'name', 'email')
-            ->where('name', 'like', "%{$request->q}%")
+        $users = User::select('id', 'first_name', 'last_name', 'email')
+            ->where('first_name', 'like', "%{$request->q}%")
+            ->where('last_name', 'like', "%{$request->q}%")
             ->orWhere('email', 'like', "%{$request->q}%")
             ->orWhere('id', 'like', "%{$request->q}%")
             ->latest()

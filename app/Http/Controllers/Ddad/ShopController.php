@@ -39,6 +39,7 @@ class ShopController extends Controller
             return ['message' => "Shop successfully added."];
         }
 
+        flash('Shop successfully added.')->success();
         return redirect()->route('shops.index');
     }
 

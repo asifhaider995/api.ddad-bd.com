@@ -1,7 +1,7 @@
 <!--  create model -->
-<form id="android-create-modal-form" action="{{ route('android-boxes.store') }}" method="post" autocomplete="off">
+<form id="androidBox-create-modal-form" action="{{ route('android-boxes.store') }}" method="post" autocomplete="off">
     @csrf
-    <div class="modal fade" id="android-create-modal" tabindex="-1" role="dialog" aria-labelledby="modal-createLabel" aria-hidden="true">
+    <div class="modal fade" id="androidBox-create-modal" tabindex="-1" role="dialog" aria-labelledby="modal-createLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
 
             <div class="modal-content">
@@ -52,8 +52,16 @@
 
 @push('script')
     <script type="text/javascript">
+        //show modal without form submit
+        $('#androidBox-modal-trigger').on('click', function (event) {
+            event.preventDefault();
+            $('#androidBox-create-modal').modal('show');
+        });
+    </script>
+
+    <script type="text/javascript">
         // this is the id of the form
-        $("#android-create-modal-form").submit(function(e) {
+        $("#androidBox-create-modal-form").submit(function(e) {
 
             e.preventDefault(); // avoid to execute the actual submit of the form.
             var form = $(this);
@@ -72,10 +80,13 @@
                     toastr.success(response.message);
                     setTimeout(function() {
                         @if($after_success == 'close_modal')
-                            $('#android-create-modal-form').trigger('reset')
-                            $('#android-create-modal').modal('hide');
+                            $('#androidBox-create-modal-form').trigger('reset')
+                            $('#androidBox-create-modal').modal('hide');
                         @elseif($after_success == 'add_to_list')
-                            location.reload(true);
+                            $('#androidBox-create-modal-form').trigger('reset')
+                            $('#androidBox-create-modal').modal('hide');
+                            var newOption = new Option(response.androidBox.label, response.androidBox.id, false, true);
+                            $('[name="android_box_id"]').append(newOption).trigger('change');
                         @endif
                     }, 1000)
                 },

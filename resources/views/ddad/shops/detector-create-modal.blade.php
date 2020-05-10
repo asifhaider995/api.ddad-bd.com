@@ -52,6 +52,14 @@
 
 @push('script')
     <script type="text/javascript">
+        //show modal without form submit
+        $('#detector-modal-trigger').on('click', function (event) {
+            event.preventDefault();
+            $('#detector-create-modal').modal('show');
+        });
+    </script>
+
+    <script type="text/javascript">
         // this is the id of the form
         $("#detector-create-modal-form").submit(function(e) {
 
@@ -75,7 +83,10 @@
                             $('#detector-create-modal-form').trigger('reset')
                             $('#detector-create-modal').modal('hide');
                         @elseif($after_success == 'add_to_list')
-                            location.reload(true);
+                            $('#detector-create-modal-form').trigger('reset')
+                            $('#detector-create-modal').modal('hide');
+                            var newOption = new Option(response.detector.label, response.detector.id, false, true);
+                            $('[name="detector_id"]').append(newOption).trigger('change');
                         @endif
                     }, 1000)
                 },
