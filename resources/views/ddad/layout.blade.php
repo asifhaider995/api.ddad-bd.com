@@ -45,7 +45,7 @@
                         <div class="st_user_toolbox st_style1">
                             <div class="st_user_toolbox_btn dropdown-toggle" data-toggle="dropdown">
                                 <div class="st_user_toolbox_info">
-                                    <h3>{{ Auth::user()->name }}</h3>
+                                    <h3>{{ Auth::user()->full_name }}</h3>
                                     <span>Available</span>
                                 </div>
                                 <div class="st_toolbox_user_box st_indigo_box st_radius_4"><img src="{{ asset('assets/img/users/user1.jpg') }}" alt="User"></div>
