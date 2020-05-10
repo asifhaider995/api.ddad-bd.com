@@ -12,3 +12,26 @@
 .st_npcsf{
     background: linear-gradient(to left, rgba(0, 0, 0, .04) , transparent);
 }
+
+// role permissions page
+.role{
+    border: 1px solid #e7f5e7;
+    margin-bottom: 5px;
+    padding: 3px;
+}
+.role .hide-default{
+    visibility: hidden;
+}
+.role:hover .hide-default{
+    visibility: visible;
+}
+.attachable-users{
+    max-height: 400px;
+    overflow-y: scroll;
+}
+.role .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.665625rem;
+    line-height: 1;
+    border-radius: 0.2rem;
+}
