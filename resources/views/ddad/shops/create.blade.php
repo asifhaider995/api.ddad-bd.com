@@ -137,23 +137,23 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="st_height_25 st_height_lg_25"></div>
-                                            <div class="st_card_head_right">
-                                                <button id="tv-modal-trigger" class="btn btn-primary btn-sm">
-                                                    <i class="material-icons">add</i>New
+                                            <div class="">
+                                                <button id="tv-modal-trigger" class="btn btn-primary">
+                                                    <i class="material-icons">add</i>
                                                 </button>
                                             </div>
 
-                                            <div class="st_height_45 st_height_lg_45"></div>
-                                            <div class="st_card_head_right">
-                                                <button id="detector-modal-trigger" class="btn btn-primary btn-sm">
-                                                    <i class="material-icons">add</i>New
+                                            <div class="st_height_40 st_height_lg_40"></div>
+                                            <div class="">
+                                                <button id="detector-modal-trigger" class="btn btn-primary">
+                                                    <i class="material-icons">add</i>
                                                 </button>
                                             </div>
 
-                                            <div class="st_height_45 st_height_lg_45"></div>
-                                            <div class="st_card_head_right">
-                                                <button id="androidBox-modal-trigger" class="btn btn-primary btn-sm">
-                                                    <i class="material-icons">add</i>New
+                                            <div class="st_height_40 st_height_lg_40"></div>
+                                            <div class="">
+                                                <button id="androidBox-modal-trigger" class="btn btn-primary">
+                                                    <i class="material-icons">add</i>
                                                 </button>
                                             </div>
                                         </div>

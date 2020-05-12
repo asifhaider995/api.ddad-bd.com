@@ -86,7 +86,7 @@
                             $('#androidBox-create-modal-form').trigger('reset')
                             $('#androidBox-create-modal').modal('hide');
                             var newOption = new Option(response.androidBox.label, response.androidBox.id, false, true);
-                            $('[name="android_box_id"]').append(newOption).trigger('change');
+                            $('[name="android_box_id"]').append(newOption).selectpicker('refresh');
                         @endif
                     }, 1000)
                 },

@@ -86,7 +86,7 @@
                             $('#detector-create-modal-form').trigger('reset')
                             $('#detector-create-modal').modal('hide');
                             var newOption = new Option(response.detector.label, response.detector.id, false, true);
-                            $('[name="detector_id"]').append(newOption).trigger('change');
+                            $('[name="detector_id"]').append(newOption).selectpicker('refresh');
                         @endif
                     }, 1000)
                 },

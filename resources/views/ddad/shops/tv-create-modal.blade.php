@@ -86,7 +86,7 @@
                             $('#tv-create-modal-form').trigger('reset')
                             $('#tv-create-modal').modal('hide');
                             var newOption = new Option(response.tv.serial_number, response.tv.id, false, true);
-                            $('[name="tv_id"]').append(newOption).trigger('change');
+                            $('[name="tv_id"]').append(newOption).selectpicker('refresh');
                         @endif
                     }, 1000)
                 },
