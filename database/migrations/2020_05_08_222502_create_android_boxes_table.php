@@ -17,7 +17,7 @@ class CreateAndroidBoxesTable extends Migration
             $table->bigIncrements('id');
             $table->string('imei');
             $table->string('label');
-            $table->string('status');
+            $table->enum('status', ['active', 'inactive'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

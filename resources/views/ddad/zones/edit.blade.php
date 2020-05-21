@@ -28,7 +28,7 @@
                                         @enderror
                                     </div>
                                     <div class="st_level_up form-group">
-                                        <label for="description">Description</label>
+                                        <label for="description">Locations</label>
                                         <textarea name="description" class=" form-control @error('description') is-invalid @enderror" style="height: 92px;" rows="5" id="description" required>{{ old('description', $zone->description) }}</textarea>
                                         @error('description')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>

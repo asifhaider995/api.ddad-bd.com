@@ -36,31 +36,18 @@
                                     <label class="custom-control-label" for="zone-c" >Zone C</label>
                                 </div>
                             </div>
-
                         </div>
                         <table id="st_dataTable" class="display">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="st_check_mark_all">
-                                        <span class="st_first"></span>
-                                        <span class="st_last"></span>
-                                    </div>
-                                </th>
-                                <th>ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Name<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Description<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>Location<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($zones as $zone)
                                 <tr>
-                                    <td>
-                                        <div class="st_check_mark"></div>
-                                    </td>
-
-                                    <td><span class="st_table_text">{{ $zone->id }}</span></td>
                                     <td><span class="st_table_text">{{ Str::upper($zone->name) }}</span></td>
                                     <td><span class="st_table_text">{{ $zone->description }}</span></td>
 

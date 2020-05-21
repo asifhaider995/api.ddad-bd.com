@@ -56,12 +56,8 @@
                     <span class="st_side_nav_text">Zone Management</span>
                 </a>
             </li>
-            <li class="st_side_nav_item">
-                <a href="" class="st_side_nav_link">
-                    <span class="st_side_nav_icon"><i class="material-icons-outlined">settings</i></span>
-                    <span class="st_side_nav_text">Configuration</span>
-                </a>
-            </li>
+
+            @include('configuration.leftbar')
         </ul>
     </div>
 </div>

@@ -15,8 +15,8 @@ class CreateISPSTable extends Migration
     {
         Schema::create('i_s_p_s', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->string('contact_person');
-            $table->string('isp_name');
             $table->string('mobile_number');
             $table->string('package_name');
             $table->double('package_price');

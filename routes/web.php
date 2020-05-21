@@ -18,3 +18,8 @@ Route::view('/home', 'home')->name('home')->middleware('auth');
 
 
 Auth::routes();
+
+Route::middleware(['web', 'auth'])
+    ->prefix('configuration')
+    ->namespace('Configuration')
+    ->group(base_path('routes/configuration.php'));

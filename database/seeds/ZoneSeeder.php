@@ -7,16 +7,16 @@ class ZoneSeeder extends Seeder
 
     protected $zones = [
         [
-            'name' => 'a',
-            'description' => 'zone a',
+            'name' => 'zone a',
+            'description' => 'Lalmatia, Kolabagan, Dhanmondi ',
         ],
         [
-            'name' => 'b',
-            'description' => 'zone b',
+            'name' => 'zone b',
+            'description' => 'Paltan, Motijheel, Bijoynagar',
         ],
         [
-            'name' => 'c',
-            'description' => 'zone c',
+            'name' => 'zone c',
+            'description' => 'Mohakhali, Bannani, Gulshan',
         ],
 
 

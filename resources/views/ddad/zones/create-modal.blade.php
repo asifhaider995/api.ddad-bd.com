@@ -20,7 +20,7 @@
                                 <div class="st_error_message"></div>
                             </div>
                             <div class="st_level_up form-group">
-                                <label>Description</label>
+                                <label>Locations</label>
                                 <textarea class="form-control" name="description" rows="5" style="height: 92px;"></textarea>
                                 <div class="st_error_message"></div>
                             </div>

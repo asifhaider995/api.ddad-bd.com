@@ -17,7 +17,7 @@ class CreateDetectorsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('unique_id');
             $table->string('label');
-            $table->string('status');
+            $table->enum('status', ['active', 'inactive'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

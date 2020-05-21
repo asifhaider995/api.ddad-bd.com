@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/material-icons/css/material-icons.css') }}" />
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('plugins/OverlayScrollbars-master/css/OverlayScrollbars.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap-select-1.13.9/dist/css/bootstrap-select.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
 </head>
 
@@ -53,5 +54,6 @@
 <script src="{{ asset('plugins/jQuery/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-4.4.1/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('plugins/OverlayScrollbars-master/js/jquery.overlayScrollbars.min.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap-select-1.13.9/js/bootstrap-select.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 </html>

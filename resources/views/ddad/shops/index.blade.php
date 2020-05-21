@@ -10,9 +10,9 @@
                         <h2 class="st_card_title">Shops</h2>
                     </div>
                     <div class="st_card_head_right">
-                        <button data-toggle="modal" data-target="#shops-create-modal" class="btn btn-primary btn-sm">
+                        <a href="{{ route('shops.create') }}" class="btn btn-primary btn-sm">
                             <i class="material-icons">add</i>Create New
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="st_card_body">
@@ -41,44 +41,65 @@
                         <table id="st_dataTable" class="display">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="st_check_mark_all">
-                                        <span class="st_first"></span>
-                                        <span class="st_last"></span>
-                                    </div>
-                                </th>
                                 <th>ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>Shop Name<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>Owner's Name<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Status<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>TV<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>IOT<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>Box<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Average Visit<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Payment Due<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>TV ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>IOT ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Android Box ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($shops as $shop)
                                 <tr>
-                                    <td>
-                                        <div class="st_check_mark"></div>
-                                    </td>
-
                                     <td><span class="st_table_text">{{ $shop->id }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($shop->status) }}</span></td>
+                                    <td><span class="st_table_text">{{ $shop->name }}</span></td>
+                                    <td><span class="st_table_text">{{ $shop->owner_name }}</span></td>
+                                    <td>
+                                        @if($shop->status === 'active')
+                                            <span class="st_text_badge st_text_badge_success">Active</span>
+                                        @else
+                                            <span class="st_text_badge st_text_badge_danger">Inactive</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($shop->tv_id && rand(0,1))
+                                            <span class="material-icons text-success">check_circle_outline</span>
+                                            <span class="st_table_text">{{ Str::upper($shop->tv->serial_number) }}</span>
+                                        @else
+                                            <span class="material-icons text-danger">cancel</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($shop->detector_id && rand(0,1))
+                                            <span class="material-icons text-success">check_circle_outline</span>
+                                            <span class="st_table_text">{{ Str::upper($shop->detector->label) }}</span>
+                                        @else
+                                            <span class="material-icons text-danger">cancel</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($shop->android_box_id && rand(0,1))
+                                            <span class="material-icons text-success">check_circle_outline</span>
+                                            <span class="st_table_text">{{ Str::upper($shop->androidBox->label) }}</span>
+                                        @else
+                                            <span class="material-icons text-danger">cancel</span>
+                                        @endif
+                                    </td>
                                     <td><span class="st_table_text">{{ $shop->average_visit }}</span></td>
-                                    <td><span class="st_table_text">{{ $shop->payment_due }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($shop->tv_id) }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($shop->iot_id) }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($shop->android_box_id) }}</span></td>
+                                    <td><span class="st_table_text">{{ $shop->payment_due_date }}</span></td>
 
                                     <td>
                                         <div class="st_table_action_btn_wrap">
                                             <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
                                             <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
                                                 <a class="dropdown-item" href=""><i class="material-icons-outlined">visibility</i>View</a>
-                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
-                                                <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                                <a class="dropdown-item" href="{{ route('shops.edit', $shop) }}"><i class="material-icons-outlined">create</i>Edit</a>
+                                                <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('shops.destroy', $shop) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -94,6 +115,4 @@
         </div>
     </div>
 
-{{--    @include('ddad.shops.create-modal', ['after_success' => 'close_modal'])--}}
 @endsection
-
