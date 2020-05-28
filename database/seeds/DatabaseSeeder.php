@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RolePermissionSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(DeviceSeeder::class);
-        $this->call(ShopSeeder::class);
         $this->call(ZoneSeeder::class);
+        $this->call(DeviceSeeder::class);
+        return 1;
+        $this->call(ShopSeeder::class);
         $this->call(AndroidBoxSeeder::class);
         $this->call(DetectorSeeder::class);
         $this->call(ISPSeeder::class);

@@ -19,21 +19,21 @@
                     <div class="st_data_table_wrap st_fixed_height1">
                         <div class="st_data_table_btn_group">
                             <div class="st_data_table_btn">
-                                <div class="custom-control custom-radio custom-control-inline">
+                                <div class="custom-control custom-radio custom-control-inline text-success">
                                     <input type="radio" id="zone-a" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-a" >Zone A</label>
+                                    <label class="custom-control-label" for="zone-a" >Available</label>
                                 </div>
                             </div>
                             <div class="st_data_table_btn">
-                                <div class="custom-control custom-radio custom-control-inline">
+                                <div class="custom-control custom-radio custom-control-inline text-danger">
                                     <input type="radio" id="zone-b" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-b" >Zone B</label>
+                                    <label class="custom-control-label" for="zone-b" >Error detected</label>
                                 </div>
                             </div>
                             <div class="st_data_table_btn">
-                                <div class="custom-control custom-radio custom-control-inline">
+                                <div class="custom-control custom-radio custom-control-inline text-warning">
                                     <input type="radio" id="zone-c" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-c" >Zone C</label>
+                                    <label class="custom-control-label" for="zone-c" >Parts unavailable</label>
                                 </div>
                             </div>
 
@@ -41,49 +41,55 @@
                         <table id="st_dataTable" class="display">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="st_check_mark_all">
-                                        <span class="st_first"></span>
-                                        <span class="st_last"></span>
-                                    </div>
-                                </th>
-                                <th>ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Status<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Location<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Size<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Shop ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>IOT ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Android Box ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Action</th>
+                                <th>ANDROID</th>
+                                <th>TV</th>
+                                <th>DETECTOR</th>
+                                <th>LOCATION</th>
+                                <th>SHOP</th>
+                                <th>ACTION</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($devices as $device)
-                                <tr>
-                                    <td>
-                                        <div class="st_check_mark"></div>
-                                    </td>
-
-                                    <td><span class="st_table_text">{{ $device->id }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($device->status) }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($device->location) }}</span></td>
-                                    <td><span class="st_table_text">{{ $device->size }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($device->shop_id) }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($device->iot_id) }}</span></td>
-                                    <td><span class="st_table_text">{{ Str::upper($device->android_box_id) }}</span></td>
-
-                                    <td>
-                                        <div class="st_table_action_btn_wrap">
-                                            <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
-                                            <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
-                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">visibility</i>View</a>
-                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
-                                                <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                @foreach($devices as $device)
+                                    <tr>
+                                        <td>
+                                            @if($device->androidAlerts())
+                                                <span class="text-danger material-icons">warning</span>
+                                            @else
+                                                <span class="text-success material-icons">check</span>
+                                            @endif
+                                            {{ $device->android_label }}
+                                        </td>
+                                        <td>
+                                            @if($device->tvAlerts())
+                                                <span class="text-danger material-icons">warning</span>
+                                            @else
+                                                <span class="text-success material-icons">check</span>
+                                            @endif
+                                            {{ $device->tv_label }}
+                                        </td>
+                                        <td>
+                                            @if($device->detectorAlerts())
+                                                <span class="text-danger material-icons">warning</span>
+                                            @else
+                                                <span class="text-success material-icons">check</span>
+                                            @endif
+                                            {{ $device->detector_label }}
+                                        </td>
+                                        <td>{{ $device->shop->zone->name ?? '-' }}</td>
+                                        <td>{{ $device->shop->name ?? '-' }}</td>
+                                        <td>
+                                            <div class="st_table_action_btn_wrap">
+                                                <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
+                                                <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
+                                                    <a class="dropdown-item" href=""><i class="material-icons-outlined">visibility</i>View</a>
+                                                    <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
+                                                    <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -94,6 +100,9 @@
         </div>
     </div>
 
-{{--    @include('ddad.devices.create-modal', ['after_success' => 'close_modal'])--}}
+
+    <div class="st_height_15 st_height_lg_15"></div>
+
+    @include('ddad.devices.create-modal', ['after_success' => 'close_modal'])
 @endsection
 

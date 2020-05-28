@@ -15,12 +15,14 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('status')->nullable();
-            $table->string('location')->nullable();
-            $table->string('size')->nullable();
-            $table->string('shop_id')->nullable();
-            $table->string('iot_id')->nullable();
-            $table->string('android_box_id')->nullable();
+            $table->string('tv_label')->nullable();
+            $table->string('tv_serial')->nullable();
+            $table->string('tv_size')->nullable();
+            $table->string('detector_label')->nullable();
+            $table->string('detector_serial')->nullable();
+            $table->string('android_imei')->nullable();
+            $table->string('android_label')->nullable();
+            $table->unsignedInteger('shop_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

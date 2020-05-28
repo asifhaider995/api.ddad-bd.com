@@ -18,32 +18,47 @@
                         <div class="st_height_25 st_height_lg_25"></div>
                         <div class="st_card_padd_25">
                             <div class="row">
-                                <div class="col-lg-3"></div>
                                 <div class="col-lg-6">
                                     <div class="st_level_up form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Zone name</label>
                                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', $zone->name) }}" required >
                                         @error('name')
-                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="st_level_up form-group">
-                                        <label for="description">Locations</label>
-                                        <textarea name="description" class=" form-control @error('description') is-invalid @enderror" style="height: 92px;" rows="5" id="description" required>{{ old('description', $zone->description) }}</textarea>
-                                        @error('description')
-                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                        @enderror
+                                    <strong>Locations</strong><br/>
+                                    <div class="locations">
+                                        @foreach($zone->locations as $location)
+                                            <div class="location" style="margin-bottom: 10px">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="locations[{{ $location->id }}]" class="form-control" value="{{ $location->name }}" required >
+                                                        <input type="hidden" name="previous_locations[{{ $location->id }}]" value="{{ $location->id }}" required >
+                                                    </div>
+                                                    <div class="col-sm-2"><a class="btn btn-danger" href="{{ route('zones.detach.location',  ['zone' => $zone, 'location' => $location]) }}">-</a></div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
+                                    <button type="button" class="btn btn-secondary add-new-location">+ Add New Location</button>
                                 </div>
+                                <div class="col-lg-3"></div>
+                                @if($unAttachedLocations->isNotEmpty())
                                 <div class="col-lg-3">
+                                    <h5>Location without region</h5>
+                                    @foreach($unAttachedLocations as $location)
+                                        <a class="btn btn-info" href="{{ route('zones.attach.location', ['zone' => $zone, 'location' => $location]) }}">Add {{ $location->name }}</a>
+                                        <div class="st_height_5 st_height_lg_5"></div>
+                                    @endforeach
                                 </div>
+                                @endif
                             </div>
 
                             <div class="st_height_15 st_height_lg_15"></div>
                             <hr>
                             <div class="st_height_25 st_height_lg_25"></div>
 
-                            <div class="st_form_btns st_style1 text-right">
+                            <div class="st_form_btns st_style1 text-left">
                                 <a href="{{ route('zones.index') }}" class="btn btn-outline-light">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
@@ -56,5 +71,27 @@
 
     </div>
 
+    <div class="st_height_15 st_height_lg_15"></div>
 @endsection
 
+@push('script')
+    <script type="text/javascript">
+        $('.add-new-location').click(function() {
+            var html = '<div class="location" style="margin-bottom: 10px">\n' +
+                '                                                <div class="row">\n' +
+                '                                                    <div class="col-sm-10">\n' +
+                '                                                        <input type="text" name="locations[]" class="form-control" >\n' +
+                '                                                    </div>\n' +
+                '                                                    <div class="col-sm-2"><button type="button" class="btn btn-danger remove">-</button></div>\n' +
+                '                                                </div>\n' +
+                '                                            </div>'
+            $('.locations').append($(html))
+        });
+
+        $(document).on('click', '.locations .remove', function() {
+            alert('1')
+            $(this).closest('.location').remove();
+        });
+    </script>
+
+@endpush

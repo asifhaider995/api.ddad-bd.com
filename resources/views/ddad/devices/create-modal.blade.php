@@ -1,12 +1,12 @@
 <!--  create model -->
-<form id="zones-create-modal-form" action="{{ route('zones.store') }}" method="post" autocomplete="off">
+<form id="devices-create-modal-form" action="{{ route('zones.store') }}" method="post" autocomplete="off">
     @csrf
-    <div class="modal fade" id="zones-create-modal" tabindex="-1" role="dialog" aria-labelledby="modal-createLabel" aria-hidden="true">
+    <div class="modal fade" id="devices-create-modal" tabindex="-1" role="dialog" aria-labelledby="modal-createLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
 
-            <div class="modal-content modal-sm">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-createLabel">New zone form</h5>
+                    <h5 class="modal-title" id="modal-createLabel">Create new device</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

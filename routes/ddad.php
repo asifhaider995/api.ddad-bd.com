@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function() {
     Route::get('zones/{zone}/edit', 'ZoneController@edit')->name('zones.edit');
     Route::put('zones/{zone}', 'ZoneController@update')->name('zones.update');
     Route::delete('zones/{zone}', 'ZoneController@destroy')->name('zones.destroy');
+    Route::get('zones/{zone}/{location}/detach', 'ZoneController@detachLocation')->name('zones.detach.location');
+    Route::get('zones/{zone}/{location}/attach', 'ZoneController@attachLocation')->name('zones.attach.location');
 
 });
 

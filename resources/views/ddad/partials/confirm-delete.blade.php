@@ -4,13 +4,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-deleteLabel">Confirm</h5>
+                <h5 class="modal-title text-danger" id="modal-deleteLabel">Are you sure?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
-                <h4 class="text-danger mt-4">Are you sure?</h4>
                 <p class="w-75 mx-auto text-muted">You won't be able to undo this action!</p>
             </div>
             <div class="modal-footer">
@@ -18,7 +17,7 @@
                     @csrf
                     @method('delete')
                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger">Confirm delete</button>
                 </form>
             </div>
         </div><!-- /.modal-content -->

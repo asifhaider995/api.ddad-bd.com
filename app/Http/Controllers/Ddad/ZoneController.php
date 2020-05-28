@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ddad;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ddad\Zone;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class ZoneController extends Controller
@@ -15,21 +16,28 @@ class ZoneController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        Zone::create($request->validate([
+        $request->validate([
             'name' => 'required',
-            'description'=> 'nullable',
+            'locations' => 'required|array|min:2'
+        ]);
+
+
+        $locationNames = array_filter($request->locations);
+        $locations = [];
+
+        $zone = Zone::create($request->validate([
+            'name' => 'required',
         ]));
 
-        if($request->ajax()) {
-            return ['message' => "Zone successfully added."];
+        foreach($locationNames as $locationName) {
+            $locations[] = new Location(['name' => $locationName]);
         }
+
+        $zone->locations()->saveMany($locations);
+
+        flash('Your zone successfully creted')->success();
 
         return redirect()->route('zones.index');
     }
@@ -37,16 +45,48 @@ class ZoneController extends Controller
     public function edit(Zone $zone)
     {
         $this->viewData['zone'] = $zone;
+        $this->viewData['unAttachedLocations'] = Location::whereNull('zone_id')->get();
 
         return view('ddad.zones.edit', $this->viewData);
     }
 
-    public function update(Zone $zone)
+    public function attachLocation(Zone $zone, Location $location)
     {
-        $zone->update(request()->validate([
+        $location->zone_id = $zone->id;
+        $location->save();
+        flash("Location added to the zone");
+
+        return back();
+    }
+
+    public function detachLocation(Zone $zone, Location $location)
+    {
+        $location->zone_id = null;
+        $location->save();
+        flash("Location removed form the zone");
+
+        return back();
+    }
+
+    public function update(Zone $zone, Request $request)
+    {
+        $request->validate([
             'name' => 'required',
-            'description'=> 'nullable'
-        ]));
+            'locations' => 'required|array|min:1',
+            'previous_locations' => 'required|array|min:1'
+        ]);
+        $zone->update($request->all());
+
+        foreach($request->locations as $id => $locationName) {
+            if(in_array($id, $request->previous_locations)) {
+                Location::where('id', $id)->update(['name' => $locationName]);
+            } else {
+                Location::create([
+                    'name' => $locationName,
+                    'zone_id' => $zone->id
+                ]);
+            }
+        }
 
         flash('Zone updated successfully!')->success();
         return redirect()->route('zones.edit', $zone);

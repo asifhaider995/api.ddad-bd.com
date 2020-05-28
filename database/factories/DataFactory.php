@@ -114,10 +114,21 @@ $factory->define(\App\Models\Ddad\Shop::class, function (Faker $faker){
         'average_visit' => rand(200, 300),
         'status' => rand(0,1)? 'active' : 'inactive',
         'payment_due_date' => $faker->date(),
-        'zone_id' => rand(1, 3),
-        'detector_id' => rand(1, 10),
-        'tv_id' => rand(1, 10),
-        'android_box_id' => rand(1, 10),
+        'device_id' => rand(1, 3),
         'isp_id' => rand(1, 10),
     ];
 });
+
+
+$factory->define(\App\Models\Ddad\Device::class, function (Faker $faker){
+    return [
+        'tv_label'  => 'TV' . rand(1, 1000),
+        'tv_serial' =>  'WALTON' . rand(100000000, 900000000),
+        'tv_size'   => ['12 inches', '18 inches', '24 inches'][rand(0,2)],
+        'detector_label' => 'IOT' . rand(1, 1000),
+        'detector_serial' => 'SMSN' . rand(100000000, 900000000),
+        'android_imei' => rand(10000000, 90000000) . rand(10000000, 90000000),
+        'android_label' => 'ANDROID' . rand(1, 1000)
+    ];
+});
+

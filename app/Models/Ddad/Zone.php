@@ -2,9 +2,25 @@
 
 namespace App\Models\Ddad;
 
+use App\Models\Location;
 use Illuminate\Database\Eloquent\Model;
 
 class Zone extends Model
 {
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name'];
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->locations->pluck('name')->join(', ');
+    }
+
+    public function getNumberOfShopsAttribute()
+    {
+        return rand(0, 100);
+    }
 }
