@@ -21,6 +21,11 @@ class Zone extends Model
 
     public function getNumberOfShopsAttribute()
     {
-        return rand(0, 100);
+        return $this->shops()->count();
+    }
+
+    public function shops()
+    {
+        return $this->hasManyThrough(Shop::class, Location::class);
     }
 }
