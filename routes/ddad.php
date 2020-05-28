@@ -23,6 +23,14 @@ Route::middleware('auth')->group(function() {
     Route::put('devices/{device}', 'DeviceController@update')->name('devices.update');
     Route::delete('devices/{device}', 'DeviceController@destroy')->name('devices.delete');
 
+
+    Route::get('isps', 'IspController@index')->name('isps.index');
+    Route::post('isps/store', 'IspController@store')->name('isps.store');
+    Route::get('isps/{isp}/edit', 'IspController@edit')->name('isps.edit');
+    Route::put('isps/{isp}', 'IspController@update')->name('isps.update');
+    Route::delete('isps/{isp}', 'IspController@destroy')->name('isps.delete');
+
+
     Route::get('zones', 'ZoneController@index')->name('zones.index');
     Route::post('zones/', 'ZoneController@store')->name('zones.store');
     Route::get('zones/{zone}/edit', 'ZoneController@edit')->name('zones.edit');

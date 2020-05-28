@@ -91,9 +91,7 @@
                 </div>
                 <div class="st_footer_right">
                     <div class="st_footer_nav">
-                        <a href="#">About</a>
-                        <a href="#">Terms & Privacy</a>
-                        <a href="#">Help</a>
+                        <a href="#">Developed by Laralink Tech Ltd</a>
                     </div>
                 </div>
             </div>
