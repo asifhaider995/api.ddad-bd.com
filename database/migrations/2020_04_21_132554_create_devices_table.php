@@ -22,7 +22,6 @@ class CreateDevicesTable extends Migration
             $table->string('detector_serial')->nullable();
             $table->string('android_imei')->nullable();
             $table->string('android_label')->nullable();
-            $table->unsignedInteger('shop_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

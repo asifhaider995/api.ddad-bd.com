@@ -28,18 +28,16 @@ class ShopRequest extends FormRequest
             'address' => 'required',
             'owner_name'=> 'required',
             'owner_nid'=> 'required',
-            'document'=> 'nullable',
+            'document_path'=> 'nullable',
             'kcp_name'=> 'required',
             'kcp_mobile_number'=> 'required',
             'payment_per_ad'=> 'required',
-            'average_visit'=> 'nullable',
-            'status'=> 'required|in:active,inactive',
             'payment_due_date'=> 'nullable',
-            'zone_id'=> 'required',
-            'detector_id'=> 'required',
-            'tv_id'=> 'required',
-            'android_box_id'=> 'required',
             'isp_id'=> 'required',
+            'location_id'=> 'required',
+            'device_id'=> 'nullable',
+            'android_imei'=> 'required_with:device_id',
+            'android_label'=> 'required_with:device_id',
         ];
     }
 }

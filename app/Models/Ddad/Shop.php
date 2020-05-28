@@ -3,11 +3,12 @@
 namespace App\Models\Ddad;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Shop extends Model
 {
     protected $fillable = ['name', 'address', 'owner_name', 'owner_nid', 'document_path', 'kcp_name', 'kcp_mobile_number',
-        'payment_per_ad', 'average_visit', 'status', 'payment_due_date', 'zone_id', 'detector_id', 'tv_id', 'android_box_id', 'isp_id',
+        'payment_per_ad', 'average_visit', 'status', 'payment_due_date', 'location_id', 'isp_id', 'device_id'
     ];
 
     public function isp()
@@ -15,23 +16,19 @@ class Shop extends Model
         return $this->belongsTo(ISP::class);
     }
 
-    public function zone()
+    public function location()
     {
         return $this->belongsTo(Zone::class);
     }
 
-    public function androidBox()
+
+    public function device()
     {
-        return $this->belongsTo(AndroidBox::class);
+        return $this->belongsTo(Device::class);
     }
 
-    public function detector()
+    public function getDocumentSrcAttribute()
     {
-        return $this->belongsTo(Detector::class);
-    }
-
-    public function tv()
-    {
-        return $this->belongsTo(TV::class);
+        return $this->document_path ? Storage::url($this->document_path) : null;
     }
 }

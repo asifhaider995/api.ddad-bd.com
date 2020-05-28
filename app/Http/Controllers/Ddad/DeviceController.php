@@ -13,4 +13,29 @@ class DeviceController extends Controller
         $this->viewData['devices'] = Device::all();
         return view('ddad.devices.index', $this->viewData);
     }
+
+    public function store(Request $request)
+    {
+        $request->validate($this->rules());
+
+        $device =Device::create($request->only([
+            'android_label', 'android_imei', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
+        ]));
+        flash("Device successfully created")->success();
+
+        return back();
+    }
+
+
+    private function rules()
+    {
+        return [
+            'android_label' => 'required_with:android_imei|required_without_all:detector_label,tv_label',
+            'android_imei' => 'required_with:android_label',
+            'detector_label' => 'required_with:detector_serial|required_without_all:android_label,tv_label',
+            'detector_serial' => 'required_with:detector_label',
+            'tv_label' => 'required_with:tv_serial|required_without_all:detector_label,android_label',
+            'tv_serial' => 'required_with:tv_label',
+        ];
+    }
 }

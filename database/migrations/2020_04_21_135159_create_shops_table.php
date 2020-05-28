@@ -23,14 +23,10 @@ class CreateShopsTable extends Migration
             $table->string('kcp_name')->nullable();
             $table->string('kcp_mobile_number')->nullable();
             $table->string('payment_per_ad')->nullable();
-            $table->string('average_visit')->nullable();
-            $table->enum('status', ['active', 'inactive'])->nullable();
             $table->date('payment_due_date')->nullable();
-            $table->unsignedBigInteger('zone_id')->nullable();
-            $table->unsignedBigInteger('detector_id')->nullable();
-            $table->unsignedBigInteger('tv_id')->nullable();
-            $table->unsignedBigInteger('android_box_id')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->unsignedBigInteger('isp_id')->nullable();
+            $table->unsignedBigInteger('device_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

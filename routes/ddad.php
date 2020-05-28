@@ -18,6 +18,10 @@ Route::middleware('auth')->group(function() {
     Route::post('tvs/', 'TVController@store')->name('tvs.store');
 
     Route::get('devices', 'DeviceController@index')->name('devices.index');
+    Route::post('devices/store', 'DeviceController@store')->name('devices.store');
+    Route::get('devices/{device}/edit', 'DeviceController@edit')->name('devices.edit');
+    Route::put('devices/{device}', 'DeviceController@update')->name('devices.update');
+    Route::delete('devices/{device}', 'DeviceController@destroy')->name('devices.delete');
 
     Route::get('zones', 'ZoneController@index')->name('zones.index');
     Route::post('zones/', 'ZoneController@store')->name('zones.store');

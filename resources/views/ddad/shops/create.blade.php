@@ -12,11 +12,13 @@
                 <div class="st_card_body">
                     <form action="{{ route('shops.store') }}" id="edit-form" method="post" enctype="multipart/form-data" class="form-horizontal" autocomplete="off">
                         @csrf
-                        <div class="st_height_25 st_height_lg_25"></div>
                         <div class="st_card_padd_25">
                             <div class="row">
                                 <div class="col-lg-8">
+
+                                    <div class="st_height_25 st_height_lg_25"></div>
                                     <div class="row">
+
                                         <div class="col-lg-6">
                                             <div class="st_level_up form-group">
                                                 <label for="name">Shop Name *</label>
@@ -70,23 +72,21 @@
                                                     <option value="{{ $isp->id }}" @if(old('isp_id') == $isp->id) selected @endif>{{ $isp->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="st_error_message"></div>
                                         </div>
 
-                                        <div class="col-lg-2">
-                                            <label class="form-label" for="shop_type">Zone</label>
-                                            <select class="st_selectpicker1" name="zone_id" id="zone_id" data-size="7" required>
-                                                @foreach($zones as $zone)
-                                                    <option value="{{ $zone->id }}" @if(old('zone_id') == $zone->id) selected @endif>{{ $zone->name }}</option>
+                                        <div class="col-lg-4">
+                                            <label class="form-label" for="location_id">Location</label>
+                                            <select class="st_selectpicker2 mb-3" name="location_id" id="location_id" data-size="7" required>
+                                                @foreach($locations as $location)
+                                                    <option value="{{ $location->id }}" @if(old('location_id') == $location->id) selected @endif>{{ $location->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="st_error_message"></div>
                                         </div>
 
 
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
-                                                <label class="form-label" for="default-06">Document</label>
+                                                <label class="form-label" for="default-06">Document(NID/TradeLicence)</label>
                                                 <div class="form-control-wrap">
                                                     <div class="custom-file">
                                                         <input type="file" multiple="" name="document" class="custom-file-input  @error('name') is-invalid @enderror" id="customFile">
@@ -98,84 +98,69 @@
                                         </div>
 
                                     </div>
+
+                                    <div class="st_height_25 st_height_lg_25"></div>
                                 </div>
 
                                 <div class="col-sm-1 st_npcsf"></div>
 
                                 <div class="col-lg-3">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div>
-                                                <label class="form-label" for="tv_id">TV</label>
-                                                <select class="st_selectpicker2 mb-3" name="tv_id" id="tv_id" data-size="7" required>
-                                                    @foreach($tvs as $tv)
-                                                        <option value="{{ $tv->id }}" @if(old('tv_id') == $tv->id) selected @endif>{{ $tv->serial_number }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="st_error_message"></div>
-                                            </div>
+                                    <div class="st_height_10 st_height_lg_10"></div>
+                                    <a  data-toggle="modal" data-target="#unallocated-devices-modal" class="btn btn-info add-unallocated" href="#"><span class="material-icons">add</span>Add unallocated device</a>
+                                    <a   class="btn btn-danger remove-allocated" style="display: none" href="#"><span class="material-icons">delete</span>Remove allocated device</a>
+                                    <input type="hidden" name="device_id">
+                                    <div class="st_height_15 st_height_lg_15"></div>
 
-                                            <div>
-                                                <label class="form-label" for="detector_id">Detector</label>
-                                                <select class="st_selectpicker2 mb-3" name="detector_id" id="detector_id" data-size="7" required>
-                                                    @foreach($detectors as $detector)
-                                                        <option value="{{ $detector->id }}" @if(old('detector_id') == $detector->id) selected @endif>{{ $detector->label }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="st_error_message"></div>
-                                            </div>
-
-                                            <div>
-                                                <label class="form-label" for="android_box_id">Android Box</label>
-                                                <select class="st_selectpicker2 mb-3" name="android_box_id" id="android_box_id" data-size="7" required>
-                                                    @foreach($android_boxes as $android_box)
-                                                        <option value="{{ $android_box->id }}" @if(old('android_box_id') == $android_box->id) selected @endif>{{ $android_box->label }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="st_error_message"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="st_height_25 st_height_lg_25"></div>
-                                            <div class="">
-                                                <button id="tv-modal-trigger" class="btn btn-primary">
-                                                    <i class="material-icons">add</i>
-                                                </button>
-                                            </div>
-
-                                            <div class="st_height_40 st_height_lg_40"></div>
-                                            <div class="">
-                                                <button id="detector-modal-trigger" class="btn btn-primary">
-                                                    <i class="material-icons">add</i>
-                                                </button>
-                                            </div>
-
-                                            <div class="st_height_40 st_height_lg_40"></div>
-                                            <div class="">
-                                                <button id="androidBox-modal-trigger" class="btn btn-primary">
-                                                    <i class="material-icons">add</i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <div class="st_level_up form-group">
+                                        <label for="name">Android label*</label>
+                                        <input type="text" name="android_label" class="form-control @error('android_label') is-invalid @enderror"
+                                               id="name" value="{{ old('android_label') }}" >
+                                        @error('android_label')
+                                            <div class="st_error_message">{{ $message }}</div>
+                                        @endif
                                     </div>
-                                    <div class="st_height_50 st_height_lg_50"></div>
-                                    <div class="row">
-                                        <label class="col-3 col-form-label pl-3">Status:</label>
-                                        <div class="col">
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input id="active" type="radio" name="status" value="active" class="custom-control-input">
-                                                <label class="custom-control-label" for="active">Active</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input id="inactive" type="radio" name="status" value="inactive" class="custom-control-input" checked="">
-                                                <label class="custom-control-label" for="inactive">Inactive</label>
-                                            </div>
-                                        </div>
+                                    <div class="st_level_up form-group">
+                                        <label for="owner_name">Android IMEI*</label>
+                                        <input type="text" name="android_imei"
+                                               class="form-control @error('android_imei') is-invalid @enderror" id="android_imei"
+                                               value="{{ old('android_imei') }}" >
+                                        @error('android_imei')
+                                            <div class="st_error_message">{{ $message }}</div>
+                                        @endif
                                     </div>
+
+                                    <div class="st_level_up form-group">
+                                        <label for="name">Detector label*</label>
+                                        <input type="text" name="detector_label" class="form-control @error('detector_label') is-invalid @enderror"
+                                               id="name" value="{{ old('detector_label') }}" >
+                                        <div class="st_error_message"></div>
+                                    </div>
+                                    <div class="st_level_up form-group">
+                                        <label for="owner_name">Detector serial*</label>
+                                        <input type="text" name="detector_serial"
+                                               class="form-control @error('owner_name') is-invalid @enderror" id="owner_name"
+                                               value="{{ old('owner_name') }}" >
+                                        <div class="st_error_message"></div>
+                                    </div>
+
+
+                                    <div class="st_level_up form-group">
+                                        <label for="name">TV label*</label>
+                                        <input type="text" name="tv_label" class="form-control @error('tv_label') is-invalid @enderror"
+                                               id="tv_label" value="{{ old('tv_label') }}" >
+                                        <div class="st_error_message"></div>
+                                    </div>
+                                    <div class="st_level_up form-group">
+                                        <label for="owner_name">TV serial*</label>
+                                        <input type="text" name="tv_serial"
+                                               class="form-control @error('tv_serial') is-invalid @enderror" id="tv_serial"
+                                               value="{{ old('tv_serial') }}" >
+                                        <div class="st_error_message"></div>
+                                    </div>
+
                                 </div>
                             </div>
 
-                            <div class="st_height_15 st_height_lg_15"></div>
                             <hr>
                             <div class="st_height_25 st_height_lg_25"></div>
 
@@ -190,9 +175,36 @@
             </div>
         </div>
     </div>
-
-    @include('ddad.shops.androidBox-create-modal', ['after_success' => 'add_to_list'])
-    @include('ddad.shops.detector-create-modal', ['after_success' => 'add_to_list'])
-    @include('ddad.shops.tv-create-modal', ['after_success' => 'add_to_list'])
+    <div class="st_height_25 st_height_lg_25"></div>
+    @include('ddad.shops.unallocated-devices')
 @endsection
 
+
+@push('script')
+    <script type="text/javascript">
+        $('.remove-allocated').click(function() {
+            $('.remove-allocated').hide();
+            $('[name=device_id]').val(null);
+            $('.add-unallocated').show();
+
+            $('[name="android_imei"]').val('')
+                .closest('.st_level_up')
+                .removeClass('active2')
+            $('[name="android_label"]').val('')
+                .closest('.st_level_up')
+                .removeClass('active2')
+            $('[name="tv_label"]').val('')
+                .closest('.st_level_up')
+                .removeClass('active2')
+            $('[name="tv_serial"]').val('')
+                .closest('.st_level_up')
+                .removeClass('active2')
+            $('[name="detector_label"]').val('')
+                .closest('.st_level_up')
+                .removeClass('active2')
+            $('[name="detector_serial"]').val('')
+                .closest('.st_level_up')
+                .removeClass('active2')
+        })
+    </script>
+@endpush

@@ -1,6 +1,5 @@
 @extends('ddad.layout')
 @section('content')
-
     <div class="row">
         <div class="col-lg-12">
 
@@ -21,19 +20,25 @@
                             <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline text-success">
                                     <input type="radio" id="zone-a" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-a" >Available</label>
+                                    <label class="custom-control-label" for="zone-a">Unallocated</label>
+                                </div>
+                            </div>
+                            <div class="st_data_table_btn">
+                                <div class="custom-control custom-radio custom-control-inline text-info">
+                                    <input type="radio" id="zone-a" name="zone" class="custom-control-input">
+                                    <label class="custom-control-label" for="zone-a">Allocated</label>
                                 </div>
                             </div>
                             <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline text-danger">
                                     <input type="radio" id="zone-b" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-b" >Error detected</label>
+                                    <label class="custom-control-label" for="zone-b">Error detected</label>
                                 </div>
                             </div>
                             <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline text-warning">
                                     <input type="radio" id="zone-c" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-c" >Parts unavailable</label>
+                                    <label class="custom-control-label" for="zone-c">Parts unavailable</label>
                                 </div>
                             </div>
 
@@ -50,46 +55,62 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($devices as $device)
-                                    <tr>
-                                        <td>
+                            @foreach($devices as $device)
+                                <tr>
+                                    <td>
+                                        @if($device->android_label)
                                             @if($device->androidAlerts())
                                                 <span class="text-danger material-icons">warning</span>
                                             @else
                                                 <span class="text-success material-icons">check</span>
                                             @endif
                                             {{ $device->android_label }}
-                                        </td>
-                                        <td>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>
+
+                                        @if($device->tv_label)
                                             @if($device->tvAlerts())
                                                 <span class="text-danger material-icons">warning</span>
                                             @else
                                                 <span class="text-success material-icons">check</span>
                                             @endif
                                             {{ $device->tv_label }}
-                                        </td>
-                                        <td>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($device->detector_label)
                                             @if($device->detectorAlerts())
                                                 <span class="text-danger material-icons">warning</span>
                                             @else
                                                 <span class="text-success material-icons">check</span>
                                             @endif
                                             {{ $device->detector_label }}
-                                        </td>
-                                        <td>{{ $device->shop->zone->name ?? '-' }}</td>
-                                        <td>{{ $device->shop->name ?? '-' }}</td>
-                                        <td>
-                                            <div class="st_table_action_btn_wrap">
-                                                <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
-                                                <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
-                                                    <a class="dropdown-item" href=""><i class="material-icons-outlined">visibility</i>View</a>
-                                                    <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
-                                                    <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i class="material-icons-outlined">delete_outline</i>Delete</a>
-                                                </div>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>{{ $device->shop->zone->name ?? '-' }}</td>
+                                    <td>{{ $device->shop->name ?? '-' }}</td>
+                                    <td>
+                                        <div class="st_table_action_btn_wrap">
+                                            <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown">
+                                                <i class="material-icons">more_horiz</i></button>
+                                            <div
+                                                class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
+                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">visibility</i>View</a>
+                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
+                                                <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i
+                                                        class="material-icons-outlined">delete_outline</i>Delete</a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                             </tbody>
                         </table>

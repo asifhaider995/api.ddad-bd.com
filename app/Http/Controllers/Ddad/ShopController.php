@@ -6,60 +6,87 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ddad\ShopRequest;
 use App\Models\Ddad\AndroidBox;
 use App\Models\Ddad\Detector;
+use App\Models\Ddad\Device;
 use App\Models\Ddad\ISP;
 use App\Models\Ddad\Shop;
 use App\Models\Ddad\TV;
 use App\Models\Ddad\Zone;
+use App\Models\Location;
 
 class ShopController extends Controller
 {
     public function index()
     {
         $this->viewData['shops'] = Shop::all();
-
+        $this->viewData['zones'] = Zone::all();
         return view('ddad.shops.index', $this->viewData);
     }
 
     public function create()
     {
-        $this->viewData['zones'] = Zone::all();
-        $this->viewData['detectors'] = Detector::all();
-        $this->viewData['tvs'] = TV::all();
-        $this->viewData['android_boxes'] = AndroidBox::all();
+        $this->viewData['locations'] = Location::all();
         $this->viewData['isps'] = ISP::all();
+        $this->viewData['unallocatedDevices'] = Device::unallocated()->get();
 
         return view('ddad.shops.create', $this->viewData);
     }
 
     public function store(ShopRequest $request)
     {
-        Shop::create($request->all());
-
-        if($request->ajax()) {
-            return ['message' => "Shop successfully added."];
+        if($request->device_id) {
+            $device = Device::find($request->device_id);
+        } else  {
+            $device = new Device();
+        }
+        $device->fill($request->only([
+            'android_label', 'android_imei', 'android_serial', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
+        ]));
+        if(!$device->isBlankBox()) {
+            $device->save();
         }
 
-        flash('Shop successfully added.')->success();
+        Shop::create(array_merge($request->all(), [
+            'device_id' => $device->id,
+            'document_path' => $request->document ? $request->document->store('shops') : null,
+        ]));
+
+        flash('Shop successfully created ')->success();
+
         return redirect()->route('shops.index');
     }
 
     public function edit(Shop $shop)
     {
-        $this->viewData['shop'] = $shop;
-        $this->viewData['zones'] = Zone::all();
-        $this->viewData['detectors'] = Detector::all();
-        $this->viewData['tvs'] = TV::all();
-        $this->viewData['android_boxes'] = AndroidBox::all();
+        $this->viewData['locations'] = Location::all();
         $this->viewData['isps'] = ISP::all();
+        $this->viewData['unallocatedDevices'] = Device::unallocated()->get();
+        $this->viewData['shop'] = $shop;
 
         return view('ddad.shops.edit', $this->viewData);
     }
 
     public function update(ShopRequest $request, Shop $shop)
     {
-        $shop->update($request->all());
+        if($request->device_id) {
+            $device = Device::find($request->device_id);
+        } else  {
+            $device = new Device();
+        }
+        $device->fill($request->only([
+            'android_label',  'android_imei', 'android_serial', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
+        ]));
 
-        flash('Shop updated successfully!')->success();
+        if(!$device->isBlankBox()) {
+            $device->save();
+        }
+
+
+        $shop->update(array_merge($request->all(), [
+            'device_id' => $device->id,
+            'document_path' => $request->document ? $request->document->store('shops') : null,
+        ]));
+
+        flash('Shop successfully updated ')->success();
         return redirect()->route('shops.edit', $shop);
     }
 
