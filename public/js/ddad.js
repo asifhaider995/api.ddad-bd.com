@@ -683,7 +683,7 @@ var i,
 	},
 
 	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|" +
-		"ismap|loop|multiple|open|readonly|required|scoped",
+		"ismap|loop|multiple|open||required|scoped",
 
 	// Regular expressions
 
@@ -8322,7 +8322,7 @@ if ( !support.optSelected ) {
 
 jQuery.each( [
 	"tabIndex",
-	"readOnly",
+	"",
 	"maxLength",
 	"cellSpacing",
 	"cellPadding",

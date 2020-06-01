@@ -1,7 +1,7 @@
 streams:
  schemes:
    theme:
-     type: ReadOnlyStream
+     type: Stream
      prefixes:
        '':
          - user/themes/site

@@ -94,6 +94,8 @@
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                         <div class="st_error_message"></div>
                                                         @if( $shop->document_path)
+                                                            <img src="{{  $shop->document_src }}" style="max-width: 100%">
+
                                                             <a target="_blank" href="{{ $shop->document_src }}">Preview</a>
                                                         @else
                                                             Empty

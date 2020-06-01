@@ -30,6 +30,6 @@ class Shop extends Model
 
     public function getDocumentSrcAttribute()
     {
-        return $this->document_path ? Storage::url($this->document_path) : null;
+        return $this->document_path ? Storage::url($this->document_path) : 'ssss';
     }
 }

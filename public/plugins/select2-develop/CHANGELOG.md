@@ -139,7 +139,7 @@
 
 #### Accessibility
 - Improve `.select2-hidden-accessible` (#4908)
-- Add role and aria-readonly attributes to single selection dropdown value (#4881)
+- Add role and aria- attributes to single selection dropdown value (#4881)
 
 ### Translations
 - Add Turkmen translations (`tk`) (#5125)
@@ -399,7 +399,7 @@ This builds upon [the second release candidate](https://github.com/select2/selec
 ##### Removed
 - `.select2("onSortStart")` and `.select2("onSortEnd")` - A custom [selection adapter](https://select2.org/advanced/default-adapters/selection) should be created instead
 - `.select2("data", data)` - Create the `<option>` tags for the objects that you would like to set, and set the `.val` to select them
-- `.select2("readonly")` - There is [no way to make a `<select>` element read-only](http://stackoverflow.com/q/368813/359284), disable it instead
+- `.select2("")` - There is [no way to make a `<select>` element read-only](http://stackoverflow.com/q/368813/359284), disable it instead
 
 #### Events
 

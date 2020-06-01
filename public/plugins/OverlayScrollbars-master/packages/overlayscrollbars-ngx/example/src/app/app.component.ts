@@ -35,7 +35,7 @@ export class AppComponent {
         console.log(this.osComponentRef2);
     }
 
-    onBtnScrollRandom(event: any, refArray: ReadonlyArray<OverlayScrollbarsComponent>) {
+    onBtnScrollRandom(event: any, refArray: Array<OverlayScrollbarsComponent>) {
         if (refArray) {
             for (let i = 0; i < refArray.length; i++) {
                 if (refArray[i]) {
