@@ -38,4 +38,19 @@ class DeviceController extends Controller
             'tv_serial' => 'required_with:tv_label',
         ];
     }
+
+    public function edit(Device $device)
+    {
+        $this->viewData['device'] = $device;
+        return view('ddad.devices.edit', $this->viewData);
+    }
+
+    public function update(Request $request, Device $device)
+    {
+        $request->validate($this->rules());
+        $device->update($request->all());
+        flash("Your device successfully updated")->success();
+
+        return redirect()->route('devices.index');
+    }
 }

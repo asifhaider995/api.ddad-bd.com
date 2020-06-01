@@ -94,7 +94,7 @@
                                             -
                                         @endif
                                     </td>
-                                    <td>{{ $device->shop->zone->name ?? '-' }}</td>
+                                    <td>{{ $device->shop->location->name ?? '-' }}</td>
                                     <td>{{ $device->shop->name ?? '-' }}</td>
                                     <td>
                                         <div class="st_table_action_btn_wrap">
@@ -102,8 +102,8 @@
                                                 <i class="material-icons">more_horiz</i></button>
                                             <div
                                                 class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
-                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
-                                                <a class="dropdown-item" href="" onclick="" data-delete_action="#"><i
+                                                <a class="dropdown-item" href="{{ route('devices.edit', $device) }}"><i class="material-icons-outlined">create</i>Edit</a>
+                                                <a class="dropdown-item" href="#" onclick="" data-delete_action="{{ route('devices.delete', $device) }}"><i
                                                         class="material-icons-outlined">delete_outline</i>Delete</a>
                                             </div>
                                         </div>

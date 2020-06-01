@@ -2,6 +2,7 @@
 
 namespace App\Models\Ddad;
 
+use App\Models\Location;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +19,7 @@ class Shop extends Model
 
     public function location()
     {
-        return $this->belongsTo(Zone::class);
+        return $this->belongsTo(Location::class, 'location_id');
     }
 
 

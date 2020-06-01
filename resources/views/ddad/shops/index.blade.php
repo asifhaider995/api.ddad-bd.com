@@ -32,8 +32,7 @@
                             <tr>
                                 <th>ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Store<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Owner<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>HasDevice<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>Location<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Android<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>IOT<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>TV<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
@@ -47,10 +46,9 @@
                                 <tr>
                                     <td>{{ $shop->id }}</td>
                                     <td>{{ $shop->name }}</td>
-                                    <td>{{ $shop->owner_name }}</td>
+                                    <td>{{ $shop->location->name }}</td>
 
                                     @if($shop->device_id)
-                                        <td><span class="st_text_badge st_text_badge_success">Yes</span></td>
                                         <td>
                                             @if($shop->device->androidAlerts())
                                                 <span class="text-danger material-icons">warning</span>
@@ -73,7 +71,6 @@
                                             @endif
                                         </td>
                                     @else
-                                        <td><span class="st_text_badge st_text_badge_danger">No</span></td>
                                         <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
