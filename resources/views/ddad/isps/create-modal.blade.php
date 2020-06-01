@@ -1,7 +1,7 @@
 <!--  create model -->
-<form id="devices-create-modal-form show" action="{{ route('devices.store') }}" method="post" autocomplete="off">
+<form id="isp-create-modal-form show" action="{{ route('isps.store') }}" method="post" autocomplete="off">
     @csrf
-    <div class="modal fade" id="devices-create-modal" tabindex="-1" role="dialog" aria-labelledby="modal-createLabel"
+    <div class="modal fade" id="isp-create-modal" tabindex="-1" role="dialog" aria-labelledby="modal-createLabel"
 
 
          aria-hidden="true">
@@ -9,7 +9,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-createLabel">Devices form</h5>
+                    <h5 class="modal-title" id="modal-createLabel">Add new ISP</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -17,59 +17,51 @@
                 <div class="modal-body">
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="st_level_up form-group">
-                                <label for="android_label">Android label*</label>
-                                <input type="text" name="android_label" class="form-control @error('android_label') is-invalid @enderror"
-                                       id="android_label" value="{{ old('android_label') }}">
-                                @error('android_label')
+                                <label for="name">ISP name*</label>
+                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                       id="name" value="{{ old('name') }}">
+                                @error('name')
                                     <div class="st_error_message">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="st_level_up form-group">
-                                <label for="android_imei">Android IMEI*</label>
-                                <input type="text" name="android_imei"
-                                       class="form-control @error('android_imei') is-invalid @enderror" id="android_imei"
-                                       value="{{ old('android_imei') }}" >
-                                @error('android_imei')
+                                <label for="contact_person">Contact person*</label>
+                                <input type="text" name="contact_person"
+                                       class="form-control @error('contact_person') is-invalid @enderror" id="contact_person"
+                                       value="{{ old('contact_person') }}" >
+                                @error('contact_person')
+                                    <div class="st_error_message">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="st_level_up form-group">
+                                <label for="mobile_number">Mobile nubmer*</label>
+                                <input type="text" name="mobile_number"
+                                       class="form-control @error('mobile_number') is-invalid @enderror" id="mobile_number"
+                                       value="{{ old('contact_person') }}" >
+                                @error('mobile_number')
                                     <div class="st_error_message">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="col-lg-4">
+
                             <div class="st_level_up form-group">
-                                <label for="detector_label">Detector label*</label>
-                                <input type="text" name="detector_label" class="form-control @error('detector_label') is-invalid @enderror"
-                                       id="detector_label" value="{{ old('detector_label') }}" >
-                                @error('detector_label')
-                                    <div class="st_error_message">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="st_level_up form-group">
-                                <label for="detector_serial">Detector serial*</label>
-                                <input type="text" name="detector_serial"
-                                       class="form-control @error('detector_serial') is-invalid @enderror" id="detector_serial"
-                                       value="{{ old('detector_serial') }}" >
-                                @error('detector_serial')
+                                <label for="package_name">Package name*</label>
+                                <input type="text" name="package_name"
+                                       class="form-control @error('package_name') is-invalid @enderror" id="package_name"
+                                       value="{{ old('package_name') }}" >
+                                @error('package_name')
                                 <div class="st_error_message">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="col-lg-4">
+
                             <div class="st_level_up form-group">
-                                <label for="tv_label">TV label*</label>
-                                <input type="text" name="tv_label" class="form-control @error('tv_label') is-invalid @enderror"
-                                       id="tv_label" value="{{ old('tv_label') }}" >
-                                @error('tv_label')
-                                <div class="st_error_message">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="st_level_up form-group">
-                                <label for="tv_serial">TV serial*</label>
-                                <input type="text" name="tv_serial"
-                                       class="form-control @error('tv_serial') is-invalid @enderror" id="tv_serial"
-                                       value="{{ old('tv_serial') }}" >
-                                @error('tv_serial')
+                                <label for="package_price">Package price*</label>
+                                <input type="number" name="package_price" class="form-control @error('package_price') is-invalid @enderror"
+                                       id="detector_label" value="{{ old('package_price') }}" >
+                                @error('package_price')
                                 <div class="st_error_message">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -88,15 +80,13 @@
 @push('script')
 <script>
 var  error = false;
-@error('android_label') error = true; @enderror
-@error('detector_label')  error = true; @enderror
-@error('tv_label') error = true; @enderror
-@error('android_imei') error = true; @enderror
-@error('tv_serial') error = true; @enderror
-@error('detector_serial') error = true; @enderror
+@error('package_price') error = true; @enderror
+@error('package_name')  error = true; @enderror
+@error('name') error = true; @enderror
+@error('contact_person') error = true; @enderror
+@error('mobile_number') error = true; @enderror
 if(error) {
-
-    $('#devices-create-modal').modal('show')
+    $('#isp-create-modal').modal('show')
 }
 </script>
 @endpush

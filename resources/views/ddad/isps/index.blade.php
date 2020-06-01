@@ -9,7 +9,7 @@
                         <h2 class="st_card_title">ISP list</h2>
                     </div>
                     <div class="st_card_head_right">
-                        <button data-toggle="modal" data-target="#devices-create-modal" class="btn btn-primary btn-sm">
+                        <button data-toggle="modal" data-target="#isp-create-modal" class="btn btn-primary btn-sm">
                             <i class="material-icons">add</i>Add new ISP
                         </button>
                     </div>
@@ -40,7 +40,7 @@
                                         <div class="st_table_action_btn_wrap">
                                             <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
                                             <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
-                                                <a class="dropdown-item" href=""><i class="material-icons-outlined">create</i>Edit</a>
+                                                <a class="dropdown-item" href="{{ route('isps.edit', $isp) }}"><i class="material-icons-outlined">create</i>Edit</a>
                                                 <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('isps.delete', $isp) }}"><i
                                                         class="material-icons-outlined">delete_outline</i>Delete</a>
                                             </div>
@@ -59,6 +59,6 @@
 
     <div class="st_height_15 st_height_lg_15"></div>
 
-    @include('ddad.devices.create-modal', ['after_success' => 'close_modal'])
+    @include('ddad.isps.create-modal', ['after_success' => 'close_modal'])
 @endsection
 

@@ -18,7 +18,7 @@ class IspController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules());
-        $device =ISP::create($request);
+        $device =ISP::create($request->all());
         flash("Device successfully created")->success();
 
         return back();
@@ -34,12 +34,26 @@ class IspController extends Controller
     private function rules()
     {
         return [
-            'android_label' => 'required_with:android_imei|required_without_all:detector_label,tv_label',
-            'android_imei' => 'required_with:android_label',
-            'detector_label' => 'required_with:detector_serial|required_without_all:android_label,tv_label',
-            'detector_serial' => 'required_with:detector_label',
-            'tv_label' => 'required_with:tv_serial|required_without_all:detector_label,android_label',
-            'tv_serial' => 'required_with:tv_label',
+           'mobile_number' => 'required',
+           'contact_person' => 'required',
+           'name' => 'required',
+           'package_name' => 'required',
+           'package_price' => 'required',
         ];
+    }
+
+    public function edit(ISP $isp)
+    {
+        $this->viewData['isp'] = $isp;
+        return view('ddad.isps.edit', $this->viewData);
+    }
+
+
+    public function update(ISP $isp, Request $request)
+    {
+        $request->validate($this->rules());
+        $isp->update($request->all());
+        flash("ISP updated");
+        return redirect()->route('isps.index');
     }
 }

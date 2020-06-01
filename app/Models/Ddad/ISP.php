@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ISP extends Model
 {
-    //
+    protected $fillable = [
+      'name', 'contact_person', 'mobile_number', 'package_price', 'package_name'
+    ];
 
     public function shops()
     {
