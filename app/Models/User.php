@@ -18,7 +18,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'password',
+        'company_name',
+        'first_name',
+        'last_name',
+        'gender',
+        'dob',
+        'mobile_number',
+        'email',
+        'description',
+        'address'
     ];
 
     /**
@@ -42,5 +50,11 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return join(' ', [$this->first_name, $this->last_name]);
+    }
+
+
+    public function scopeClients($query)
+    {
+        return $query->where('is_client');
     }
 }
