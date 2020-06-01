@@ -26,35 +26,21 @@
 <header class="st_site_header st_style1 st_sticky_header">
     <div class="st_main_header">
         <div class="st_main_header_in">
-            @include('ddad.partials.header-services')
+            <div style="max-width: calc(100% - 250px)"><h4>{{ \Illuminate\Foundation\Inspiring::quote() }}</h4></div>
             <div class="st_header_toolbox">
                 <ul class="st_header_toolbox_list">
-                    <li>
-                        <div class="st_toolbar_icon dropdown-toggle" data-toggle="dropdown"><i class="material-icons-outlined">apps</i></div>
-                        @include('ddad.partials.header-quick-links')
-                    </li>
-                    <li>
-                        <div class="st_toolbar_icon dropdown-toggle" data-toggle="dropdown">
-                            <i class="material-icons-outlined">notifications</i>
-                            <span class="st_get_notic"></span>
-                        </div>
-                        @include('ddad.partials.header-notifications')
-                    </li>
 
                     <li>
                         <div class="st_user_toolbox st_style1">
                             <div class="st_user_toolbox_btn dropdown-toggle" data-toggle="dropdown">
                                 <div class="st_user_toolbox_info">
                                     <h3>{{ Auth::user()->full_name }}</h3>
-                                    <span>Available</span>
+                                    <span>{{ Auth::user()->is_client? "Client" : "Admin" }}</span>
                                 </div>
                                 <div class="st_toolbox_user_box st_indigo_box st_radius_4"><img src="{{ asset('assets/img/users/user1.jpg') }}" alt="User"></div>
                             </div>
                             <div class="dropdown-menu dropdown-size-md dropdown-menu-right st_boxshadow">
                                 <a class="dropdown-item" href="#"><i class="material-icons-outlined">account_circle</i>View Profile</a>
-                                <a class="dropdown-item" href="#"><i class="material-icons-outlined">settings</i>Settings</a>
-                                <a class="dropdown-item" href="#"><i class="material-icons-outlined">help_outline</i>Help</a>
-                                <a class="dropdown-item" href="#"><i class="material-icons-outlined">assignment</i>Billing</a>
                                 <div class="st_dropdown_divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="material-icons-outlined">exit_to_app</i>Sign Out</a>

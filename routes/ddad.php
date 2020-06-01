@@ -6,6 +6,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function() {
     Route::get('dashboard', 'DashboardController@today')->name('dashboard.today');
 
+    Route::get('users', 'UserController@index')->name('users.index');
+    Route::get('users/create', 'UserController@create')->name('users.create');
+    Route::post('users/', 'UserController@store')->name('users.store');
+    Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
+    Route::put('users/{user}', 'UserController@update')->name('users.update');
+    Route::get('users/{user}', 'UserController@show')->name('users.show');
+    Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy');
+
+
+
     Route::get('shops', 'ShopController@index')->name('shops.index');
     Route::get('shops/create', 'ShopController@create')->name('shops.create');
     Route::post('shops/', 'ShopController@store')->name('shops.store');
