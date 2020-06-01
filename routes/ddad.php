@@ -11,6 +11,7 @@ Route::middleware('auth')->group(function() {
     Route::post('shops/', 'ShopController@store')->name('shops.store');
     Route::get('shops/{shop}/edit', 'ShopController@edit')->name('shops.edit');
     Route::put('shops/{shop}', 'ShopController@update')->name('shops.update');
+    Route::get('shops/{shop}', 'ShopController@show')->name('shops.show');
     Route::delete('shops/{shop}', 'ShopController@destroy')->name('shops.destroy');
 
     Route::post('android-boxes/', 'AndroidBoxController@store')->name('android-boxes.store');

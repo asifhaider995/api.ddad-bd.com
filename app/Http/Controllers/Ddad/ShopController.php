@@ -96,4 +96,11 @@ class ShopController extends Controller
         flash('Shop deleted successfully!')->success();
         return redirect()->route('shops.index');
     }
+
+    public function show(Shop $shop)
+    {
+        $this->viewData['shop'] = $shop;
+
+        return view('ddad.shops.show', $this->viewData);
+    }
 }
