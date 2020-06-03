@@ -1212,7 +1212,7 @@ select.form-control[multiple] {
 }
 
 .form-control:disabled,
-.form-control[] {
+.form-control[readonly] {
     background-color: $black4;
 }
 
