@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.5.1
+ * jQuery JavaScript Library v3.5.0
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -104,7 +104,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2020-05-04T22:49Z
+ * Date: 2020-04-10T15:07Z
  */
 ( function( global, factory ) {
 
@@ -242,7 +242,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.5.1",
+	version = "3.5.0",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -4339,7 +4339,7 @@ Data.prototype = {
 
 		// If not, create one
 		if ( !value ) {
-			value = {};
+			value = Object.create( null );
 
 			// We can accept data for non-element nodes in modern browsers,
 			// but we should not, see #8335.
@@ -11501,8 +11501,8 @@ $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /srv/http/shahadat/ddad/resources/js/ddad.js */"./resources/js/ddad.js");
-module.exports = __webpack_require__(/*! /srv/http/shahadat/ddad/resources/sass/ddad.scss */"./resources/sass/ddad.scss");
+__webpack_require__(/*! /Users/shahadat/Projects/Laralink/ddad/resources/js/ddad.js */"./resources/js/ddad.js");
+module.exports = __webpack_require__(/*! /Users/shahadat/Projects/Laralink/ddad/resources/sass/ddad.scss */"./resources/sass/ddad.scss");
 
 
 /***/ })

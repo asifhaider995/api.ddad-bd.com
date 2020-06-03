@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save device</button>
+                    <button type="submit" class="btn btn-primary">Save ISP</button>
 
 
 

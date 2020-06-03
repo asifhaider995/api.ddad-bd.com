@@ -49,7 +49,7 @@
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="kcp_mobile_number">KCP Mobile *</label>
-                                                <input type="text" name="kcp_mobile" class="form-control" value="{{  $shop->kcp_mobile }}"  >
+                                                <input type="text" name="kcp_mobile" class="form-control" value="{{  $shop->kcp_mobile_number }}"  >
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                     <div>
                                         <div class="st_level_up form-group">
                                             <label for="address">Shop Address</label>
-                                            <textarea type="text" name="shop_address" class="form-control">{{  $shop->shop_address }}</textarea>
+                                            <textarea type="text" name="shop_address" class="form-control">{{  $shop->address }}</textarea>
                                         </div>
                                     </div>
 
@@ -76,11 +76,9 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label class="form-label" for="default-06">Document(NID/TradeLicence)</label>
-                                                <div class="form-control-wrap">
-                                                    <div class="custom-file">
-                                                        <img src="{{  $shop->document_src }}" style="max-width: 100%">
-                                                    </div>
-                                                </div>
+                                                <a href="{{ $shop->document_src }}" target="_blank">
+                                                    <img src="{{  $shop->document_src }}" style="max-width: 100%">
+                                                </a>
                                             </div>
                                         </div>
 

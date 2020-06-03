@@ -66,7 +66,7 @@
                                         <div class="col-lg-6">
                                             <div class="st_level_up form-group">
                                                 <label for="company_name">Company name</label>
-                                                <input type="text" name="company_name" class="form-control @error('st_level_up') is-invalid @enderror" id="st_level_up" value="{{ old('st_level_up', $user->company_name) }}" >
+                                                <input type="text" name="company_name" class="form-control @error('st_level_up') is-invalid @enderror" id="st_level_up" value="{{ old('company_name', $user->company_name) }}" >
 
                                                 @error('st_level_up')
                                                 <div class="st_error_message">{{ $message }}</div>

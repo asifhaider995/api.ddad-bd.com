@@ -19,14 +19,14 @@
                                     <div class="st_height_25 st_height_lg_25"></div>
 
                                     <div class="custom-control custom-radio">
-                                        <input checked type="radio" id="is_client_yes" name="is_client" value="yes" class="custom-control-input">
+                                        <input checked type="radio" id="is_client_yes" name="is_client" @if(old('is_client') == 'yes') checked @endif value="yes" class="custom-control-input">
                                         <label class="custom-control-label" for="is_client_yes">I want to create client profile</label>
                                     </div>
 
                                     <div class="st_height_10 st_height_lg_10"></div>
 
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="is_client_no"  name="is_client" value="no" class="custom-control-input">
+                                        <input type="radio" id="is_client_no"  @if(old('is_client') == 'no') checked @endif name="is_client" value="no" class="custom-control-input">
                                         <label class="custom-control-label" for="is_client_no">I want to create admin profile</label>
                                     </div>
 
@@ -65,11 +65,11 @@
 
                                             <div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" id="gender_male" name="gender" value="male" checked class="custom-control-input">
+                                                    <input type="radio" id="gender_male" name="gender" value="male" @if(old('gender') == 'male') checked @endif checked class="custom-control-input">
                                                     <label class="custom-control-label" for="gender_male">Male</label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" id="gender_female" name="gender" value="female" class="custom-control-input">
+                                                    <input type="radio" id="gender_female" name="gender" value="female" @if(old('gender') == 'female') checked @endif class="custom-control-input">
                                                     <label class="custom-control-label" for="gender_female">Female</label>
                                                 </div>
                                                 @error('gender')
@@ -82,7 +82,7 @@
                                         <div class="col-lg-6">
                                             <div class="st_level_up form-group">
                                                 <label for="company_name">Company name</label>
-                                                <input type="text" name="company_name" class="form-control @error('st_level_up') is-invalid @enderror" id="st_level_up" value="{{ old('st_level_up') }}" >
+                                                <input type="text" name="company_name" class="form-control @error('st_level_up') is-invalid @enderror" id="st_level_up" value="{{ old('company_name') }}" >
 
                                                 @error('st_level_up')
                                                     <div class="st_error_message">{{ $message }}</div>

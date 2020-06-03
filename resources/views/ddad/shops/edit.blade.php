@@ -93,15 +93,16 @@
                                                         <input type="file" multiple="" name="document" class="custom-file-input  @error('name') is-invalid @enderror" id="customFile">
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                         <div class="st_error_message"></div>
-                                                        @if( $shop->document_path)
-                                                            <img src="{{  $shop->document_src }}" style="max-width: 100%">
-
-                                                            <a target="_blank" href="{{ $shop->document_src }}">Preview</a>
-                                                        @else
-                                                            Empty
-                                                        @endif
                                                     </div>
                                                 </div>
+                                                @if( $shop->document_path)
+
+                                                    <a target="_blank" href="{{ $shop->document_src }}">
+                                                        <img src="{{  $shop->document_src }}" style="max-width: 100%">
+                                                    </a>
+                                                @else
+                                                    Empty
+                                                @endif
                                             </div>
                                         </div>
 
@@ -119,7 +120,7 @@
                                     <a  @if(!$device->id) style="display: none" @endif class="btn btn-danger remove-allocated" href="#"><span class="material-icons">delete</span>Remove allocated device</a>
                                     <input type="hidden" name="device_id" value="{{ $device->id }}">
                                     <div class="st_height_15 st_height_lg_15"></div>
-
+                                    <div class="hide-edit-box"></div>
                                     <div class="st_level_up form-group">
                                         <label for="name">Android label*</label>
                                         <input type="text" name="android_label" class="form-control @error('android_label') is-invalid @enderror"

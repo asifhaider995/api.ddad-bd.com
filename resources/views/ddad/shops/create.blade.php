@@ -110,7 +110,7 @@
                                     <a   class="btn btn-danger remove-allocated" style="display: none" href="#"><span class="material-icons">delete</span>Remove allocated device</a>
                                     <input type="hidden" name="device_id">
                                     <div class="st_height_15 st_height_lg_15"></div>
-
+                                    <div class="hide-edit-box"></div>
                                     <div class="st_level_up form-group">
                                         <label for="name">Android label*</label>
                                         <input type="text" name="android_label" class="form-control @error('android_label') is-invalid @enderror"
