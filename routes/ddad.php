@@ -24,6 +24,18 @@ Route::middleware('auth')->group(function() {
     Route::get('shops/{shop}', 'ShopController@show')->name('shops.show');
     Route::delete('shops/{shop}', 'ShopController@destroy')->name('shops.destroy');
 
+    Route::get('campaigns', 'CampaignController@index')->name('campaigns.index');
+    Route::get('campaigns/create', 'CampaignController@create')->name('campaigns.create');
+    Route::post('campaigns/', 'CampaignController@store')->name('campaigns.store');
+    Route::get('campaigns/{campaign}/edit', 'CampaignController@edit')->name('campaigns.edit');
+    Route::put('campaigns/{campaign}', 'CampaignController@update')->name('campaigns.update');
+    Route::get('campaigns/{campaign}', 'CampaignController@show')->name('campaigns.show');
+    Route::delete('campaigns/{campaign}', 'CampaignController@destroy')->name('campaigns.destroy');
+    Route::post('campaigns/calculate', 'CampaignController@calculate')->name('campaigns.calculate');
+
+
+
+
     Route::post('android-boxes/', 'AndroidBoxController@store')->name('android-boxes.store');
     Route::post('detectors/', 'DetectorController@store')->name('detectors.store');
     Route::post('tvs/', 'TVController@store')->name('tvs.store');

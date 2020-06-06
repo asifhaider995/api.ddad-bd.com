@@ -55,6 +55,11 @@ class User extends Authenticatable
 
     public function scopeClients($query)
     {
-        return $query->where('is_client');
+        return $query->where('is_client', 1);
+    }
+
+    public function isAdmin()
+    {
+        return !$this->is_client;
     }
 }

@@ -3,123 +3,131 @@
 namespace App\Http\Controllers\Ddad;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Ddad\ShopRequest;
+use App\Models\Ddad\AndroidBox;
+use App\Models\Ddad\Campaign;
+use App\Models\Ddad\Detector;
+use App\Models\Ddad\Device;
+use App\Models\Ddad\ISP;
 use App\Models\Ddad\Shop;
+use App\Models\Ddad\TV;
+use App\Models\Ddad\Zone;
+use App\Models\Location;
+use App\Models\User;
+use App\Package;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
-    public function index() {
-        $playList = $this->demo();
-        $loopDuration = array_sum(array_column($playList, 'duration_in_sec'));
-        return [
-            "server_time"=> "2020-04-10 23:10:10",
-            "content_start_at"=> "2020-04-10 23:12:10",
-            'loop_duration' => $loopDuration + 10,
-            'playlist_duration' => $loopDuration,
-            'loop_sync_content' => [
-                'id' => $this->loopSyncContent('id'),
-                'file_hash' => $this->loopSyncContent('file_hash')
-            ],
-            'play_list' => array_map(function($item) {
-                return [
-                    'id' => $item['id'],
-                    'file_hash' => $item['file_hash'],
-                    'duration_in_sec' => $item['duration_in_sec'],
-                ];
-            }, $playList)
-        ];
+    public function index()
+    {
+        $this->viewData['campaigns'] = Campaign::all();
+        return view('ddad.campaigns.index', $this->viewData);
     }
 
-    public function contentList() {
-        return array_map(function($item) {
-            return [
-                'src' => $item['src'],
-                'file_hash' => $item['file_hash'],
-                'type' => $item['type'],
-            ];
-        }, $this->demo());
+    public function create()
+    {
+        $this->viewData['locations'] = Location::all();
+        $this->viewData['clients'] = User::clients()->get();
+        $this->viewData['packages'] = Package::all();
+
+        return view('ddad.campaigns.create', $this->viewData);
+    }
+
+    public function calculate(Request $request)
+    {
+        $numberOfTv = Shop::whereIn('location_id', $request->locations ?: [])
+            ->whereNotNull('device_id')
+            ->count();
+
+        $package = new Package($request->package ?: '');
+
+        $startingDate = $request->starting_date ? Carbon::createFromFormat('Y-m-d', $request->starting_date) : now();
+        $endingDate = $request->ending_date ? Carbon::createFromFormat('Y-m-d', $request->ending_date) : now();
+        $diffInDays = $startingDate->diffInDays($endingDate);
+
+        $totalPrice = $package->rate * $numberOfTv * ($diffInDays + 1);
+
+        return [
+            'total_price' => $totalPrice,
+            'number_of_tv' => $numberOfTv,
+        ];
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'device_id' => 'required',
-            'content_id' => 'required',
-            'started_at' => 'required',
-            'ended_at' => 'required',
-        ]);
-        return [
-            "message" => "success",
-            "request_id" => time()
-        ];
+        return  $this->calculate($request);
+
+        if($request->device_id) {
+            $device = Device::find($request->device_id);
+        } else  {
+            $device = new Device();
+        }
+        $device->fill($request->only([
+            'android_label', 'android_imei', 'android_serial', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
+        ]));
+        if(!$device->isBlankBox()) {
+            $device->save();
+        }
+
+        Shop::create(array_merge($request->all(), [
+            'device_id' => $device->id,
+            'document_path' => $request->document ? $request->document->store('shops') : null,
+        ]));
+
+        flash('Shop successfully created ')->success();
+
+        return redirect()->route('shops.index');
     }
 
-
-    public function demo()
+    public function edit(Shop $shop)
     {
+        $this->viewData['locations'] = Location::all();
+        $this->viewData['isps'] = ISP::all();
+        $this->viewData['unallocatedDevices'] = Device::unallocated()->get();
+        $this->viewData['shop'] = $shop;
 
-        $jayParsedAry =
-             [
-                [
-                    "id" => 1,
-                    "type" => "video",
-                    "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/Alia+Bhatt+Sunsilk+shampoo+Ad+Instabun+TVC.mp4",
-                    "duration_in_sec" => 50,
-                    "file_hash" => "qazcdw21.mp4",
-                    "file_size" => 10040000
-                ],
-                [
-                    "id" => 2,
-                    "type" => "video",
-                    "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/MARLIA+ADS+-+XXX+SOAP+-+TELUGU++-+35+SEC+-+HD+-+2019.mp4",
-                    "duration_in_sec" => 35,
-                    "file_hash" => "7ujmnhytr.mp4",
-                    "file_size" => 10040000
-                ],
-                [
-                    "id" => 3,
-                    "type" => "image",
-                    "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/Priya+Gold+Sunflower+Oil+Ad+Telugu+2020+-+Kajal+Aggarwal+-+Director+TD+RAJU+-+Thought+Sprinklers.mp4",
-                    "duration_in_sec" => 31,
-                    "file_hash" => "asdfghj.mp4",
-                ],
-                [
-                    "id" => 4,
-                    "type" => "video",
-                    "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/TVC+Teer+Whole+Wheat+Atta.mp4",
-                    "duration_in_sec" => 60,
-                    "file_hash" => "098765.mp4",
-                ],
-                [
-                    "id" => 5,
-                    "type" => "video",
-                    "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/Teer+Whole+Wheat+Atta+TVC.mp4",
-                    "duration_in_sec" => 51,
-                    "file_hash" => "2wsxcde34rfv.mp4",
-                ],
-
-                [
-                    "id" => 6,
-                    "type" => "image",
-                    "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/Screenshot+2020-05-09+at+20.13.16.png",
-                    "duration_in_sec" => 9,
-                    "file_hash" => "20okse34rfv.png",
-                ],
-
-            ]
-        ;
-
-        return $jayParsedAry;
+        return view('ddad.shops.edit', $this->viewData);
     }
 
-    public function loopSyncContent($name)
+    public function update(ShopRequest $request, Shop $shop)
     {
-        return   [
-            "id" => 6,
-            "type" => "image",
-            "src" => "https://s3-ap-southeast-1.amazonaws.com/static.laralink.com/ddad/Screenshot+2020-05-09+at+20.13.16.png",
-            "duration_in_sec" => 9,
-            "file_hash" => "20okse34rfv.png",
-        ][$name];
+        if($request->device_id) {
+            $device = Device::find($request->device_id);
+        } else  {
+            $device = new Device();
+        }
+        $device->fill($request->only([
+            'android_label',  'android_imei', 'android_serial', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
+        ]));
+
+        if(!$device->isBlankBox()) {
+            $device->save();
+        }
+
+
+        $shop->update(array_merge($request->all(), [
+            'device_id' => $device->id,
+            'document_path' => $request->document ? $request->document->store('shops') : null,
+        ]));
+
+        flash('Shop successfully updated ')->success();
+        return redirect()->route('shops.edit', $shop);
+    }
+
+    public function destroy(Shop $shop)
+    {
+        $shop->delete();
+        flash('Shop deleted successfully!')->success();
+        return redirect()->route('shops.index');
+    }
+
+    public function show(Shop $shop)
+    {
+        $this->viewData['shop'] = $shop;
+
+        return view('ddad.shops.show', $this->viewData);
     }
 }
