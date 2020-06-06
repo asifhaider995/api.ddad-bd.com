@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ddad\Campaign;
 use App\Models\Ddad\Shop;
 use App\Models\Ddad\Zone;
 use Illuminate\Database\Eloquent\Model;
@@ -18,5 +19,10 @@ class Location extends Model
     public function shops()
     {
         return $this->hasMany(Shop::class);
+    }
+
+    public function campaigns()
+    {
+        return $this->belongsToMany(Campaign::class);
     }
 }

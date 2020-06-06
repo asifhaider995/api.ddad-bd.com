@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ddad;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Ddad\CampaignRequest;
 use App\Http\Requests\Ddad\ShopRequest;
 use App\Models\Ddad\AndroidBox;
 use App\Models\Ddad\Campaign;
@@ -18,6 +19,7 @@ use App\Package;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CampaignController extends Controller
 {
@@ -56,65 +58,70 @@ class CampaignController extends Controller
         ];
     }
 
-    public function store(Request $request)
+    public function store(CampaignRequest $request)
     {
-        return  $this->calculate($request);
+        $campaign = new Campaign($request->all());
 
-        if($request->device_id) {
-            $device = Device::find($request->device_id);
-        } else  {
-            $device = new Device();
+        if(Auth::user()->isAdmin()) {
+            $campaign->client_id = $request->client_id;
+            $campaign->reviewer_id = Auth::id();
+            $campaign->reviewer_note = $request->reviewer_note;
+            $campaign->status = $request->status;
+        } else {
+            $campaign->client_id = Auth::id();
+            $campaign->status = 'awaiting_for_approval';
         }
-        $device->fill($request->only([
-            'android_label', 'android_imei', 'android_serial', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
-        ]));
-        if(!$device->isBlankBox()) {
-            $device->save();
-        }
+        $campaign->video_path = $campaign->video ? $campaign->video->store("campaigns/{$campaign->client_id}/videos") : null;
+        $campaign->image_path = $campaign->image ? $campaign->image->store("campaigns/{$campaign->client_id}/images") : null;
+        $campaign->auto_renew = (boolean) $request->auto_renew;
+        $campaign->save();
+        $campaign->locations()->sync($request->locations);
 
-        Shop::create(array_merge($request->all(), [
-            'device_id' => $device->id,
-            'document_path' => $request->document ? $request->document->store('shops') : null,
-        ]));
+        flash('Campaign successfully created ')->success();
 
-        flash('Shop successfully created ')->success();
-
-        return redirect()->route('shops.index');
+        return redirect()->route('campaigns.index');
     }
 
-    public function edit(Shop $shop)
+    public function edit(Campaign $campaign)
     {
         $this->viewData['locations'] = Location::all();
-        $this->viewData['isps'] = ISP::all();
-        $this->viewData['unallocatedDevices'] = Device::unallocated()->get();
-        $this->viewData['shop'] = $shop;
+        $this->viewData['campaign'] = $campaign;
+        $this->viewData['clients'] = User::clients()->get();
+        $this->viewData['packages'] = Package::all();
 
-        return view('ddad.shops.edit', $this->viewData);
+        return view('ddad.campaigns.edit', $this->viewData);
     }
 
-    public function update(ShopRequest $request, Shop $shop)
+    public function update(CampaignRequest $request, Campaign $campaign)
     {
-        if($request->device_id) {
-            $device = Device::find($request->device_id);
-        } else  {
-            $device = new Device();
+        if(Auth::user()->isAdmin()) {
+            $campaign->client_id = $request->client_id;
+            $campaign->reviewer_id = Auth::id();
+            $campaign->reviewer_note = $request->reviewer_note;
+            $campaign->status = $request->status;
+
+            $campaign->locations()->sync($request->locations);
+            $campaign->starting_date = $request->starting_date;
+            $campaign->ending_date = $request->ending_date;
+            $campaign->package = $request->package;
+
+        } else {
+            $campaign->client_id = Auth::id();
+            $campaign->status = 'awaiting_for_approval';
         }
-        $device->fill($request->only([
-            'android_label',  'android_imei', 'android_serial', 'detector_label', 'detector_serial', 'tv_label', 'tv_serial'
-        ]));
-
-        if(!$device->isBlankBox()) {
-            $device->save();
+        if($campaign->video) {
+            $campaign->video_path = $campaign->video->store("campaigns/{$campaign->client_id}/videos");
         }
 
+        if($campaign->image) {
+            $campaign->video_path = $campaign->video->store("campaigns/{$campaign->client_id}/videos");
+        }
+        $campaign->title = $request->title;
+        $campaign->auto_renew = (boolean) $request->auto_renew;
+        $campaign->save();
 
-        $shop->update(array_merge($request->all(), [
-            'device_id' => $device->id,
-            'document_path' => $request->document ? $request->document->store('shops') : null,
-        ]));
-
-        flash('Shop successfully updated ')->success();
-        return redirect()->route('shops.edit', $shop);
+        flash('Campaign successfully updated')->success();
+        return redirect()->route('campaigns.edit', $campaign);
     }
 
     public function destroy(Shop $shop)

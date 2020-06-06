@@ -20,18 +20,23 @@ class CreateCampaignsTable extends Migration
             $table->dateTime('ending_date')->nullable();
             $table->string('image_path')->nullable();
             $table->string('video_path')->nullable();
-            $table->unsignedInteger('priority')->default(false);
             $table->boolean('auto_renew')->default(false);
             $table->unsignedInteger('renewed_from')->default(false);
             $table->unsignedInteger('client_id')->nullable();
+            $table->string('package')->nullable();
             $table->unsignedInteger('reviewer_id')->nullable();
             $table->unsignedInteger('reviewer_note')->nullable();
             $table->dateTime('reviewed_at')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-    }
 
+        Schema::create('campaign_location', function (Blueprint $table) {
+            $table->unsignedInteger('campaign_id');
+            $table->unsignedInteger('location_id');
+        });
+    }
     /**
      * Reverse the migrations.
      *

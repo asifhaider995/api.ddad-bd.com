@@ -18,18 +18,20 @@
                 <div class="st_card_body">
                     <div class="st_data_table_wrap st_fixed_height1">
                         <div class="st_data_table_btn_group text-info">
-                            If you update any information then running campaign will go to awaiting for review status <br>and
-                            after approving the content by the admin, campaign will again go to active status.
+                            Admin will review your content before publish to the devices.
                         </div>
                         <table id="st_dataTable" class="display">
                             <thead>
                             <tr>
                                 <th>ID<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Title<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Client<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Auto renew<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                @if(Auth::user()->isAdmin())
+                                    <th>Client<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                @endif
+                                <th>AutoRenew<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Start<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>End<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+                                <th>Viwes<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Status<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                <th>Action</th>
                             </tr>
@@ -37,20 +39,36 @@
                             <tbody>
                                 @foreach($campaigns as $campaign)
                                 <tr>
-                                    <td>{{ $campaign->id }}{{ $campaign }}</td>
+                                    <td>{{ $campaign->id }}</td>
                                     <td>{{ $campaign->title }}</td>
-                                    <td>{{ optional($campaign->client)->name }}</td>
-                                    <td>{{ $campaign->auto_renew }}</td>
-                                    <td>{{ $campaign->starting_date }}</td>
-                                    <td>{{ $campaign->ending_date }}</td>
-                                    <td>{{ $campaign->status }}</td>
+                                    @if(Auth::user()->isAdmin())
+                                        <td>{{ $campaign->client->company_name ?: $campaign->client->full_name }}</td>
+                                    @endif
+
+                                    <td>
+                                        @if($campaign->auto_renew)
+                                            <span class="text-danger material-icons">close</span>
+                                        @else
+                                            <span class="text-success material-icons">check</span>
+                                        @endif         </td>
+                                    <td>{{ formateDate($campaign->starting_date) }}</td>
+                                    <td>{{ formateDate($campaign->ending_date) }}</td>
+
+                                    <td>
+                                        {{ $campaign->total_view }}
+                                    </td>
+                                    <td>
+                                        @include('ddad.campaigns._status', ['status' => $campaign->status])
+                                    </td>
                                     <td>
                                         <div class="st_table_action_btn_wrap">
                                             <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
                                             <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
                                                 <a class="dropdown-item" href="{{ route('campaigns.show', $campaign) }}"><i class="material-icons-outlined">visibility</i>View</a>
                                                 <a class="dropdown-item" href="{{ route('campaigns.edit', $campaign) }}"><i class="material-icons-outlined">create</i>Edit</a>
-                                                <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('campaigns.destroy', $campaign) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                                @if(Auth::user()->isAdmin())
+                                                    <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('campaigns.destroy', $campaign) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

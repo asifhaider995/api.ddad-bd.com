@@ -15,10 +15,13 @@
                         <div class="st_card_padd_25">
                             <div class="row">
 
-
                                 <div class="col-lg-6">
                                     <div class="st_height_15 st_height_lg_15"></div>
-
+                                    Image:
+                                    <input type="file" name="image" value="{{ old('image') }}">
+                                        <br><br>
+                                    Video:
+                                    <input type="file" name="video" value="{{ old('video') }}">
 
                                 </div>
                                 <div class="col-sm-1 st_npcsf"></div>
@@ -26,6 +29,8 @@
 
                                     <div class="st_height_25 st_height_lg_25"></div>
 
+                                    @php(dump($errors))
+                                    {{ $errors }}
                                     <div class="st_level_up form-group">
                                         <label for="title">Campaign title *</label>
                                         <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" value="{{ old('title') }}" required >
@@ -37,10 +42,10 @@
                                     @if(Auth::user()->isAdmin())
                                     <div class="st_level_up form-group active1">
                                         <label for="client">Client *</label>
-                                        <select name="client" class="form-control">
+                                        <select name="client_id" class="form-control" required>
                                             <option value="">Please select client</option>
                                             @foreach($clients as $client)
-                                                <option>
+                                                <option @if($client->id == old('client_id')) selected @endif>
                                                     {{ $client->full_name }}
                                                     @if($client->company_name)
                                                         -
@@ -61,7 +66,7 @@
                                         <select name="package" class="form-control" required>
                                             <option value="">Please select package</option>
                                             @foreach($packages as $package)
-                                                <option value="{{ $package }}">{{ $package->name }} {{ $package->duration }}sec, {{ $package->rate }} taka/Day/TV</option>
+                                                <option value="{{ $package }}" @if((string) $package == old('package')) selected @endif>{{ $package->name }} {{ $package->duration }}sec, {{ $package->rate }} taka/Day/TV</option>
                                             @endforeach
                                         </select>
                                         @error('package')
@@ -75,7 +80,7 @@
                                             <div class="st_level_up form-group active1">
                                                 <label for="starting_date">Starting date*</label>
                                                 <input type="date" name="starting_date" class="form-control @error('starting_date') is-invalid @enderror"
-                                                       id="starting_date" value="{{ old('starting_date') }}" >
+                                                       id="starting_date" value="{{ old('starting_date') }}" required>
                                                 @error('starting_date')
                                                     <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
@@ -86,7 +91,7 @@
                                                 <label for="ending_date">Ending date*</label>
                                                 <input type="date" name="ending_date"
                                                        class="form-control @error('ending_date') is-invalid @enderror" id="ending_date"
-                                                       value="{{ old('ending_date') }}" >
+                                                       value="{{ old('ending_date') }}" required>
                                                 @error('ending_date')
                                                     <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
@@ -99,7 +104,7 @@
                                         <label for="locations">Target locations *</label>
                                         <select id="locations" name="locations[]" class="form-control" multiple required>
                                             @foreach($locations as $location)
-                                                <option value="{{ $location->id }}">{{ $location->zone->name }}, {{ $location->name }}</option>
+                                                <option value="{{ $location->id }}" @if(in_array($location->id, old('locations',[]))) selected @endif>{{ $location->zone->name }}, {{ $location->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('location')
@@ -120,6 +125,7 @@
                                     </div>
                                     @endif
 
+
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="st_iconbox st_style1 st_border st_boxshadow st_radius_5" style="min-height: auto">
@@ -136,6 +142,15 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="st_height_15 st_height_lg_15"></div>
+
+                                    <div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="auto_renew" name="auto_renew" @if(old('auto_renew')) checked @endif)>
+                                            <label class="custom-control-label" for="customCheck1">Auto renew this campaign</label>
+                                        </div>
+                                    </div>
                                     <div class="st_height_20 st_height_lg_20"></div>
 
                                 </div>
