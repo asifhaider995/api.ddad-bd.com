@@ -25,7 +25,11 @@ class CampaignController extends Controller
 {
     public function index()
     {
-        $this->viewData['campaigns'] = Campaign::all();
+        if(Auth::user()->is_client)
+            $this->viewData['campaigns'] = Campaign::all();
+        else
+            $this->viewData['campaigns'] = Auth::user()->campaigns;
+
         return view('ddad.campaigns.index', $this->viewData);
     }
 
