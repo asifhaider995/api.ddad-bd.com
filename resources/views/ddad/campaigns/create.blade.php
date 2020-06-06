@@ -29,8 +29,6 @@
 
                                     <div class="st_height_25 st_height_lg_25"></div>
 
-                                    @php(dump($errors))
-                                    {{ $errors }}
                                     <div class="st_level_up form-group">
                                         <label for="title">Campaign title *</label>
                                         <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" value="{{ old('title') }}" required >
