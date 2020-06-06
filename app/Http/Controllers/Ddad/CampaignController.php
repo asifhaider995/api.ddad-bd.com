@@ -132,4 +132,11 @@ class CampaignController extends Controller
         $this->viewData['campaign'] = $campaign;
         return view('ddad.campaigns.show', $this->viewData);
     }
+
+    public function updateStatus(Campaign $campaign, $status) {
+        $campaign->status = $status;
+        $campaign->save();
+        flash("Campaign successfully updated")->success();
+        return back();
+    }
 }

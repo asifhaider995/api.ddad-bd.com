@@ -12,14 +12,33 @@
                     </div>
 
                     <div class="st_card_head_right">
-                        <a href="{{ route('campaigns.edit', $campaign) }}" class="btn btn-success btn-sm">
-                            <i class="material-icons">done_outline</i>Approve
-                        </a>
+                        @if(Auth::user()->isAdmin())
+                            @if($campaign->status == 'awaiting_for_approval')
+                                <a  href="{{ route('campaigns.change-status', [$campaign, 'approved']) }}" class="btn btn-success btn-sm">
+                                    <i class="material-icons">done_outline</i>Approve
+                                </a>
 
-                        <a href="{{ route('campaigns.edit', $campaign) }}" class="btn btn-danger btn-sm">
-                            <i class="material-icons">cancel</i>Reject
-                        </a>
+                                <a href="{{ route('campaigns.change-status', [$campaign, 'rejected']) }}" class="btn btn-danger btn-sm">
+                                    <i class="material-icons">cancel</i>Reject
+                                </a>
+                            @elseif($campaign->status == 'approved')
+                                <a href="{{ route('campaigns.change-status', [$campaign, 'stopped']) }}" class="btn btn-danger btn-sm">
+                                    <i class="material-icons">cancel</i>Stop
+                                </a>
+                            @elseif($campaign->status == 'stopped')
+                                <a href="{{ route('campaigns.change-status',  [$campaign, 'approved']) }}" class="btn btn-success btn-sm">
+                                    <i class="material-icons">cancel</i>Start again
+                                </a>
+                            @elseif($campaign->status == 'expired')
+                                <a href="{{ route('campaigns.change-status', $campaign) }}" class="btn btn-success btn-sm">
+                                    <i class="material-icons">cancel</i>Renew
+                                </a>
+                            @endif
 
+
+
+
+                        @endif
                         <a href="{{ route('campaigns.edit', $campaign) }}" class="btn btn-primary btn-sm">
                             <i class="material-icons">create</i>Edit
                         </a>
@@ -101,7 +120,7 @@
                                     @if(Auth::user()->isAdmin())
                                         <div class="st_level_up form-group">
                                             <label for="title">Client</label>
-                                            <input class="form-control" value="{{ $client->full_name }}@if($client->company_name)-{{ $client->company_name }} @endif" >
+                                            <input class="form-control" value="{{ $campaign->client->full_name }}@if($campaign->client->company_name)-{{ $campaign->client->company_name }} @endif" >
                                         </div>
                                     @endif
 

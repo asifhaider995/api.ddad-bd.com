@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
         $admin = factory(User::class, 1)->make()->first();
         $admin->email = 'admin@example.com';
         $admin->password = bcrypt('Test1234');
+        $admin->is_client = 0;
         $admin->save();
         $admin->assignRole('admin');
 

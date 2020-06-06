@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::get('campaigns/{campaign}', 'CampaignController@show')->name('campaigns.show');
     Route::delete('campaigns/{campaign}', 'CampaignController@destroy')->name('campaigns.destroy');
     Route::post('campaigns/calculate', 'CampaignController@calculate')->name('campaigns.calculate');
+    Route::get('campaigns/{campaign}/status/{status}', 'CampaignController@updateStatus')->name('campaigns.change-status');
 
 
 

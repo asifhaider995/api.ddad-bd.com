@@ -6,12 +6,15 @@
         <span class="badge badge-info">Approved</span>
     @break
 
-    @case('ended')
-        <span class="badge badge-info">Approved</span>
+    @case('rejected')
+        <span class="badge badge-danger">Rejected</span>
     @break
 
-    @case('stoped')
-        <span class="badge badge-info">Approved</span>
+    @case('stopped')
+        <span class="badge badge-warning">Stopped</span>
     @break
 
+    @case('expired')
+        <span class="badge badge-danger">Stopped</span>
+    @break
 @endswitch

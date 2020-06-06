@@ -6,6 +6,8 @@
     </div>
     <div class="st_side_nav">
         <ul class="st_side_nav_list">
+
+            @if(Auth::user()->isAdmin())
             <li class="st_side_nav_item">
                 <a href="{{ route('dashboard.today') }}" class="st_side_nav_link active">
                     <span class="st_side_nav_icon"><i class="material-icons-outlined">dashboard</i></span>
@@ -18,6 +20,18 @@
                     <span class="st_side_nav_text">Statistics</span>
                 </a>
             </li>
+            @else
+                <li class="st_side_nav_item">
+                    <a href="{{ route('campaigns.index') }}" class="st_side_nav_link">
+                        <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
+                        <span class="st_side_nav_text">My campaigns</span>
+                    </a>
+                </li>
+            @endif
+
+
+
+            @if(Auth::user()->isAdmin())
             <li class="st_side_nav_item">
                 <a href="{{ route('campaigns.index') }}" class="st_side_nav_link">
                     <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
@@ -65,6 +79,8 @@
             </li>
 
             @include('configuration.leftbar')
+
+                @endif
         </ul>
     </div>
 </div>

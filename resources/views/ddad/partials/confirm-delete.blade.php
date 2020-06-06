@@ -17,7 +17,7 @@
                     @csrf
                     @method('delete')
                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Confirm delete</button>
+                    <button type="submit" class="btn btn-danger">Confirm</button>
                 </form>
             </div>
         </div><!-- /.modal-content -->

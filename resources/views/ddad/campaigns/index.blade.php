@@ -67,7 +67,7 @@
                                                 <a class="dropdown-item" href="{{ route('campaigns.show', $campaign) }}"><i class="material-icons-outlined">visibility</i>View</a>
                                                 <a class="dropdown-item" href="{{ route('campaigns.edit', $campaign) }}"><i class="material-icons-outlined">create</i>Edit</a>
                                                 @if(Auth::user()->isAdmin())
-                                                    <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('campaigns.destroy', $campaign) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
+                                                <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('campaigns.destroy', $campaign) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
                                                 @endif
                                             </div>
                                         </div>
