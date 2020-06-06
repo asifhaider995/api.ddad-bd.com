@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\Ddad\Shop;
+
 class Package
 {
     protected $string;
@@ -23,8 +25,26 @@ class Package
         });
     }
 
+    public function calculatePrice($numberOfTv, $startingDate, $endingDate)
+    {
+
+        $diffInDays = $startingDate->diffInDays($endingDate);
+
+        $totalPrice = $this->rate * $numberOfTv * ($diffInDays + 1);
+
+        return $totalPrice;
+    }
+
     public function __toString()
     {
         return $this->string;
     }
+
+    public static function countNumberOfTv($ids)
+    {
+        return Shop::whereIn('location_id', $ids)
+            ->whereNotNull('device_id')
+            ->count();
+    }
+
 }

@@ -295,3 +295,18 @@ button.toast-close-button {
   z-index: 10;
 }
 
+.preview {
+  border: 1px solid #986666;
+  border-radius: 10px;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.preview .title {
+  border: 1px solid #986666;
+  padding: 13px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+

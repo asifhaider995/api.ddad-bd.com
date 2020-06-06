@@ -6,6 +6,7 @@ use App\Models\Location;
 use App\Models\User;
 use App\Package;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Campaign extends Model
 {
@@ -29,7 +30,18 @@ class Campaign extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getTotalViewAttribute()
+    public function getVideoSrcAttribute()
+    {
+        return Storage::url($this->video_path);
+    }
+
+    public function getImageSrcAttribute()
+    {
+        return Storage::url($this->image_path);
+    }
+
+
+    public function getTotalViewsAttribute()
     {
         return rand(1, 1000);
     }
@@ -42,5 +54,15 @@ class Campaign extends Model
     public function locations()
     {
         return $this->belongsToMany(Location::class);
+    }
+
+    public function countTV()
+    {
+        return Package::countNumberOfTV($this->locations->pluck('id')->toArray());
+    }
+
+    public function calculatePrice()
+    {
+        return $this->package->calculatePrice($this->countTV(), $this->starting_date, $this->ending_date);
     }
 }

@@ -38,22 +38,18 @@ class CampaignController extends Controller
         return view('ddad.campaigns.create', $this->viewData);
     }
 
+
     public function calculate(Request $request)
     {
-        $numberOfTv = Shop::whereIn('location_id', $request->locations ?: [])
-            ->whereNotNull('device_id')
-            ->count();
 
         $package = new Package($request->package ?: '');
+        $numberOfTv = Package::countNumberOfTV($request->locations ?: []);
 
         $startingDate = $request->starting_date ? Carbon::createFromFormat('Y-m-d', $request->starting_date) : now();
         $endingDate = $request->ending_date ? Carbon::createFromFormat('Y-m-d', $request->ending_date) : now();
-        $diffInDays = $startingDate->diffInDays($endingDate);
-
-        $totalPrice = $package->rate * $numberOfTv * ($diffInDays + 1);
 
         return [
-            'total_price' => $totalPrice,
+            'total_price' => $package->calculatePrice($numberOfTv, $startingDate, $endingDate),
             'number_of_tv' => $numberOfTv,
         ];
     }
@@ -71,8 +67,8 @@ class CampaignController extends Controller
             $campaign->client_id = Auth::id();
             $campaign->status = 'awaiting_for_approval';
         }
-        $campaign->video_path = $campaign->video ? $campaign->video->store("campaigns/{$campaign->client_id}/videos") : null;
-        $campaign->image_path = $campaign->image ? $campaign->image->store("campaigns/{$campaign->client_id}/images") : null;
+        $campaign->video_path = $request->video ? $request->video->store("campaigns/{$campaign->client_id}/videos") : null;
+        $campaign->image_path = $request->image ? $request->image->store("campaigns/{$campaign->client_id}/images") : null;
         $campaign->auto_renew = (boolean) $request->auto_renew;
         $campaign->save();
         $campaign->locations()->sync($request->locations);
@@ -109,12 +105,12 @@ class CampaignController extends Controller
             $campaign->client_id = Auth::id();
             $campaign->status = 'awaiting_for_approval';
         }
-        if($campaign->video) {
-            $campaign->video_path = $campaign->video->store("campaigns/{$campaign->client_id}/videos");
+        if($request->video) {
+            $campaign->video_path = $request->video->store("campaigns/{$campaign->client_id}/videos");
         }
 
-        if($campaign->image) {
-            $campaign->video_path = $campaign->video->store("campaigns/{$campaign->client_id}/videos");
+        if($request->image) {
+            $campaign->video_path = $request->video->store("campaigns/{$campaign->client_id}/videos");
         }
         $campaign->title = $request->title;
         $campaign->auto_renew = (boolean) $request->auto_renew;
@@ -131,10 +127,9 @@ class CampaignController extends Controller
         return redirect()->route('shops.index');
     }
 
-    public function show(Shop $shop)
+    public function show(Campaign $campaign)
     {
-        $this->viewData['shop'] = $shop;
-
-        return view('ddad.shops.show', $this->viewData);
+        $this->viewData['campaign'] = $campaign;
+        return view('ddad.campaigns.show', $this->viewData);
     }
 }
