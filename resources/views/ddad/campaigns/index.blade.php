@@ -55,7 +55,7 @@
                                     <td>{{ formateDate($campaign->ending_date) }}</td>
 
                                     <td>
-                                        {{ $campaign->total_view }}
+                                        {{ $campaign->total_views }}
                                     </td>
                                     <td>
                                         @include('ddad.campaigns._status', ['status' => $campaign->status])

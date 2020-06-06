@@ -19,35 +19,16 @@
                                 <div class="col-lg-6">
                                     <div class="st_height_15 st_height_lg_15"></div>
 
-                                    <style type="text/css">
-                                        input[type="file"] {
-                                            display: none;
-                                        }
-                                        .custom-file-upload {
-                                            padding: 6px 12px;
-                                            cursor: pointer;
-                                            min-height: 250px;
-                                            display: flex;
-                                            justify-content: center;
-                                            align-items: center;
-                                            font-size: 25px;
-                                            background-color: #efebe58f;
-                                            margin: 20px;
-                                            border: 20px dashed #65383845;
-                                        }
-                                        .preview-box{
-                                            display: none;
-                                        }
-                                    </style>
-
 
                                     <div class="preview">
                                         <div class="title">Video</div>
                                         <div class="body">
-                                            <video class="preview-box video-preview-box" style="width: 100%; height: auto;" controls>
-                                                Your browser does not support the video tag.
-                                            </video>
-
+                                            <div class="video-preview-box">
+                                                <span class="remove remove-video">Remove video</span>
+                                                <video class="video-box" style=" width: 100%; height: auto;" controls>
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
                                             <div class="video-upload-box upload-box">
                                                 <label for="video" class="custom-file-upload">
                                                     <i class="fa fa-cloud-upload"></i> Select campaign Video
@@ -61,7 +42,11 @@
                                     <div class="preview">
                                         <div class="title">Image</div>
                                         <div class="body">
-                                            <img  class="preview-image image-preview-box"  src="">
+
+                                            <div class="image-preview-box">
+                                                <span class="remove remove-image">Remove image</span>
+                                                <img  class="image-box" src="">
+                                            </div>
 
 
                                             <div class="image-upload-box">
@@ -97,7 +82,7 @@
                                             <select name="client_id" class="form-control" required>
                                                 <option value="">Please select client</option>
                                                 @foreach($clients as $client)
-                                                    <option @if($client->id == old('client_id')) selected @endif>
+                                                    <option value="{{ $client->id }}" @if($client->id == old('client_id')) selected @endif>
                                                         {{ $client->full_name }}
                                                         @if($client->company_name)
                                                             -
@@ -186,6 +171,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <input type="hidden" name="status" value="awaiting_for_approval">
                                     @endif
 
 
@@ -275,38 +261,55 @@
 
         calculatePrice();
 
-        $("#image").change(function() {
-            (function(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('.image-preview-box').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
-                    $('.image-upload-box').hide();
-                    return
+        function changeVideo(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.video-box').attr('src', e.target.result);
                 }
-                $('.image-preview-box').hide();
-            })(this)
-        });
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                $('.video-upload-box').hide();
+                $('.video-preview-box').show();
+                return
+            }
+            $('.video-upload-box').show();
+            $('.video-preview-box').hide();
+        }
+
+        function changeImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.image-box').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                $('.image-upload-box').hide();
+                $('.image-preview-box').show();
+                return
+            }
+            $('.image-upload-box').show();
+            $('.image-preview-box').hide();
+        }
+
+        $("#image").change(function() {
+            changeImage(this)
+        })
 
 
         $("#video").change(function() {
-            (function(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('.video-preview-box').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
-                    $('.video-upload-box').hide();
-                    return
-                }
-                $('.video-preview-box').hide();
-            })(this)
+            changeVideo(this)
+        });
+
+        $('.remove-video').click(function() {
+            $('[name=video]').val(null)
+            changeVideo($('[name=video]'))
         });
 
 
+        $('.remove-image').click(function() {
+            $('[name=image]').val(null)
+            changeImage($('[name=image]'))
+        });
 
     </script>
 

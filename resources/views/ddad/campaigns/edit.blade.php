@@ -6,7 +6,7 @@
             <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                 <div class="st_card_head">
                     <div class="st_card_head_left">
-                        <h2 class="st_card_title">New campaign form</h2>
+                        <h2 class="st_card_title">Edit campaign: {{ $campaign->title }}</h2>
                     </div>
                     <div class="st_card_head_right">
                         @include('ddad.campaigns._status', ['status' => $campaign->status])
@@ -21,13 +21,49 @@
 
 
                                 <div class="col-lg-6">
-                                    <div class="st_height_15 st_height_lg_15"></div>
-                                    Image:
-                                    <input type="file" name="image" value="{{ old('image') }}">
-                                    <br><br>
-                                    Video:
-                                    <input type="file" name="video" value="{{ old('video') }}">
 
+                                    <div class="st_height_15 st_height_lg_15"></div>
+
+
+                                    <div class="preview">
+                                        <div class="title">Video</div>
+                                        <div class="body">
+                                            <div class="video-preview-box">
+                                                <span class="remove remove-video">Remove video</span>
+                                                <video class="video-box" style=" width: 100%; height: auto;" src="{{ $campaign->video_src }}" controls>
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                            <div class="video-upload-box upload-box">
+                                                <label for="video" class="custom-file-upload">
+                                                    <i class="fa fa-cloud-upload"></i> Select campaign Video
+                                                </label>
+                                                <input id="video" name="video" value="{{ old('video') }}" type="file" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="st_height_25 st_height_lg_25"></div>
+
+                                    <div class="preview">
+                                        <div class="title">Image</div>
+                                        <div class="body">
+
+                                            <div class="image-preview-box">
+                                                <span class="remove remove-image">Remove image</span>
+                                                <img  class="image-box" src="{{ $campaign->image_src }}">
+                                            </div>
+
+
+                                            <div class="image-upload-box">
+                                                <label for="image" class="custom-file-upload">
+                                                    <i class="fa fa-cloud-upload"></i> Select campaign Image
+                                                </label>
+                                                <input id="image" name="image" value="{{ old('image') }}" type="file" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="st_height_25 st_height_lg_25"></div>
                                 </div>
                                 <div class="col-sm-1 st_npcsf"></div>
                                 <div class="col-lg-5">
@@ -210,6 +246,77 @@
         $('#locations').on('change', calculatePrice)
 
         calculatePrice();
+
+
+        function changeVideo(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.video-box').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                $('.video-upload-box').hide();
+                $('.video-preview-box').show();
+                return
+            }
+            $('.video-upload-box').show();
+            $('.video-preview-box').hide();
+        }
+
+        function changeImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.image-box').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                $('.image-upload-box').hide();
+                $('.image-preview-box').show();
+                return
+            }
+            $('.image-upload-box').show();
+            $('.image-preview-box').hide();
+        }
+
+        $("#image").change(function() {
+            changeImage(this)
+        })
+
+
+        $("#video").change(function() {
+            changeVideo(this)
+        });
+
+        $('.remove-video').click(function() {
+            $('[name=video]').val(null)
+            changeVideo($('[name=video]'))
+        });
+
+
+        $('.remove-image').click(function() {
+            $('[name=image]').val(null)
+            changeImage($('[name=image]'))
+        });
+
+
+        @if($campaign->video_src)
+            $('.video-upload-box').hide();
+            $('.video-preview-box').show();
+        @else
+            ('.video-upload-box').show();
+            $('.video-preview-box').hide();
+        @endif
+
+
+
+        @if($campaign->image_src)
+            $('.image-upload-box').hide();
+            $('.image-preview-box').show();
+        @else
+            ('.video-upload-box').show();
+            $('.image-preview-box').hide();
+        @endif
+
     </script>
 
 @endpush

@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('campaigns/index', 'Ddad\CampaignController@index');
-Route::get('campaigns/contents', 'Ddad\CampaignController@contentList');
-Route::post('campaigns', 'Ddad\CampaignController@store');
+Route::get('campaigns/index', 'Api\CampaignController@index');
+Route::get('campaigns/contents', 'Api\CampaignController@contentList');
+Route::post('campaigns', 'Api\CampaignController@store');

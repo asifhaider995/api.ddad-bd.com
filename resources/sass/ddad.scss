@@ -61,3 +61,41 @@
     text-align: center;
 }
 
+input[name=image],
+input[name=video]
+{
+    display: none;
+}
+.custom-file-upload {
+    padding: 6px 12px;
+    cursor: pointer;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    background-color: #efebe58f;
+    margin: 20px;
+    border: 20px dashed #65383845;
+}
+
+.image-preview-box,
+.video-preview-box
+{
+    display: none;
+}
+.preview .body{
+    position: relative;
+}
+.preview .remove{
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px;
+    background-color: red;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1;
+}

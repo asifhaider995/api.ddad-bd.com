@@ -26,6 +26,7 @@ class CampaignRequest extends FormRequest
     {
         $rules = [
             'title' => 'required',
+            'nasssme' =>   'required'
         ];
 
         if($this->route()->getName() !== 'campaigns.update') {

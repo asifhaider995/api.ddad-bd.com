@@ -25,7 +25,7 @@ class CreateCampaignsTable extends Migration
             $table->unsignedInteger('client_id')->nullable();
             $table->string('package')->nullable();
             $table->unsignedInteger('reviewer_id')->nullable();
-            $table->unsignedInteger('reviewer_note')->nullable();
+            $table->text('reviewer_note')->nullable();
             $table->dateTime('reviewed_at')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
