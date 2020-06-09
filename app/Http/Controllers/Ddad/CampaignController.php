@@ -150,6 +150,6 @@ class CampaignController extends Controller
         $campaign->status = $status;
         $campaign->save();
         flash("Campaign successfully updated")->success();
-        return back();
+        return redirect()->route('campaigns.index');
     }
 }
