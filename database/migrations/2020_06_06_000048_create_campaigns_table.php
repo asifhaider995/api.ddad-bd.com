@@ -18,8 +18,10 @@ class CreateCampaignsTable extends Migration
             $table->string('title')->nullable();
             $table->dateTime('starting_date')->nullable();
             $table->dateTime('ending_date')->nullable();
-            $table->string('image_path')->nullable();
-            $table->string('video_path')->nullable();
+            $table->string('primary_path')->nullable();
+            $table->string('secondary_path')->nullable();
+            $table->integer('primary_queue')->nullable();
+            $table->integer('secondary_queue')->nullable();
             $table->boolean('auto_renew')->default(false);
             $table->unsignedInteger('renewed_from')->default(false);
             $table->unsignedInteger('client_id')->nullable();
@@ -28,6 +30,7 @@ class CreateCampaignsTable extends Migration
             $table->text('reviewer_note')->nullable();
             $table->dateTime('reviewed_at')->nullable();
             $table->string('status')->nullable();
+            $table->decimal('discounted_price', 8, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

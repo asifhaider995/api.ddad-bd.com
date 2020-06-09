@@ -30,14 +30,14 @@ class Campaign extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getVideoSrcAttribute()
+    public function getPrimarySrcAttribute()
     {
-        return Storage::url($this->video_path);
+        return Storage::url($this->primary_path);
     }
 
-    public function getImageSrcAttribute()
+    public function getSecondarySrcAttribute()
     {
-        return Storage::url($this->image_path);
+        return Storage::url($this->secondary_path);
     }
 
 

@@ -29,6 +29,17 @@ class DeviceController extends Controller
 
     private function rules()
     {
+        if(request()->route()->getName() !== 'shops.update') {
+            return [
+                'android_label' => 'nullable|required_with:android_imei|required_without_all:detector_label,tv_label|unique:devices,android_label',
+                'android_imei' => 'nullable|required_with:android_label|unique:devices,android_imei',
+                'detector_label' => 'nullable|required_with:detector_serial|required_without_all:android_label,tv_label|unique:devices,detector_label',
+                'detector_serial' => 'nullable|required_with:detector_label|unique:devices,detector_serial',
+                'tv_label' => 'nullable|required_with:tv_serial|required_without_all:detector_label,android_label|unique:devices,tv_label',
+                'tv_serial' => 'nullable|required_with:tv_label|unique:devices,tv_serial',
+            ];
+        }
+
         return [
             'android_label' => 'required_with:android_imei|required_without_all:detector_label,tv_label',
             'android_imei' => 'required_with:android_label',
@@ -52,5 +63,11 @@ class DeviceController extends Controller
         flash("Your device successfully updated")->success();
 
         return redirect()->route('devices.index');
+    }
+
+    public function destroy(Device $device) {
+        $device->delete();
+        flash("Device deleted")->success();
+        return back();
     }
 }

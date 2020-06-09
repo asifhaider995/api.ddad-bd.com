@@ -53,7 +53,7 @@
                             <div class="row">
 
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-7">
 
 
                                     <div class="st_height_15 st_height_lg_15"></div>
@@ -68,8 +68,8 @@
 
                                         <div class="col-lg-4">
                                             <div class="st_iconbox st_style1 st_border st_boxshadow st_radius_5" style="min-height: auto">
-                                                <div class="st_iconbox_title">PRICE(TK)</div>
-                                                <div class="st_iconbox_number" id="total_price">{{ $campaign->calculatePrice() }}</div>
+                                                <div class="st_iconbox_title" title="Discounted price">D.PRICE(TK)</div>
+                                                <div class="st_iconbox_number" id="total_price">{{ (int) $campaign->discounted_price }}</div>
                                             </div>
                                         </div>
 
@@ -86,29 +86,37 @@
                                     <div class="st_height_15 st_height_lg_15"></div>
 
                                     <div class="preview">
-                                        <div class="title">Video</div>
+                                        <div class="title">Video - Queue {{ $campaign->primary_queue }}</div>
                                         <div class="body">
                                             <video style="width: 100%; height: auto;" controls>
-                                                <source src="{{ $campaign->video_src }}" type="video/mp4">
-                                                <source src="{{ $campaign->video_src }}" type="video/ogg">
+                                                <source src="{{ $campaign->primary_src }}" type="video/mp4">
+                                                <source src="{{ $campaign->primary_src }}" type="video/ogg">
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
                                     </div>
                                     <div class="st_height_25 st_height_lg_25"></div>
 
+
                                     <div class="preview">
-                                        <div class="title">Image</div>
+                                        <div class="title">Image - Queue {{ $campaign->primary_queue }}</div>
                                         <div class="body">
-                                            <img src="{{ $campaign->image_src }}">
+                                            @if($campaign->secondary_src)
+                                            <video style="width: 100%; height: auto;" controls>
+                                                <source src="{{ $campaign->secondary_src }}" type="video/mp4">
+                                                <source src="{{ $campaign->secondary_src }}" type="video/ogg">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            @else
+                                            <h1>Unavailable</h1>
+                                                @endif
                                         </div>
                                     </div>
-
                                     <div class="st_height_25 st_height_lg_25"></div>
 
                                 </div>
                                 <div class="col-sm-1 st_npcsf"></div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-4">
 
                                     <div class="st_height_25 st_height_lg_25"></div>
 

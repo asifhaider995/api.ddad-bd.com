@@ -328,8 +328,10 @@ input[name=video] {
   border: 20px dashed #65383845;
 }
 
-.image-preview-box,
-.video-preview-box {
+#primary-video,
+#secondary-video,
+.primary-video-preview-box,
+.secondary-video-preview-box {
   display: none;
 }
 

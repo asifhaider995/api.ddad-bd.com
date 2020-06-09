@@ -60,7 +60,7 @@ class ShopController extends Controller
     {
         $this->viewData['locations'] = Location::all();
         $this->viewData['isps'] = ISP::all();
-        $this->viewData['unallocatedDevices'] = Device::unallocated()->get();
+        $this->viewData['unallocatedDevices'] = Device::unallocated()->orWhere('device_id', $shop->device_id)->get();
         $this->viewData['shop'] = $shop;
 
         return view('ddad.shops.edit', $this->viewData);

@@ -26,12 +26,10 @@ class CampaignRequest extends FormRequest
     {
         $rules = [
             'title' => 'required',
-            'nasssme' =>   'required'
         ];
 
         if($this->route()->getName() !== 'campaigns.update') {
-            $rules['image'] = 'required';
-            $rules['video'] = 'required';
+            $rules['primary_video'] = 'required';
             $rules['package'] = 'required';
             $rules['starting_date'] = 'required';
             $rules['ending_date'] = 'required';
@@ -40,6 +38,8 @@ class CampaignRequest extends FormRequest
 
         if(Auth::user()->isAdmin())
         {
+            $rules['primary_queue'] = 'required';
+            $rules['secondary_queue'] = 'required_with:secondary_video';
             $rules['client_id'] = 'required';
             $rules['package'] = 'required';
             $rules['starting_date'] = 'required';

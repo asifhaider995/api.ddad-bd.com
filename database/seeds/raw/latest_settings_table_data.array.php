@@ -1,6 +1,23 @@
 <?php
 return array (
-  0 =>
+    3 =>
+        array (
+            'name' => 'queue_size',
+            'title' => 'Queue size',
+            'type' => 'number',
+            'value' => "30",
+            'data' =>
+                array (
+                    'placeholder' => NULL,
+                    'max_length' => NULL,
+                    'min_length' => NULL,
+                    'is_required' => true,
+                ),
+            'created_at' => '2020-06-06T00:58:06.000000Z',
+            'updated_at' => '2020-06-06T00:58:06.000000Z',
+            'deleted_at' => NULL,
+        ),
+    0 =>
   array (
     'name' => 'packages',
     'title' => 'Packages',

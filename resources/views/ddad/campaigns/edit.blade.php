@@ -21,50 +21,98 @@
 
 
                                 <div class="col-lg-6">
-
                                     <div class="st_height_15 st_height_lg_15"></div>
 
 
                                     <div class="preview">
                                         <div class="title">Video</div>
                                         <div class="body">
-                                            <div class="video-preview-box">
-                                                <span class="remove remove-video">Remove video</span>
-                                                <video class="video-box" style=" width: 100%; height: auto;" src="{{ $campaign->video_src }}" controls>
+                                            <div class="primary-video-preview-box">
+                                                <span class="remove remove-primary-video">Remove</span>
+                                                <video class="primary-video-box" style=" width: 100%; height: auto;" src="{{ $campaign->primary_src }}" controls>
                                                     Your browser does not support the video tag.
                                                 </video>
                                             </div>
-                                            <div class="video-upload-box upload-box">
-                                                <label for="video" class="custom-file-upload">
+                                            <div class="primary-video-upload-box upload-box">
+                                                <label for="primary-video" class="custom-file-upload">
                                                     <i class="fa fa-cloud-upload"></i> Select campaign Video
                                                 </label>
-                                                <input id="video" name="video" value="{{ old('video') }}" type="file" required/>
+                                                <input id="primary-video" name="primary_video" value="{{ old('primary_video') }}" type="file" required/>
                                             </div>
+
+
+                                            @if(\Auth::user()->isAdmin())
+                                                @php
+                                                    $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
+                                                @endphp
+
+                                                <div style="padding: 15px; padding-bottom: 0px">
+                                                    <div class="st_level_up form-group active1">
+                                                        <label for="title">Queue position*</label>
+                                                        <select required name="primary_queue" class="form-control">
+                                                            @for($i = 0; $i <= setting_get('queue_size'); $i++)
+                                                                <option value="{{ $i }}" @if(old('primary_queue', $campaign->primary_queue ?: 0) == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>
+                                                            @endfor
+                                                        </select>
+                                                        @error('title')
+                                                        <div class="st_error_message">{{ $messasge }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                         </div>
                                     </div>
                                     <div class="st_height_25 st_height_lg_25"></div>
+
+
+
 
                                     <div class="preview">
                                         <div class="title">Image</div>
                                         <div class="body">
-
-                                            <div class="image-preview-box">
-                                                <span class="remove remove-image">Remove image</span>
-                                                <img  class="image-box" src="{{ $campaign->image_src }}">
+                                            <div class="secondary-video-preview-box">
+                                                <span class="remove remove-secondary-video">Remove</span>
+                                                <video class="secondary-video-box" src="{{ $campaign->secondary_src }}" style=" width: 100%; height: auto;" controls>
+                                                    Your browser does not support the video tag.
+                                                </video>
                                             </div>
-
-
-                                            <div class="image-upload-box">
-                                                <label for="image" class="custom-file-upload">
-                                                    <i class="fa fa-cloud-upload"></i> Select campaign Image
+                                            <div class="secondary-video-upload-box upload-box">
+                                                <label for="secondary-video" class="custom-file-upload">
+                                                    <i class="fa fa-cloud-upload"></i> Select campaign Video
                                                 </label>
-                                                <input id="image" name="image" value="{{ old('image') }}" type="file" required/>
+                                                <input id="secondary-video" name="secondary_video" value="{{ old('secondary_video') }}" type="file" required/>
                                             </div>
+
+
+                                            @if(\Auth::user()->isAdmin())
+                                                @php
+                                                    $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
+                                                @endphp
+
+                                                <div style="padding: 15px; padding-bottom: 0px">
+                                                    <div class="st_level_up form-group active1">
+                                                        <label for="title">Queue position*</label>
+                                                        <select name="secondary_queue" class="form-control">
+                                                            <option value="">Queue position</option>
+                                                            @for($i = 0; $i <= setting_get('queue_size'); $i++)
+                                                                <option value="{{ $i }}" @if(old('secondary_queue', $campaign->secondary_queue ?: 0) == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>
+                                                            @endfor
+                                                        </select>
+                                                        @error('title')
+                                                        <div class="st_error_message">{{ $messasge }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                         </div>
                                     </div>
 
                                     <div class="st_height_25 st_height_lg_25"></div>
+
                                 </div>
+
                                 <div class="col-sm-1 st_npcsf"></div>
                                 <div class="col-lg-5">
 
@@ -84,7 +132,7 @@
                                             <select name="client_id" class="form-control" required>
                                                 <option value="">Please select client</option>
                                                 @foreach($clients as $client)
-                                                    <option @if($client->id == old('client_id', $campaign->campaign_id)) selected @endif>
+                                                    <option @if($client->id == old('client_id', $campaign->client_id)) selected @endif>
                                                         {{ $client->full_name }}
                                                         @if($client->company_name)
                                                             -
@@ -182,6 +230,26 @@
                                     </div>
 
 
+
+
+                                    <div class="st_height_25 st_height_lg_25"></div>
+
+
+                                    @if(Auth::user()->isAdmin())
+                                        <div style="width: calc(50% - 8px)">
+                                            <div class="st_level_up form-group">
+                                                <label for="address">Discounted price</label>
+                                                <input type="number" name="discounted_price"
+                                                       class=" form-control @error('discounted_price') is-invalid @enderror" id="discounted_price"
+                                                       value="{{ old('discounted_price', $campaign->discounted_price ?: 0) }}" required>
+                                                @error('discounted_price')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    @endif
+
+
                                     <div class="st_height_15 st_height_lg_15"></div>
 
                                     <div>
@@ -247,74 +315,77 @@
 
         calculatePrice();
 
-
-        function changeVideo(input) {
+        function changePrimaryVideo(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('.video-box').attr('src', e.target.result);
+                    $('.primary-video-box').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]); // convert to base64 string
-                $('.video-upload-box').hide();
-                $('.video-preview-box').show();
+                $('.primary-video-upload-box').hide();
+                $('.primary-video-preview-box').show();
                 return
             }
-            $('.video-upload-box').show();
-            $('.video-preview-box').hide();
+            $('.primary-video-upload-box').show();
+            $('.primary-video-preview-box').hide();
         }
 
-        function changeImage(input) {
+
+        $("#primary-video").change(function() {
+            changePrimaryVideo(this)
+        });
+
+        $('.remove-primary-video').click(function() {
+            $('[name=primary_video]').val(null)
+            changePrimaryVideo($('[name=primary_video]'))
+        });
+
+
+
+        function changeSecondaryVideo(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('.image-box').attr('src', e.target.result);
+                    $('.secondary-video-box').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]); // convert to base64 string
-                $('.image-upload-box').hide();
-                $('.image-preview-box').show();
+                $('.secondary-video-upload-box').hide();
+                $('.secondary-video-preview-box').show();
                 return
             }
-            $('.image-upload-box').show();
-            $('.image-preview-box').hide();
+            $('.secondary-video-upload-box').show();
+            $('.secondary-video-preview-box').hide();
         }
 
-        $("#image").change(function() {
-            changeImage(this)
-        })
 
-
-        $("#video").change(function() {
-            changeVideo(this)
+        $("#secondary-video").change(function() {
+            changeSecondaryVideo(this)
         });
 
-        $('.remove-video').click(function() {
-            $('[name=video]').val(null)
-            changeVideo($('[name=video]'))
+        $('.remove-secondary-video').click(function() {
+            $('[name=secondary_video]').val(null)
+            changeSecondaryVideo($('[name=secondary_video]'))
         });
 
 
-        $('.remove-image').click(function() {
-            $('[name=image]').val(null)
-            changeImage($('[name=image]'))
-        });
 
 
-        @if($campaign->video_src)
-            $('.video-upload-box').hide();
-            $('.video-preview-box').show();
+        @if($campaign->primary_src)
+            $('.primary-video-upload-box').hide();
+            $('.primary-video-preview-box').show();
         @else
-            ('.video-upload-box').show();
-            $('.video-preview-box').hide();
+            ('.primary-video-upload-box').show();
+            $('.primary-video-preview-box').hide();
         @endif
 
 
 
-        @if($campaign->image_src)
-            $('.image-upload-box').hide();
-            $('.image-preview-box').show();
+        @if($campaign->secondary_src)
+            $('.secondary-video-upload-box').hide();
+            $('.secondary-video-preview-box').show();
         @else
-            ('.video-upload-box').show();
-            $('.image-preview-box').hide();
+            ('.secondary-video-upload-box').show();
+            $('.primary-preview-box').hide();
         @endif
 
     </script>

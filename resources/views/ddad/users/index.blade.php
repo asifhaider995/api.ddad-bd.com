@@ -21,6 +21,11 @@
                             <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="zone-a" name="zone" class="custom-control-input">
+                                    <label class="custom-control-label" for="zone-a" >All</label>
+                                </div>
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="zone-a" name="zone" class="custom-control-input">
                                     <label class="custom-control-label" for="zone-a" >Clients</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">

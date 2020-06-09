@@ -71,12 +71,16 @@ class CampaignController extends Controller
             $campaign->client_id = Auth::id();
             $campaign->status = 'awaiting_for_approval';
         }
-        $campaign->video_path = $request->video ? $request->video->store("campaigns/{$campaign->client_id}/videos") : null;
-        $campaign->image_path = $request->image ? $request->image->store("campaigns/{$campaign->client_id}/images") : null;
+        $campaign->primary_path = $request->primary_video ? $request->primary_video->store("campaigns/{$campaign->client_id}/videos") : null;
+        $campaign->secondary_path = $request->secondary_video ? $request->primary_video->store("campaigns/{$campaign->client_id}/videos") : null;
+        $campaign->primary_queue = $request->primary_queue;
+        $campaign->secondary_queue = $request->secondary_queue;
+        $campaign->discounted_price = $request->discounted_price;
         $campaign->auto_renew = (boolean) $request->auto_renew;
         $campaign->save();
         $campaign->locations()->sync($request->locations);
 
+        dd($campaign->toArray(), $request->toArray());
         flash('Campaign successfully created ')->success();
 
         return redirect()->route('campaigns.index');
@@ -105,17 +109,23 @@ class CampaignController extends Controller
             $campaign->ending_date = $request->ending_date;
             $campaign->package = $request->package;
 
+            $campaign->primary_queue = $request->primary_queue;
+            $campaign->secondary_queue = $request->secondary_queue;
+            $campaign->discounted_price = $request->discounted_price;
+
         } else {
             $campaign->client_id = Auth::id();
             $campaign->status = 'awaiting_for_approval';
         }
-        if($request->video) {
-            $campaign->video_path = $request->video->store("campaigns/{$campaign->client_id}/videos");
+
+        if($request->primary_video) {
+            $campaign->video_path = $request->primary_video->store("campaigns/{$campaign->client_id}/videos");
         }
 
-        if($request->image) {
-            $campaign->video_path = $request->video->store("campaigns/{$campaign->client_id}/videos");
+        if($request->secondary_video) {
+            $campaign->video_path = $request->secondary_video->store("campaigns/{$campaign->client_id}/videos");
         }
+
         $campaign->title = $request->title;
         $campaign->auto_renew = (boolean) $request->auto_renew;
         $campaign->save();
