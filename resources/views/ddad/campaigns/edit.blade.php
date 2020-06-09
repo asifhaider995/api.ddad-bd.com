@@ -132,7 +132,7 @@
                                             <select name="client_id" class="form-control" required>
                                                 <option value="">Please select client</option>
                                                 @foreach($clients as $client)
-                                                    <option @if($client->id == old('client_id', $campaign->client_id)) selected @endif>
+                                                    <option value="{{ $client->id }}" @if($client->id == old('client_id', $campaign->client_id)) selected @endif>
                                                         {{ $client->full_name }}
                                                         @if($client->company_name)
                                                             -
@@ -204,7 +204,7 @@
                                         <div>
                                             <div class="st_level_up form-group">
                                                 <label for="address">Reviewer note</label>
-                                                <textarea name="reviewer_note" class=" form-control @error('reviewer_note') is-invalid @enderror" style="height: 92px;" rows="5" id="reviewer_note" required>{{ old('reviewer_note', $campaign->reviewer_note) }}</textarea>
+                                                <textarea name="reviewer_note" class=" form-control @error('reviewer_note') is-invalid @enderror" style="height: 92px;" rows="5" id="reviewer_note">{{ old('reviewer_note', $campaign->reviewer_note) }}</textarea>
                                                 @error('reviewer_note')
                                                 <div class="st_error_message">{{ $message }}</div>
                                                 @enderror

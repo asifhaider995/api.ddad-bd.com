@@ -212,7 +212,7 @@
                                                 <textarea name="reviewer_note"
                                                           class=" form-control @error('reviewer_note') is-invalid @enderror"
                                                           style="height: 92px;" rows="5" id="reviewer_note"
-                                                          required>{{ old('reviewer_note') }}</textarea>
+                                                          >{{ old('reviewer_note') }}</textarea>
                                                 @error('reviewer_note')
                                                 <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
