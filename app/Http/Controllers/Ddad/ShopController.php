@@ -47,7 +47,8 @@ class ShopController extends Controller
 
         Shop::create(array_merge($request->all(), [
             'device_id' => $device->id,
-            'document_path' => $request->document ? $request->document->store('shops') : null,
+            'nid_path' => $request->nid ? $request->nid->store('shops/nid') : null,
+            'licence_path' => $request->licence ? $request->nid->store('shops/licence') : null,
         ]));
 
         flash('Shop successfully created ')->success();
@@ -83,11 +84,12 @@ class ShopController extends Controller
 
         $shop->update(array_merge($request->all(), [
             'device_id' => $device->id,
-            'document_path' => $request->document ? $request->document->store('shops') : null,
+            'nid_path' => $request->nid ? $request->nid->store('shops\nid') : $shop->nid_path,
+            'licence_path' => $request->licence ? $request->licence->store('shops\licence') : $shop->licence_path,
         ]));
 
         flash('Shop successfully updated ')->success();
-        return redirect()->route('shops.edit', $shop);
+        return redirect()->route('shops.index', $shop);
     }
 
     public function destroy(Shop $shop)

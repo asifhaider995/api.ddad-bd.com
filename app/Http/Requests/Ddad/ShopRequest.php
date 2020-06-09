@@ -23,12 +23,14 @@ class ShopRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
+
+        $rules  = [
+            'name' => 'required|unique:shops,name',
             'address' => 'required',
             'owner_name'=> 'required',
             'owner_nid'=> 'required',
-            'document_path'=> 'nullable',
+            'nid'=> 'nullable',
+            'licence'=> 'nullable',
             'kcp_name'=> 'required',
             'kcp_mobile_number'=> 'required',
             'payment_per_ad'=> 'required',
@@ -39,5 +41,11 @@ class ShopRequest extends FormRequest
             'android_imei'=> 'required_with:device_id',
             'android_label'=> 'required_with:device_id',
         ];
+
+        if($this->route()->getName() == 'shops.update') {
+            $rules['name'] = 'required';
+        }
+
+        return $rules;
     }
 }

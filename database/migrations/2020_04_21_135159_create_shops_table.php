@@ -19,7 +19,8 @@ class CreateShopsTable extends Migration
             $table->string('address');
             $table->string('owner_name')->nullable();
             $table->string('owner_nid')->nullable();
-            $table->string('document_path')->nullable();
+            $table->string('nid_path')->nullable();
+            $table->string('licence_path')->nullable();
             $table->string('kcp_name')->nullable();
             $table->string('kcp_mobile_number')->nullable();
             $table->string('payment_per_ad')->nullable();

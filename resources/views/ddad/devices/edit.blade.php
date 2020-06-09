@@ -9,9 +9,9 @@
                         <h2 class="st_card_title">Edit device:</h2>
                     </div>
                     <div class="st_card_head_right">
-                        <button data-toggle="modal" data-target="#devices-create-modal" class="btn btn-primary btn-sm">
+                        <a href="{{ route('devices.index') }}" class="btn btn-primary btn-sm">
                             <i class="material-icons">exit_to_app</i>Back
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="st_card_body" style="padding: 20px;">

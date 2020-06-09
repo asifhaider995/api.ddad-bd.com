@@ -62,26 +62,38 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <label class="form-label" for="isp_id">ISP</label>
                                             <input type="text" name="isp_name" class="form-control" value="{{  $shop->isp->name ?? '-' }}"  >
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <label class="form-label" for="location_id">Location</label>
                                             <input type="text" name="location" class="form-control" value="{{  $shop->location->name ?? '-' }}"  >
                                         </div>
 
+                                    </div>
 
-                                        <div class="col-lg-4">
+                                    <div class="st_height_25 st_height_lg_25"></div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-label" for="default-06">Document(NID/TradeLicence)</label>
-                                                <a href="{{ $shop->document_src }}" target="_blank">
-                                                    <img src="{{  $shop->document_src }}" style="max-width: 100%">
+                                                <label class="form-label" for="default-06">Document(NID front page)</label>
+                                                <a href="{{ $shop->nid_src }}" target="_blank">
+                                                    <img src="{{  $shop->nid_src }}" style="max-width: 100%">
                                                 </a>
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="default-06">Document(Trade Licence)</label>
+                                                <a href="{{ $shop->licence_src }}" target="_blank">
+                                                    <img src="{{  $shop->licence_src }}" style="max-width: 100%">
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="st_height_25 st_height_lg_25"></div>
@@ -95,7 +107,7 @@
 
                                     <div class="st_level_up form-group">
                                         <label for="name">Android label*</label>
-                                        <input type="text" name="android_label" class="form-control" value="{{  $device->name ?? '-' }}"  >
+                                        <input type="text" name="android_label" class="form-control" value="{{  $device->android_label ?? '-' }}"  >
                                     </div>
                                     <div class="st_level_up form-group">
                                         <label for="android_imei">Android IMEI*</label>

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Shop extends Model
 {
-    protected $fillable = ['name', 'address', 'owner_name', 'owner_nid', 'document_path', 'kcp_name', 'kcp_mobile_number',
+    protected $fillable = ['name', 'address', 'owner_name', 'owner_nid', 'nid_path', 'licence_path', 'kcp_name', 'kcp_mobile_number',
         'payment_per_ad', 'average_visit', 'status', 'payment_due_date', 'location_id', 'isp_id', 'device_id'
     ];
 
@@ -28,8 +28,13 @@ class Shop extends Model
         return $this->belongsTo(Device::class);
     }
 
-    public function getDocumentSrcAttribute()
+    public function getNidSrcAttribute()
     {
-        return $this->document_path ? Storage::url($this->document_path) : 'ssss';
+        return $this->nid_path ? Storage::url($this->nid_path) : Storage::url('placeholders/blank.jpg');
+    }
+
+    public function getLicenceSrcAttribute()
+    {
+        return $this->licence_path ? Storage::url($this->licence_path) : Storage::url('placeholders/blank.jpg');
     }
 }

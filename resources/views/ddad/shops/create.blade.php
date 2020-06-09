@@ -23,17 +23,23 @@
                                             <div class="st_level_up form-group">
                                                 <label for="name">Shop Name *</label>
                                                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}" required >
-                                                <div class="st_error_message"></div>
+                                                @error('name')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="owner_name">Owner's Name *</label>
                                                 <input type="text" name="owner_name" class="form-control @error('owner_name') is-invalid @enderror" id="owner_name" value="{{ old('owner_name') }}" required >
-                                                <div class="st_error_message"></div>
+                                                @error('owner_name')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="kcp_name">KCP Name *</label>
                                                 <input type="text" name="kcp_name" class="form-control @error('kcp_name') is-invalid @enderror" id="kcp_name" value="{{ old('kcp_name') }}" required >
-                                                <div class="st_error_message"></div>
+                                                @error('kcp_name')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -41,17 +47,23 @@
                                             <div class="st_level_up form-group">
                                                 <label>Payment Per Ad *</label>
                                                 <input name="payment_per_ad" type="number" min="0" value="{{ old('payment_per_ad', 0) }}" class="form-control">
-                                                <div class="st_error_message"></div>
+                                                @error('payment_per_ad')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="owner_nid">Owner's NID *</label>
                                                 <input type="text" name="owner_nid" class="form-control @error('owner_nid') is-invalid @enderror" id="owner_nid" value="{{ old('owner_nid') }}" required >
-                                                <div class="st_error_message"></div>
+                                                @error('owner_nid')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="st_level_up form-group">
                                                 <label for="kcp_mobile_number">KCP Mobile *</label>
-                                                <input type="text" name="kcp_mobile_number" class="form-control @error('kcp_mobile_number') is-invalid @enderror" id="kcp_mobile_number" value="{{ old('kcp_mobile_number') }}" required >
-                                                <div class="st_error_message"></div>
+                                                <input type="text" name="kcp_mobile_number" pattern="[0-9,]{11,22}" class="form-control @error('kcp_mobile_number') is-invalid @enderror" id="kcp_mobile_number" value="{{ old('kcp_mobile_number') }}" required >
+                                                @error('kcp_mobile_number')
+                                                    <div class="st_error_message">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -60,43 +72,76 @@
                                         <div class="st_level_up form-group">
                                             <label for="address">Shop Address</label>
                                             <textarea name="address" class=" form-control @error('address') is-invalid @enderror" style="height: 92px;" rows="5" id="address" required>{{ old('address') }}</textarea>
-                                            <div class="st_error_message"></div>
+                                            @error('address')
+                                                <div class="st_error_message">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <label class="form-label" for="isp_id">ISP</label>
                                             <select class="st_selectpicker2 mb-3" name="isp_id" id="isp_id" data-size="7" required>
                                                 @foreach($isps as $isp)
                                                     <option value="{{ $isp->id }}" @if(old('isp_id') == $isp->id) selected @endif>{{ $isp->name }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('isp_id')
+                                                <div class="st_error_message">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <label class="form-label" for="location_id">Location</label>
                                             <select class="st_selectpicker2 mb-3" name="location_id" id="location_id" data-size="7" required>
                                                 @foreach($locations as $location)
                                                     <option value="{{ $location->id }}" @if(old('location_id') == $location->id) selected @endif>{{ $location->name }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('location_id')
+                                                <div class="st_error_message">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
 
-                                        <div class="col-lg-4">
+
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-label" for="default-06">Document(NID/TradeLicence)</label>
+                                                <label class="form-label" for="default-06">Document(NID front page)</label>
                                                 <div class="form-control-wrap">
                                                     <div class="custom-file">
-                                                        <input type="file" multiple="" name="document" class="custom-file-input  @error('name') is-invalid @enderror" id="customFile">
+                                                        <input type="file"  name="nid" class="custom-file-input  @error('nid') is-invalid @enderror" id="customFile">
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                         <div class="st_error_message"></div>
                                                     </div>
+                                                    @error('nid')
+                                                        <div class="st_error_message">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="default-06">Document(Trade Licence)</label>
+                                                <div class="form-control-wrap">
+                                                    <div class="custom-file">
+                                                        <input type="file" name="licence" class="custom-file-input  @error('licence') is-invalid @enderror" id="customFile">
+                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                        <div class="st_error_message"></div>
+                                                    </div>
+
+                                                    @error('licence')
+                                                        <div class="st_error_message">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="st_height_25 st_height_lg_25"></div>
