@@ -133,9 +133,9 @@ class CampaignController extends Controller
         return redirect()->route('campaigns.edit', $campaign);
     }
 
-    public function destroy(Campaign $shop)
+    public function destroy(Campaign $campaign)
     {
-        $shop->delete();
+        $campaign->delete();
         flash('Campaign deleted successfully!')->success();
         return redirect()->route('campaigns.index');
     }
