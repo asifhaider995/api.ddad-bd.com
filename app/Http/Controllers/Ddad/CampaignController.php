@@ -130,7 +130,7 @@ class CampaignController extends Controller
         $campaign->save();
 
         flash('Campaign successfully updated')->success();
-        return redirect()->route('campaigns.edit', $campaign);
+        return redirect()->route('campaigns.index');
     }
 
     public function destroy(Campaign $campaign)
