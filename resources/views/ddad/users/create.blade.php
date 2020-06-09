@@ -128,7 +128,7 @@
                                     </div>
 
                                     <div class="st_level_up form-group">
-                                        <label for="password">Password *</label>
+                                        <label for="password">Password(Minimum 8 character)*</label>
                                         <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" value="{{ old('password') }}" required >
                                         @error('password')
                                             <div class="st_error_message">{{ $message }}</div>
