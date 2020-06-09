@@ -80,7 +80,6 @@ class CampaignController extends Controller
         $campaign->save();
         $campaign->locations()->sync($request->locations);
 
-        dd($campaign->toArray(), $request->toArray());
         flash('Campaign successfully created ')->success();
 
         return redirect()->route('campaigns.index');
