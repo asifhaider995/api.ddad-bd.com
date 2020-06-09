@@ -37,7 +37,7 @@
                                                 <label for="primary-video" class="custom-file-upload">
                                                     <i class="fa fa-cloud-upload"></i> Select campaign Video
                                                 </label>
-                                                <input id="primary-video" name="primary_video" value="{{ old('primary_video') }}" type="file" required/>
+                                                <input id="primary-video" name="primary_video" value="{{ old('primary_video') }}" type="file"/>
                                             </div>
 
 
