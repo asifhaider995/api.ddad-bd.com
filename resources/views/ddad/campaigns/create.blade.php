@@ -248,11 +248,11 @@
                                     @if(Auth::user()->isAdmin())
                                         <div style="width: calc(50% - 8px)">
                                             <div class="st_level_up form-group">
-                                                <label for="address">Discounted price</label>
-                                                <input type="number" name="discounted_price"
-                                                          class=" form-control @error('discounted_price') is-invalid @enderror" id="discounted_price"
-                                                          value="{{ old('discounted_price', 0) }}" required>
-                                                @error('discounted_price')
+                                                <label for="address">Actual price</label>
+                                                <input type="number" name="actual_price"
+                                                          class=" form-control @error('actual_price') is-invalid @enderror" id="actual_price"
+                                                          value="{{ old('actual_price', 0) }}" required>
+                                                @error('actual_price')
                                                 <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
                                             </div>

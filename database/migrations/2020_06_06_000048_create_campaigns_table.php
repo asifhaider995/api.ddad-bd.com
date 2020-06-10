@@ -30,7 +30,7 @@ class CreateCampaignsTable extends Migration
             $table->text('reviewer_note')->nullable();
             $table->dateTime('reviewed_at')->nullable();
             $table->string('status')->nullable();
-            $table->decimal('discounted_price', 8, 2)->nullable();
+            $table->decimal('actual_price', 8, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

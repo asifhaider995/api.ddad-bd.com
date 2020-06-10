@@ -21,9 +21,9 @@ return array (
   array (
     'name' => 'packages',
     'title' => 'Packages',
-    'subtitle' => 'Each line contain new package(PackageName,duration sec,rate taka)<br>Ex: HelloBoss,40,10',
+    'subtitle' => 'Each line contain new package(PackageName,DailyMinutes,Rate/TV/Month)<br>Ex: HelloBoss,40,2200',
     'type' => 'textarea',
-    'value' => "SuperDuper,40,30\nQuickBoost,20,25\n",
+    'value' => "SuperDuper,40,2200\nQuickBoost,30,2000\n",
     'data' =>
     array (
       'placeholder' => NULL,

@@ -68,8 +68,8 @@
 
                                         <div class="col-lg-4">
                                             <div class="st_iconbox st_style1 st_border st_boxshadow st_radius_5" style="min-height: auto">
-                                                <div class="st_iconbox_title" title="Discounted price">D.PRICE(TK)</div>
-                                                <div class="st_iconbox_number" id="total_price">{{ (int) $campaign->discounted_price }}</div>
+                                                <div class="st_iconbox_title" title="Actual price">A.PRICE(TK)</div>
+                                                <div class="st_iconbox_number" id="total_price">{{ (int) $campaign->actual_price }}</div>
                                             </div>
                                         </div>
 

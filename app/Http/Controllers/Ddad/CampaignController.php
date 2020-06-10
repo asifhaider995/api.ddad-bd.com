@@ -75,7 +75,7 @@ class CampaignController extends Controller
         $campaign->secondary_path = $request->secondary_video ? $request->primary_video->store("campaigns/{$campaign->client_id}/videos") : null;
         $campaign->primary_queue = $request->primary_queue;
         $campaign->secondary_queue = $request->secondary_queue;
-        $campaign->discounted_price = $request->discounted_price;
+        $campaign->actual_price = $request->actual_price;
         $campaign->auto_renew = (boolean) $request->auto_renew;
         $campaign->save();
         $campaign->locations()->sync($request->locations);
@@ -110,7 +110,7 @@ class CampaignController extends Controller
 
             $campaign->primary_queue = $request->primary_queue;
             $campaign->secondary_queue = $request->secondary_queue;
-            $campaign->discounted_price = $request->discounted_price;
+            $campaign->actual_price = $request->actual_price;
 
         } else {
             $campaign->client_id = Auth::id();
