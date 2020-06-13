@@ -17,7 +17,7 @@ class Placement
 
     public static function all()
     {
-        $values = array_filter(explode("\n", setting_get('packages')));
+        $values = array_filter(explode("\n", setting_get('placements')));
 
         return collect($values)->map(function($str) {
             return new static($str);
