@@ -49,6 +49,7 @@ class Shop extends Model
         return abs($this->payments()->sum('amount'));
     }
 
+    private $countRunningAd = 0;
     public function countRunningAd()
     {
         if(!$this->countRunningAd)
