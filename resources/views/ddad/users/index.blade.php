@@ -69,7 +69,7 @@
                                             <button class="st_table_action_btn dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_horiz</i></button>
                                             <div class="dropdown-menu dropdown-size-sm dropdown-menu-right st_boxshadow">
                                                 @if($user->is_client)
-                                                    <a class="dropdown-item" href="{{ route('users.show', $user) }}"><i class="material-icons-outlined">visibility</i>View</a>
+{{--                                                    <a class="dropdown-item" href="{{ route('users.show', $user) }}"><i class="material-icons-outlined">visibility</i>View</a>--}}
                                                 @endif
                                                 <a class="dropdown-item" href="{{ route('users.edit', $user) }}"><i class="material-icons-outlined">create</i>Edit</a>
                                                 <a class="dropdown-item" href="" onclick="" data-delete_action="{{ route('users.destroy', $user) }}"><i class="material-icons-outlined">delete_outline</i>Delete</a>
