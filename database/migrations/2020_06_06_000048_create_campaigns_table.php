@@ -17,7 +17,7 @@ class CreateCampaignsTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->dateTime('starting_date')->nullable();
-            $table->dateTime('ending_date')->nullable();
+            $table->integer('duration_month')->nullable();
             $table->string('primary_path')->nullable();
             $table->string('secondary_path')->nullable();
             $table->integer('primary_queue')->nullable();
@@ -26,6 +26,7 @@ class CreateCampaignsTable extends Migration
             $table->unsignedInteger('renewed_from')->default(false);
             $table->unsignedInteger('client_id')->nullable();
             $table->string('package')->nullable();
+            $table->string('placement')->nullable();
             $table->unsignedInteger('reviewer_id')->nullable();
             $table->text('reviewer_note')->nullable();
             $table->dateTime('reviewed_at')->nullable();

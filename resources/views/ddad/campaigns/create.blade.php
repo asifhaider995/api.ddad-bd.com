@@ -144,6 +144,21 @@
                                         </div>
                                     @endif
 
+                                    <div class="st_level_up form-group active1">
+                                        <label for="placement">Placement *</label>
+                                        <select name="placement" class="form-control" required>
+                                            <option value="">Please select placement</option>
+                                            @foreach($placements as $placement)
+                                                <option value="{{ $placement }}">
+                                                    {{ $placement->name }} {{ $placement->duration }} sec
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('placement')
+                                            <div class="st_error_message">{{ $messasge }}</div>
+                                        @enderror
+                                    </div>
+
 
                                     <div class="st_level_up form-group active1">
                                         <label for="package">Package *</label>
@@ -151,13 +166,13 @@
                                             <option value="">Please select package</option>
                                             @foreach($packages as $package)
                                                 <option value="{{ $package }}"
-                                                        @if((string) $package == old('package')) selected @endif>{{ $package->name }} {{ $package->duration }}
-                                                    sec, {{ $package->rate }} taka/Day/TV
+                                                        @if((string) $package == old('package')) selected @endif>{{ $package->name }}
+                                                    Daily {{ $package->duration }} minutes, {{ $package->rate }} TK/MONTH/TV
                                                 </option>
                                             @endforeach
                                         </select>
                                         @error('package')
-                                        <div class="st_error_message">{{ $messasge }}</div>
+                                            <div class="st_error_message">{{ $messasge }}</div>
                                         @enderror
                                     </div>
 
@@ -176,13 +191,17 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="st_level_up form-group active1">
-                                                <label for="ending_date">Ending date*</label>
-                                                <input type="date" name="ending_date"
-                                                       class="form-control @error('ending_date') is-invalid @enderror"
-                                                       id="ending_date"
-                                                       value="{{ old('ending_date') }}" required>
-                                                @error('ending_date')
-                                                <div class="st_error_message">{{ $message }}</div>
+                                                <label for="duration_month">Duration*</label>
+                                                <select name="duration_month" class="form-control" required>
+                                                    <option value="0">select duration</option>
+                                                    @foreach([1,2,3,4,5,6,8,10,12,15, 18, 24, 36] as $month)
+                                                        <option value="{{ $month }}"
+                                                                @if((string) $month == old('duration_month')) selected @endif>{{ $month }} {{ $month == 1 ? 'month' : 'months' }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('duration_month')
+                                                    <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -299,18 +318,16 @@
 @push('script')
     <script type="text/javascript">
         function calculatePrice() {
-            var starting_date = $('[name=starting_date]').val();
-            var ending_date = $('[name=ending_date]').val();
-            var package = $('[name=package]').val();
+            var duration_month = $('[name=duration_month]').val();
+            var package_name = $('[name=package]').val();
             var locations = $('#locations').val();
 
             $.post(
                 "{{ route('campaigns.calculate') }}",
                 {
                     "_token": "{{ csrf_token() }}",
-                    starting_date,
-                    ending_date,
-                    package,
+                    duration_month,
+                    package_name,
                     locations
                 },
                 function (response) {
@@ -320,8 +337,7 @@
             )
         }
 
-        $('[name=starting_date]').on('change', calculatePrice)
-        $('[name=ending_date]').on('change', calculatePrice)
+        $('[name=duration_month]').on('change', calculatePrice)
         $('[name=package]').on('change', calculatePrice)
         $('#locations').on('change', calculatePrice)
 

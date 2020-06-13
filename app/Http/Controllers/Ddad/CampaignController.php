@@ -16,6 +16,7 @@ use App\Models\Ddad\Zone;
 use App\Models\Location;
 use App\Models\User;
 use App\Package;
+use App\Placement;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class CampaignController extends Controller
         $this->viewData['locations'] = Location::all();
         $this->viewData['clients'] = User::clients()->get();
         $this->viewData['packages'] = Package::all();
+        $this->viewData['placements'] = Placement::all();
 
         return view('ddad.campaigns.create', $this->viewData);
     }
@@ -45,15 +47,12 @@ class CampaignController extends Controller
 
     public function calculate(Request $request)
     {
-
-        $package = new Package($request->package ?: '');
+        $package = new Package($request->package_name ?: '');
         $numberOfTv = Package::countNumberOfTV($request->locations ?: []);
-
-        $startingDate = $request->starting_date ? Carbon::createFromFormat('Y-m-d', $request->starting_date) : now();
-        $endingDate = $request->ending_date ? Carbon::createFromFormat('Y-m-d', $request->ending_date) : now();
+        $durationMonth = abs((int)$request->duration_month);
 
         return [
-            'total_price' => $package->calculatePrice($numberOfTv, $startingDate, $endingDate),
+            'total_price' => $package->calculatePrice($numberOfTv, $durationMonth),
             'number_of_tv' => $numberOfTv,
         ];
     }
@@ -91,6 +90,7 @@ class CampaignController extends Controller
         $this->viewData['campaign'] = $campaign;
         $this->viewData['clients'] = User::clients()->get();
         $this->viewData['packages'] = Package::all();
+        $this->viewData['placements'] = Placement::all();
 
         return view('ddad.campaigns.edit', $this->viewData);
     }
@@ -105,8 +105,9 @@ class CampaignController extends Controller
 
             $campaign->locations()->sync($request->locations);
             $campaign->starting_date = $request->starting_date;
-            $campaign->ending_date = $request->ending_date;
+            $campaign->duration_month = $request->duration_month;
             $campaign->package = $request->package;
+            $campaign->placement = $request->placement;
 
             $campaign->primary_queue = $request->primary_queue;
             $campaign->secondary_queue = $request->secondary_queue;
@@ -118,11 +119,11 @@ class CampaignController extends Controller
         }
 
         if($request->primary_video) {
-            $campaign->video_path = $request->primary_video->store("campaigns/{$campaign->client_id}/videos");
+            $campaign->primary_path = $request->primary_video->store("campaigns/{$campaign->client_id}/videos");
         }
 
         if($request->secondary_video) {
-            $campaign->video_path = $request->secondary_video->store("campaigns/{$campaign->client_id}/videos");
+            $campaign->secondary_path = $request->secondary_video->store("campaigns/{$campaign->client_id}/videos");
         }
 
         $campaign->title = $request->title;

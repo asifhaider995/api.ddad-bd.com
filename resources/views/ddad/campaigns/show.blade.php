@@ -132,10 +132,22 @@
                                         </div>
                                     @endif
 
+
+                                    <div class="st_level_up form-group">
+                                        <label for="title">Placement</label>
+                                        <input class="form-control" value="{{ $campaign->placement->name }} {{ $campaign->placement->duration }}sec" >
+                                    </div>
+
                                     <div class="st_level_up form-group">
                                         <label for="title">Package</label>
                                         <input class="form-control" value="{{ $campaign->package->name }} {{ $campaign->package->duration }}sec, {{ $campaign->package->rate }} taka/Day/TV" >
                                     </div>
+
+
+                                        <div class="st_level_up form-group active1">
+                                            <label for="starting_date">Duration</label>
+                                            <input class="form-control" value="{{ $campaign->duration_month  }} month{{ $campaign->duration_month == 1 ? '' : 's' }}">
+                                        </div>
 
 
                                     <div class="row">

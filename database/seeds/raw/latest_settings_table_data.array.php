@@ -35,6 +35,23 @@ return array (
     'updated_at' => '2020-06-06T00:58:06.000000Z',
     'deleted_at' => NULL,
   ),
+      2 =>  array (
+            'name' => 'placements',
+            'title' => 'Placement',
+            'subtitle' => 'Each line contain new placement,Placement title, placement duration',
+            'type' => 'textarea',
+            'value' => "LongTime,40\nShortTime,30\n",
+            'data' =>
+                array (
+                    'placeholder' => NULL,
+                    'max_length' => NULL,
+                    'min_length' => NULL,
+                    'is_required' => true,
+                ),
+            'created_at' => '2020-06-06T00:58:06.000000Z',
+            'updated_at' => '2020-06-06T00:58:06.000000Z',
+            'deleted_at' => NULL,
+        ),
   1 =>
   array (
     'name' => 'can_admin_backup',

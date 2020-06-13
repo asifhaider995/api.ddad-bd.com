@@ -149,6 +149,22 @@
 
 
                                     <div class="st_level_up form-group active1">
+                                        <label for="placement">Placement *</label>
+                                        <select name="placement" class="form-control" required>
+                                            <option value="">Please select placement</option>
+                                            @foreach($placements as $placement)
+                                                <option value="{{ $placement }}" @if(old('placement', $campaign->placement)) selected @endif>
+                                                    {{ $placement->name }} {{ $placement->duration }} sec
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('placement')
+                                        <div class="st_error_message">{{ $messasge }}</div>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="st_level_up form-group active1">
                                         <label for="package">Package *</label>
                                         <select name="package" class="form-control" @if(Auth::user()->isAdmin()) required @else disabled @endif>
                                             <option value="">Please select package</option>
@@ -173,13 +189,19 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-sm-6">
                                             <div class="st_level_up form-group active1">
-                                                <label for="ending_date">Ending date*</label>
-                                                <input type="date" name="ending_date"
-                                                       class="form-control @error('ending_date') is-invalid @enderror" id="ending_date"
-                                                       value="{{ old('ending_date', $campaign->ending_date->format('Y-m-d')) }}"  @if(Auth::user()->isAdmin()) required @else disabled @endif>
-                                                @error('ending_date')
+                                                <label for="duration_month">Duration*</label>
+                                                <select name="duration_month" class="form-control" @if(Auth::user()->isAdmin()) required @else disabled @endif>
+                                                    <option value="0">select duration</option>
+                                                    @foreach([1,2,3,4,5,6,8,10,12,15, 18, 24, 36] as $month)
+                                                        <option value="{{ $month }}"
+                                                                @if((string) $month == old('duration_month', $campaign->duration_month)) selected @endif>{{ $month }} {{ $month == 1 ? 'month' : 'months' }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('duration_month')
                                                 <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -235,19 +257,17 @@
                                     <div class="st_height_25 st_height_lg_25"></div>
 
 
-                                    @if(Auth::user()->isAdmin())
                                         <div style="width: calc(50% - 8px)">
                                             <div class="st_level_up form-group">
                                                 <label for="address">Actual price</label>
                                                 <input type="number" name="actual_price"
                                                        class=" form-control @error('actual_price') is-invalid @enderror" id="actual_price"
-                                                       value="{{ old('actual_price', $campaign->actual_price ?: 0) }}" required>
+                                                       value="{{ old('actual_price', $campaign->actual_price ?: 0) }}" @if(!Auth::user()->isAdmin()) disabled @endif>
                                                 @error('actual_price')
                                                     <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                    @endif
 
 
                                     <div class="st_height_15 st_height_lg_15"></div>
@@ -287,18 +307,16 @@
 @push('script')
     <script type="text/javascript">
         function calculatePrice() {
-            var starting_date = $('[name=starting_date]').val();
-            var ending_date = $('[name=ending_date]').val();
-            var package = $('[name=package]').val();
+            var duration_month = $('[name=duration_month]').val();
+            var package_name = $('[name=package]').val();
             var locations = $('#locations').val();
 
             $.post(
                 "{{ route('campaigns.calculate') }}",
                 {
                     "_token": "{{ csrf_token() }}",
-                    starting_date,
-                    ending_date,
-                    package,
+                    duration_month,
+                    package_name,
                     locations
                 },
                 function(response) {
@@ -308,8 +326,7 @@
             )
         }
 
-        $('[name=starting_date]').on('change', calculatePrice)
-        $('[name=ending_date]').on('change', calculatePrice)
+        $('[name=duration_month]').on('change', calculatePrice)
         $('[name=package]').on('change', calculatePrice)
         $('#locations').on('change', calculatePrice)
 

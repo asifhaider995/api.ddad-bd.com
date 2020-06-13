@@ -31,8 +31,9 @@ class CampaignRequest extends FormRequest
         if($this->route()->getName() !== 'campaigns.update') {
             $rules['primary_video'] = 'required';
             $rules['package'] = 'required';
+            $rules['placement'] = 'required';
             $rules['starting_date'] = 'required';
-            $rules['ending_date'] = 'required';
+            $rules['duration_month'] = 'required';
             $rules['locations'] = 'required';
         }
 
@@ -42,8 +43,9 @@ class CampaignRequest extends FormRequest
             $rules['secondary_queue'] = 'required_with:secondary_video';
             $rules['client_id'] = 'required';
             $rules['package'] = 'required';
+            $rules['placement'] = 'required';
             $rules['starting_date'] = 'required';
-            $rules['ending_date'] = 'required';
+            $rules['duration_month'] = 'required';
             $rules['locations'] = 'required';
         }
 
