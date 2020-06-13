@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function() {
     Route::put('shops/{shop}', 'ShopController@update')->name('shops.update');
     Route::get('shops/{shop}', 'ShopController@show')->name('shops.show');
     Route::delete('shops/{shop}', 'ShopController@destroy')->name('shops.destroy');
+    Route::post('shops/{shop}/make-payment', 'ShopController@makePayment')->name('shops.make-payment');
 
     Route::get('campaigns', 'CampaignController@index')->name('campaigns.index');
     Route::get('campaigns/create', 'CampaignController@create')->name('campaigns.create');

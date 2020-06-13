@@ -2,6 +2,7 @@
 
 namespace App\Models\Ddad;
 
+use App\Ddad\Payment;
 use App\Models\Location;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -36,5 +37,28 @@ class Shop extends Model
     public function getLicenceSrcAttribute()
     {
         return $this->licence_path ? Storage::url($this->licence_path) : Storage::url('placeholders/blank.jpg');
+    }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'paymentable');
+    }
+
+    public function totalPaidAmount()
+    {
+        return abs($this->payments()->sum('amount'));
+    }
+
+    public function countRunningAd()
+    {
+        if(!$this->countRunningAd)
+        $this->countRunningAd = rand(0, 100);
+
+        return $this->countRunningAd;
+    }
+
+    public function monthlyBill()
+    {
+        return $this->countRunningAd() * $this->;
     }
 }

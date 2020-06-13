@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ddad;
 
+use App\Ddad\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ddad\ShopRequest;
 use App\Models\Ddad\AndroidBox;
@@ -12,6 +13,7 @@ use App\Models\Ddad\Shop;
 use App\Models\Ddad\TV;
 use App\Models\Ddad\Zone;
 use App\Models\Location;
+use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
@@ -104,5 +106,22 @@ class ShopController extends Controller
         $this->viewData['shop'] = $shop;
 
         return view('ddad.shops.show', $this->viewData);
+    }
+
+    public function makePayment(Request $request, Shop $shop)
+    {
+        $request->validate([
+            'payment_title' => "required",
+            'amount' => "required|integer|confirmed|min:0"
+        ]);
+
+        $payment = new Payment();
+        $payment->amount = $request->amount;
+        $payment->payment_title = $request->payment_title;
+        $payment->user_id = auth()->id();
+        $shop->payments()->save($payment);
+        flash("Payment successfully added.");
+
+        return back();
     }
 }
