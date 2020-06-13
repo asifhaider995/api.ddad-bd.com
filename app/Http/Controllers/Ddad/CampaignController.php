@@ -2,23 +2,14 @@
 
 namespace App\Http\Controllers\Ddad;
 
+use App\Ddad\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ddad\CampaignRequest;
-use App\Http\Requests\Ddad\ShopRequest;
-use App\Models\Ddad\AndroidBox;
 use App\Models\Ddad\Campaign;
-use App\Models\Ddad\Detector;
-use App\Models\Ddad\Device;
-use App\Models\Ddad\ISP;
-use App\Models\Ddad\Shop;
-use App\Models\Ddad\TV;
-use App\Models\Ddad\Zone;
 use App\Models\Location;
 use App\Models\User;
 use App\Package;
 use App\Placement;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -152,5 +143,22 @@ class CampaignController extends Controller
         $campaign->save();
         flash("Campaign successfully updated")->success();
         return redirect()->route('campaigns.index');
+    }
+
+    public function addPaymentReceived(Request $request, Campaign $campaign)
+    {
+        $request->validate([
+            'payment_title' => "required",
+            'amount' => "required|integer|confirmed|min:0|max:" . $campaign->dueAmount()
+        ]);
+
+        $payment = new Payment();
+        $payment->amount = $request->amount;
+        $payment->payment_title = $request->payment_title;
+        $payment->user_id = auth()->id();
+        $campaign->payments()->save($payment);
+        flash("Payment successfully added.");
+
+        return back();
     }
 }

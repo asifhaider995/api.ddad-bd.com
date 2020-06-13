@@ -2,7 +2,7 @@
 
 function formatCurrency($amount = 0)
 {
-    return '$' . $amount;
+    return $amount;
 }
 
 function formateDate(\Carbon\Carbon $carbon, $withTime  = false)

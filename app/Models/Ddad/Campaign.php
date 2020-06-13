@@ -2,6 +2,7 @@
 
 namespace App\Models\Ddad;
 
+use App\Ddad\Payment;
 use App\Models\Location;
 use App\Models\User;
 use App\Package;
@@ -77,5 +78,20 @@ class Campaign extends Model
     public function getEndingDateAttribute()
     {
         return $this->starting_date->addMonths($this->month_duration);
+    }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'paymentable');
+    }
+
+    public function paidAmount()
+    {
+        return $this->payments->sum('amount');
+    }
+
+    public function dueAmount()
+    {
+        return $this->actual_price - $this->paidAmount();
     }
 }
