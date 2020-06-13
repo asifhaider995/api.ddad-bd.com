@@ -169,7 +169,7 @@
                                         <select name="package" class="form-control" @if(Auth::user()->isAdmin()) required @else disabled @endif>
                                             <option value="">Please select package</option>
                                             @foreach($packages as $package)
-                                                <option value="{{ $package }}" @if((string) $package == old('package', $campaign->package->__toString())) selected @endif>{{ $package->name }} {{ $package->duration }}sec, {{ $package->rate }} taka/Day/TV</option>
+                                                <option value="{{ $package }}" @if((string) $package == old('package', $campaign->package->__toString())) selected @endif>{{ $package->name }} {{ $package->duration }}sec, {{ $package->rate }} taka/Month/TV</option>
                                             @endforeach
                                         </select>
                                         @error('package')
