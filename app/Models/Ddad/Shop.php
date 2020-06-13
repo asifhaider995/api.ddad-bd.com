@@ -59,6 +59,6 @@ class Shop extends Model
 
     public function monthlyBill()
     {
-        return $this->countRunningAd() * $this->;
+        return $this->countRunningAd() * $this->payment_per_ad;
     }
 }
