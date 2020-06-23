@@ -66,17 +66,12 @@
             }
         </style>
         <div class="card-body">
-            @for($i = -5; $i < 150; $i++)
-                @php
-                    $max = 60 * 60;
-                    $sec = rand(0, $max);
-                @endphp
-
-                <div class="ability" style="background-color: {{ redYellowGreen($sec, $max) }}">
-                    <div class="date">{{ formateDate(now()->addDays($i)) }}</div>
-                    <div class="available">{{ $sec }} sec</div>
+            @foreach($availability->getDates() as $date => $slotCover)
+                <div class="ability" style="background-color: {{ redYellowGreen(3600 - $slotCover, 3600) }}">
+                    <div class="date">{{ $date }}</div>
+                    <div class="available">{{ 3600 - $slotCover }} sec</div>
                 </div>
-            @endfor
+            @endforeach
         </div>
 
     </div>

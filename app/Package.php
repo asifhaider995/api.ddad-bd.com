@@ -9,7 +9,7 @@ class Package
     protected $string;
     public function __construct($string)
     {
-        $this->string = $string;
+        $this->string = trim($string);
         $values = explode(',', $this->string);
         $this->name = $values[0] ?? 'Unnamed';
         $this->duration = (int) $values[1] ?? 0;

@@ -17,6 +17,7 @@ class CreateCampaignsTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->dateTime('starting_date')->nullable();
+            $table->dateTime('ending_date')->nullable();
             $table->integer('duration_month')->nullable();
             $table->string('primary_path')->nullable();
             $table->string('secondary_path')->nullable();

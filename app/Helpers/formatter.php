@@ -45,8 +45,10 @@ function redYellowGreen($i, $max)
     $totalColour = count($outputs);
 
     if($i <= 0) {
+
         return rgb2hex($outputs[0]);
     } else if($i >= $max) {
+
         return rgb2hex($outputs[$totalColour -  1]);
     }
 

@@ -7,6 +7,7 @@ use App\Models\Location;
 use App\Models\User;
 use App\Package;
 use App\Placement;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +21,7 @@ class Campaign extends Model
         'placement',
     ];
 
-    protected $dates = ['starting_date'];
+    protected $dates = ['starting_date', 'ending_date'];
 
     public function getPackageAttribute()
     {
@@ -75,11 +76,6 @@ class Campaign extends Model
         return $this->package->calculatePrice($this->countTV(), $this->duration_month);
     }
 
-    public function getEndingDateAttribute()
-    {
-        return $this->starting_date->addMonths($this->month_duration);
-    }
-
     public function payments()
     {
         return $this->morphMany(Payment::class, 'paymentable');
@@ -93,5 +89,21 @@ class Campaign extends Model
     public function dueAmount()
     {
         return $this->actual_price - $this->paidAmount();
+    }
+
+    public function getSlotTimeAttribute()
+    {
+        $ert = setting_get('estimated_run_time');
+        return (($this->package->duration * 60 / $this->placement->duration) * 60 / $ert) * $this->placement->duration;
+    }
+
+    public function isRunningOnThatDay(Carbon $carbon)
+    {
+        return $carbon->gte($this->starting_date) && $carbon->lte($this->ending_date);
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->attributes['status'] ?: 'awaiting_for_approval';
     }
 }
