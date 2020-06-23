@@ -45,8 +45,8 @@
                                                 <div style="padding: 15px; padding-bottom: 0px">
                                                     <div class="st_level_up form-group active1">
                                                     <label for="title">Queue position*</label>
-                                                    <select required name="primary_queue" class="form-control">
-                                                        @for($i = 0; $i <= setting_get('queue_size'); $i++)
+                                                    <select  name="primary_queue" class="form-control" required>
+                                                        @for($i = 1; $i <= setting_get('queue_size'); $i++)
                                                             <option value="{{ $i }}" @if(old('primary_queue') == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>
                                                         @endfor
                                                     </select>
@@ -181,7 +181,7 @@
                                         <div class="col-lg-6">
                                             <div class="st_level_up form-group active1">
                                                 <label for="starting_date">Starting date*</label>
-                                                <input type="date" name="starting_date"
+                                                <input type="date" name="starting_date" min="{{ now()->format('Y-m-d') }}"
                                                        class="form-control @error('starting_date') is-invalid @enderror"
                                                        id="starting_date" value="{{ old('starting_date') }}" required>
                                                 @error('starting_date')
@@ -193,7 +193,7 @@
                                             <div class="st_level_up form-group active1">
                                                 <label for="duration_month">Duration*</label>
                                                 <select name="duration_month" class="form-control" required>
-                                                    <option value="0">select duration</option>
+                                                    <option value="">select duration</option>
                                                     @foreach([1,2,3,4,5,6,8,10,12,15, 18, 24, 36] as $month)
                                                         <option value="{{ $month }}"
                                                                 @if((string) $month == old('duration_month')) selected @endif>{{ $month }} {{ $month == 1 ? 'month' : 'months' }}

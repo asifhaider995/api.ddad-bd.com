@@ -12,7 +12,7 @@ class Placement
         $this->string = $string;
         $values = explode(',', $this->string);
         $this->name = $values[0] ?? 'Unnamed';
-        $this->duration = $values[1] ?? 0;
+        $this->duration = (int)($values[1] ?? 0);
     }
 
     public static function all()

@@ -25,11 +25,12 @@ class CampaignRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title' => 'required',
+            'title' => 'required|max:50',
+            'secondary_video' => 'nullable|mimes:mp4,ogx,oga,ogv,ogg,webm'
         ];
 
         if($this->route()->getName() !== 'campaigns.update') {
-            $rules['primary_video'] = 'required';
+            $rules['primary_video'] = 'required|mimes:mp4,ogx,oga,ogv,ogg,webm';
             $rules['package'] = 'required';
             $rules['placement'] = 'required';
             $rules['starting_date'] = 'required';
@@ -39,7 +40,7 @@ class CampaignRequest extends FormRequest
 
         if(Auth::user()->isAdmin())
         {
-            $rules['primary_queue'] = 'required';
+            $rules['primary_queue'] = 'required_with:primary_video';
             $rules['secondary_queue'] = 'required_with:secondary_video';
             $rules['client_id'] = 'required';
             $rules['package'] = 'required';

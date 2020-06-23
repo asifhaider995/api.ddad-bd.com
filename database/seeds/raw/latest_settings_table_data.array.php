@@ -52,6 +52,23 @@ return array (
             'updated_at' => '2020-06-06T00:58:06.000000Z',
             'deleted_at' => NULL,
         ),
+    5 =>  array (
+        'name' => 'estimated_run_time',
+        'title' => 'Estimated run time in one day',
+        'subtitle' => 'Enter in minutes(System will convert it to hours)',
+        'type' => 'number',
+        'value' => 60 * 12,
+        'data' =>
+            array (
+                'placeholder' => NULL,
+                'max_length' => NULL,
+                'min_length' => NULL,
+                'is_required' => true,
+            ),
+        'created_at' => '2020-06-06T00:58:06.000000Z',
+        'updated_at' => '2020-06-06T00:58:06.000000Z',
+        'deleted_at' => NULL,
+    ),
   1 =>
   array (
     'name' => 'can_admin_backup',

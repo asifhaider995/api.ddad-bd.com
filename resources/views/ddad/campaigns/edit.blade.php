@@ -50,7 +50,7 @@
                                                     <div class="st_level_up form-group active1">
                                                         <label for="title">Queue position*</label>
                                                         <select required name="primary_queue" class="form-control">
-                                                            @for($i = 0; $i <= setting_get('queue_size'); $i++)
+                                                            @for($i = 1; $i <= setting_get('queue_size'); $i++)
                                                                 <option value="{{ $i }}" @if(old('primary_queue', $campaign->primary_queue ?: 0) == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>
                                                             @endfor
                                                         </select>

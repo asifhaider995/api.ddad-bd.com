@@ -38,13 +38,19 @@ class CampaignController extends Controller
 
     public function calculate(Request $request)
     {
-        $package = new Package($request->package_name ?: '');
-        $numberOfTv = Package::countNumberOfTV($request->locations ?: []);
-        $durationMonth = abs((int)$request->duration_month);
+        if($request->package_name) {
+            $package = new Package($request->package_name ?: '');
+            $numberOfTv = Package::countNumberOfTV($request->locations ?: []);
+            $durationMonth = abs((int)$request->duration_month);
 
+            return [
+                'total_price' => $package->calculatePrice($numberOfTv, $durationMonth),
+                'number_of_tv' => $numberOfTv,
+            ];
+        }
         return [
-            'total_price' => $package->calculatePrice($numberOfTv, $durationMonth),
-            'number_of_tv' => $numberOfTv,
+            'total_price' => 0,
+            'number_of_tv' => 0,
         ];
     }
 

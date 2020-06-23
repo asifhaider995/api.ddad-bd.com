@@ -9,13 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 
 class DashboardController extends Controller
 {
-    public function today()
+    public function index()
     {
-        return view('ddad.dashboard.today');
-    }
-
-    public function month()
-    {
-        return view('dashboard.month');
+        return view('ddad.dashboard.index');
     }
 }
