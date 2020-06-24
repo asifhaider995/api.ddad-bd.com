@@ -21,7 +21,7 @@ class HourlyPlaylist
             $timeInSec = 0;
             $campaigns = $this->campaigns();
             $overflow = false;
-            while (!$overflow) {
+            while (!$overflow && $campaigns->isNotEmpty()) {
                 foreach ($campaigns as $campaign) {
                     $neededTime = $campaign->calculatedDuration;
                     if ($neededTime + $timeInSec <= 3600): //3600 sec or 1 hours
