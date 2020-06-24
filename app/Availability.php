@@ -28,16 +28,7 @@ class Availability
 
     private function campaigns()
     {
-        return Campaign::where(function($query) {
-            $query->where(function($query) {
-                $query->where('starting_date', '>', $this->start);
-                $query->where('starting_date', '<', $this->end);
-            });
-            $query->orwhere(function($query) {
-                $query->where('ending_date', '>', $this->start);
-                $query->where('ending_date', '<', $this->end);
-            });
-        })->where('status', 'approved')->get();
+        return Campaign::between($this->start, $this->end)->where('status', 'approved')->get();
     }
 
     public function getDates()

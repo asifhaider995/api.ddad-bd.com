@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function() {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+    Route::get('playlist', 'DashboardController@playlist')->name('dashboard.playlist');
 
     Route::get('users', 'UserController@index')->name('users.index');
     Route::get('users/create', 'UserController@create')->name('users.create');

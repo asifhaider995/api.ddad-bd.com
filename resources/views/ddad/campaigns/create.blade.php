@@ -85,21 +85,21 @@
                                                 @php
                                                     $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
                                                 @endphp
-
-                                                <div style="padding: 15px; padding-bottom: 0px">
-                                                    <div class="st_level_up form-group active1">
-                                                        <label for="title">Queue position*</label>
-                                                        <select name="secondary_queue" class="form-control">
-                                                            <option value="">Queue position</option>
-                                                            @for($i = 0; $i <= setting_get('queue_size'); $i++)
-                                                                <option value="{{ $i }}" @if(old('secondary_queue') == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>
-                                                            @endfor
-                                                        </select>
-                                                        @error('title')
-                                                        <div class="st_error_message">{{ $messasge }}</div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+                                                <input type="hidden" name="secondary_queue" value="1">
+{{--                                                <div style="padding: 15px; padding-bottom: 0px">--}}
+{{--                                                    <div class="st_level_up form-group active1">--}}
+{{--                                                        <label for="title">Queue position*</label>--}}
+{{--                                                        <select name="secondary_queue" class="form-control">--}}
+{{--                                                            <option value="">Queue position</option>--}}
+{{--                                                            @for($i = 0; $i <= setting_get('queue_size'); $i++)--}}
+{{--                                                                <option value="{{ $i }}" @if(old('secondary_queue') == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>--}}
+{{--                                                            @endfor--}}
+{{--                                                        </select>--}}
+{{--                                                        @error('title')--}}
+{{--                                                        <div class="st_error_message">{{ $messasge }}</div>--}}
+{{--                                                        @enderror--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                             @endif
 
                                         </div>

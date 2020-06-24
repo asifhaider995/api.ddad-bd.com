@@ -3,6 +3,7 @@
 namespace App\Models\Ddad;
 
 use App\Ddad\Payment;
+use App\HourlyPlaylist;
 use App\Models\Location;
 use App\Models\User;
 use App\Package;
@@ -42,12 +43,12 @@ class Campaign extends Model
 
     public function getPrimarySrcAttribute()
     {
-        return Storage::url($this->primary_path);
+        return $this->primary_path ? Storage::url($this->primary_path) : null;
     }
 
     public function getSecondarySrcAttribute()
     {
-        return Storage::url($this->secondary_path);
+        return $this->secondary_path ? Storage::url($this->secondary_path) : null;
     }
 
 
@@ -91,10 +92,18 @@ class Campaign extends Model
         return $this->actual_price - $this->paidAmount();
     }
 
+    public function getDailyFrequencyAttribute() {
+        return $this->package->duration * 60 / $this->placement->duration;
+    }
+
+    public function getHourlyFrequencyAttribute() {
+        $ert = setting_get('estimated_run_time');
+        return $this->dailyFrequency * 60 /$ert;
+    }
+
     public function getSlotTimeAttribute()
     {
-        $ert = setting_get('estimated_run_time');
-        return (($this->package->duration * 60 / $this->placement->duration) * 60 / $ert) * $this->placement->duration;
+        return $this->hourlyFrequency * $this->placement->duration;
     }
 
     public function isRunningOnThatDay(Carbon $carbon)
@@ -105,5 +114,23 @@ class Campaign extends Model
     public function getStatusAttribute()
     {
         return $this->attributes['status'] ?: 'awaiting_for_approval';
+    }
+
+    public function getCalculatedDurationAttribute()
+    {
+        return $this->placement->duration;
+    }
+
+    public function scopeBetween($query, $start, $end)
+    {
+        $query->where('starting_date', '<', $end);
+        $query->where('ending_date', '>', $start);
+
+        return $query;
+    }
+
+    public function calculateActualHourlyFrequency()
+    {
+        return app(HourlyPlaylist::class)->calculateFrequency($this);
     }
 }
