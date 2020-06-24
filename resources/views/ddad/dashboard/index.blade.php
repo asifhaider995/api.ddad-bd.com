@@ -65,6 +65,7 @@
                     <th rowspan="2">Placement</th>
                     <th rowspan="2">Package</th>
                     <th rowspan="2">Queue</th>
+                    <th rowspan="2">Slot Duration</th>
                     <th rowspan="2">Daily Frequency</th>
                     <th class="text-center" colspan="2">Hourly Frequency</th>
                 </tr>
@@ -78,6 +79,7 @@
                         <td>{{ $campaign->placement }}</td>
                         <td>{{ $campaign->package }}</td>
                         <td class="text-center">{{ $campaign->primary_queue }}</td>
+                        <td class="text-center">{{ $campaign->slotTime }}</td>
                         <td class="text-center">{{ $campaign->dailyFrequency }}</td>
                         <td class="text-center">{{ $campaign->hourlyFrequency }}</td>
                         @php($x = $campaign->calculateActualHourlyFrequency())
