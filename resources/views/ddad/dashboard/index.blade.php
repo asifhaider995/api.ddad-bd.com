@@ -68,14 +68,18 @@
                     <th rowspan="2">Slot Duration</th>
                     <th rowspan="2">Daily Frequency</th>
                     <th class="text-center" colspan="2">Hourly Frequency</th>
+                    <th class="text-center" colspan="2">Bonus</th>
                 </tr>
                 <tr>
                     <th class="text-center">Purchased</th>
                     <th class="text-center">Getting</th>
+                    <th class="text-center">Frequency</th>
+                    <th class="text-center">Seconds</th>
+
                 </tr>
                 @foreach($campaigns as $campaign)
                     <tr>
-                        <td>{{ $campaign->title }}</td>
+                        <td><a href="{{ route('campaigns.show', $campaign) }}">{{ $campaign->title }}</a></td>
                         <td>{{ $campaign->placement }}</td>
                         <td>{{ $campaign->package }}</td>
                         <td class="text-center">{{ $campaign->primary_queue }}</td>
@@ -84,6 +88,9 @@
                         <td class="text-center">{{ $campaign->hourlyFrequency }}</td>
                         @php($x = $campaign->calculateActualHourlyFrequency())
                         <td class="text-center @if($x < $campaign->hourlyFrequency) bg-danger text-white @endif">{{ $x }}</td>
+                        <td class="text-center">{{ $y = $x - $campaign->hourlyFrequency }}</td>
+                        <td class="text-center">{{ $y * $campaign->calculatedDuration }}</td>
+
                     </tr>
                 @endforeach
             </table>

@@ -32,26 +32,37 @@ class HourlyPlaylist
                 $timeInSec  += $campaign->hourlyFrequency * $campaign->calculatedDuration;
             }
 
+            /*Giving bonus*/
             while (!$overflow && $campaigns->isNotEmpty()) {
-                foreach ($campaigns as $campaign) {
-                    $neededTime = $campaign->calculatedDuration;
-                    if ($neededTime + $timeInSec <= 3600): //3600 sec or 1 hours
-                        $play = [
-                            'campaign_id' => $campaign->id,
-                            'campaign_title' => $campaign->title,
-                            'primary_src' => $campaign->primarySrc,
-                            'secondary_src' => $campaign->secondarySrc,
-                            'duration' => $neededTime,
-                        ];
-                        $campaignPlays[$campaign->id][] = $play;
+                $frequencySegments = $campaigns->pluck('hourlyFrequency')->sort();
+                foreach($frequencySegments as $hourlyFrequency) {
+                    foreach ($campaigns as $campaign) {
+                        if($campaign->hourlyFrequency < $hourlyFrequency) {
+                            break;
+                        }
+                        $neededTime = $campaign->calculatedDuration;
+                        if ($neededTime + $timeInSec <= 3600): //3600 sec or 1 hours
+                            $play = [
+                                'campaign_id' => $campaign->id,
+                                'campaign_title' => $campaign->title,
+                                'primary_src' => $campaign->primarySrc,
+                                'secondary_src' => $campaign->secondarySrc,
+                                'duration' => $neededTime,
+                            ];
+                            $campaignPlays[$campaign->id][] = $play;
 
-                        $timeInSec += $neededTime;
-                    else:
-                        $overflow = true;
-                        continue;
-                    endif;
+                            $timeInSec += $neededTime;
+                        else:
+                            $overflow = true;
+                            continue;
+                        endif;
+                    }
                 }
             }
+
+
+//            dd($timeInSec);
+            /**Generating playlist**/
             $totalPlay = 0;
             foreach($campaignPlays as $campaignPlay)
                 $totalPlay += count($campaignPlay);
@@ -71,6 +82,8 @@ class HourlyPlaylist
                return $a['priority'] > $b['priority'];
             });
 
+
+            // Re-organize to remove consecutive play same ad
             $cs = [];
             if($campaigns->count() > 2) {
                 for($i = 0; $i < $totalPlay - 1; $i++)
