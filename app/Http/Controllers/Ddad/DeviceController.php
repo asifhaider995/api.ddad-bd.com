@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 
 class DeviceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $this->viewData['devices'] = Device::all();
+        $query = Device::query();
+        if($request->filter_by == 'unallocated') {
+            $query->doesntHave('shop');
+        }
+        elseif($request->filter_by == 'allocated') {
+            $query->whereHas('shop');
+        }
+        elseif($request->filter_by == 'error') {
+            flash("Error detection logic is not implemented yet because its depends on app")->warning()->important();
+        }
+
+            $this->viewData['devices'] = $query->get();
         return view('ddad.devices.index', $this->viewData);
     }
 

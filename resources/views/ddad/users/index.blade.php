@@ -102,7 +102,6 @@
         </div>
 
     </div>
-    </div>
     <div class="st_height_25 st_height_lg_25"></div>
 @endsection
 

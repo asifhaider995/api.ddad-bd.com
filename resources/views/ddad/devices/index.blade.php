@@ -18,27 +18,28 @@
                     <div class="st_data_table_wrap st_fixed_height1">
                         <div class="st_data_table_btn_group">
                             <div class="st_data_table_btn">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"  name="filter_by" @if(!in_array(request('filter_by'), ['allocated', 'unallocated', 'error'])) checked @endif class="custom-control-input" value="all">
+                                    <label class="custom-control-label">All</label>
+                                </div>
+                            </div>
+
+                            <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline text-success">
-                                    <input type="radio" id="zone-a" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-a">Unallocated</label>
+                                    <input type="radio"  name="filter_by" @if(in_array(request('filter_by'), ['unallocated'])) checked @endif class="custom-control-input" value="unallocated">
+                                    <label class="custom-control-label">Unallocated</label>
                                 </div>
                             </div>
                             <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline text-info">
-                                    <input type="radio" id="zone-a" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-a">Allocated</label>
+                                    <input type="radio"  name="filter_by" @if(in_array(request('filter_by'), ['allocated'])) checked @endif  class="custom-control-input" value="allocated">
+                                    <label class="custom-control-label">Allocated</label>
                                 </div>
                             </div>
                             <div class="st_data_table_btn">
                                 <div class="custom-control custom-radio custom-control-inline text-danger">
-                                    <input type="radio" id="zone-b" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-b">Error detected</label>
-                                </div>
-                            </div>
-                            <div class="st_data_table_btn">
-                                <div class="custom-control custom-radio custom-control-inline text-warning">
-                                    <input type="radio" id="zone-c" name="zone" class="custom-control-input">
-                                    <label class="custom-control-label" for="zone-c">Parts unavailable</label>
+                                    <input type="radio" name="filter_by" @if(in_array(request('filter_by'), ['error'])) checked @endif  class="custom-control-input" value="error">
+                                    <label class="custom-control-label" >Error</label>
                                 </div>
                             </div>
 
@@ -126,3 +127,11 @@
     @include('ddad.devices.create-modal', ['after_success' => 'close_modal'])
 @endsection
 
+
+@push('script')
+    <script type="text/javascript">
+        $('[name=filter_by]').click(function () {
+            window.location.href = "{{ route('devices.index') }}?filter_by=" + $(this).val();
+        })
+    </script>
+@endpush
