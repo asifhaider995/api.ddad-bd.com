@@ -115,15 +115,18 @@
                                                 <label class="form-label" for="default-06">Document(NID front page)</label>
                                                 <div class="form-control-wrap">
                                                     <div class="custom-file">
-                                                        <input type="file"  name="nid" class="custom-file-input  @error('nid') is-invalid @enderror" id="customFile">
+                                                        <input type="file"  name="nid" class="custom-file-input  @error('nid') is-invalid @enderror" id="nid">
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                         <div class="st_error_message"></div>
                                                     </div>
+                                                    <img id="nid-preview"  class="img-thumbnail img img-responsive" style="display: none">
+                                                    <button type="button" id="nid-remove" class="btn btn-danger" style="display: none">Remove NID</button>
                                                     @error('nid')
                                                         <div class="st_error_message">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         <div class="col-lg-6">
@@ -131,10 +134,12 @@
                                                 <label class="form-label" for="default-06">Document(Trade Licence)</label>
                                                 <div class="form-control-wrap">
                                                     <div class="custom-file">
-                                                        <input type="file" name="licence" class="custom-file-input  @error('licence') is-invalid @enderror" id="customFile">
+                                                        <input type="file" name="licence" class="custom-file-input  @error('licence') is-invalid @enderror" id="licence">
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                         <div class="st_error_message"></div>
                                                     </div>
+                                                    <img id="licence-preview" src="" display="none" class="img-thumbnail img img-responsive">
+                                                    <button id type="button"  id="licence-remove" class="btn btn-danger" style="display: none">Remove Licence</button>
 
                                                     @error('licence')
                                                         <div class="st_error_message">{{ $message }}</div>
@@ -227,6 +232,39 @@
 
 @push('script')
     <script type="text/javascript">
+        function configureImagePreview(inputId, imageId, removerId) {
+            $('#' + inputId).change(function () {
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(document.getElementById(inputId).files[0]);
+
+                oFReader.onload = function (oFREvent) {
+                    document.getElementById(imageId).src = oFREvent.target.result;
+                    $('#' + imageId).show();
+                    $('#' + removerId).show();
+                };
+
+            })
+
+            $('#' + removerId).click(function () {
+                $('#' + imageId).attr('src', '').hide();
+                $('#' + inputId).val(null);
+                $(this).hide();
+            })
+
+            if(document.getElementById(imageId).src) {
+                $('#' + imageId).show();
+                $('#' + removerId).show();
+            } else {
+                alert('no')
+                $('#' + imageId).hide();
+                $('#' + removerId).hide();
+            }
+        }
+
+        configureImagePreview('nid', 'nid-preview', 'nid-remove')
+        configureImagePreview('licence', 'licence-preview', 'licence-remove')
+
+
         $('.remove-allocated').click(function() {
             $('.remove-allocated').hide();
             $('[name=device_id]').val(null);
