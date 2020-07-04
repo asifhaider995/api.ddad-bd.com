@@ -73,7 +73,7 @@ class CampaignController extends Controller
         $campaign->secondary_queue = $request->secondary_queue;
         $campaign->actual_price = $request->actual_price;
         $campaign->auto_renew = (boolean) $request->auto_renew;
-        $campaign->ending_date = $campaign->starting_date->addMonths($campaign->month_duration)->endOfDay();
+        $campaign->ending_date = $campaign->starting_date->addMonths($campaign->duration_month)->endOfDay();
         $campaign->save();
         $campaign->locations()->sync($request->locations);
 
@@ -125,7 +125,7 @@ class CampaignController extends Controller
         }
 
         $campaign->title = $request->title;
-        $campaign->ending_date = $campaign->starting_date->addMonths($campaign->month_duration)->endOfDay();
+        $campaign->ending_date = $campaign->starting_date->addMonths($campaign->duration_month)->endOfDay();
         $campaign->auto_renew = (boolean) $request->auto_renew;
         $campaign->save();
 
