@@ -138,8 +138,8 @@
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                         <div class="st_error_message"></div>
                                                     </div>
-                                                    <img id="licence-preview" src="" display="none" class="img-thumbnail img img-responsive">
-                                                    <button id type="button"  id="licence-remove" class="btn btn-danger" style="display: none">Remove Licence</button>
+                                                    <img id="licence-preview"  style="display: none" class="img-thumbnail img img-responsive">
+                                                    <button  id="licence-remove" class="btn btn-danger" style="display: none">Remove Licence</button>
 
                                                     @error('licence')
                                                         <div class="st_error_message">{{ $message }}</div>
@@ -252,10 +252,10 @@
             })
 
             if(document.getElementById(imageId).src) {
+                console.log(imageId, removerId)
                 $('#' + imageId).show();
                 $('#' + removerId).show();
             } else {
-                alert('no')
                 $('#' + imageId).hide();
                 $('#' + removerId).hide();
             }
