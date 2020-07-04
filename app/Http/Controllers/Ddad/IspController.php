@@ -36,7 +36,7 @@ class IspController extends Controller
         return [
            'mobile_number' => 'required',
            'contact_person' => 'required',
-           'name' => 'required',
+           'name' => 'sometimes|required|unique:i_s_p_s,name',
            'package_name' => 'required',
            'package_price' => 'required',
         ];
@@ -51,7 +51,11 @@ class IspController extends Controller
 
     public function update(ISP $isp, Request $request)
     {
-        $request->validate($this->rules());
+        $rules = $this->rules();
+        if($request->name == $isp->name) {
+            $rules['name'] = 'required';
+        }
+        $request->validate($rules);
         $isp->update($request->all());
         flash("ISP updated");
         return redirect()->route('isps.index');
