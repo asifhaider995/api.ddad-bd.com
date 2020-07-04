@@ -9,9 +9,17 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $this->viewData['users'] = User::all();
+        $query = User::query();
+        if($request->user_role == 'admin') {
+            $query->where('is_client', 0);
+        }
+        else if($request->user_role == 'client') {
+            $query->where('is_client', 1);
+        }
+
+        $this->viewData['users'] = $query->get();
         return view('ddad.users.index', $this->viewData);
     }
 
