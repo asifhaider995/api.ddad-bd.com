@@ -50,8 +50,8 @@
                                                             <option value="{{ $i }}" @if(old('primary_queue') == $i) selected @endif>{{ $i !== 0 ? $numberFormatter->format($i) : "Please select queue" }}</option>
                                                         @endfor
                                                     </select>
-                                                    @error('title')
-                                                    <div class="st_error_message">{{ $messasge }}</div>
+                                                    @error('primary_queue')
+                                                        <div class="st_error_message">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 </div>
@@ -96,7 +96,7 @@
 {{--                                                            @endfor--}}
 {{--                                                        </select>--}}
 {{--                                                        @error('title')--}}
-{{--                                                        <div class="st_error_message">{{ $messasge }}</div>--}}
+{{--                                                        <div class="st_error_message">{{ $message }}</div>--}}
 {{--                                                        @enderror--}}
 {{--                                                    </div>--}}
 {{--                                                </div>--}}
@@ -119,7 +119,7 @@
                                                class="form-control @error('title') is-invalid @enderror" id="title"
                                                value="{{ old('title') }}" required>
                                         @error('title')
-                                        <div class="st_error_message">{{ $messasge }}</div>
+                                            <div class="st_error_message">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -139,7 +139,7 @@
                                                 @endforeach
                                             </select>
                                             @error('client')
-                                            <div class="st_error_message">{{ $messasge }}</div>
+                                                <div class="st_error_message">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     @endif
@@ -155,7 +155,7 @@
                                             @endforeach
                                         </select>
                                         @error('placement')
-                                            <div class="st_error_message">{{ $messasge }}</div>
+                                            <div class="st_error_message">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -172,7 +172,7 @@
                                             @endforeach
                                         </select>
                                         @error('package')
-                                            <div class="st_error_message">{{ $messasge }}</div>
+                                            <div class="st_error_message">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -219,7 +219,7 @@
                                             @endforeach
                                         </select>
                                         @error('location')
-                                        <div class="st_error_message">{{ $messasge }}</div>
+                                        <div class="st_error_message">{{ $message }}</div>
                                         @enderror
                                     </div>
 

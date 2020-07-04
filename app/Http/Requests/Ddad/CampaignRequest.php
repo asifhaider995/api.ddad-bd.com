@@ -30,6 +30,7 @@ class CampaignRequest extends FormRequest
         ];
 
         if($this->route()->getName() !== 'campaigns.update') {
+            $rules['title'] = 'required|max:50|unique:campaigns';
             $rules['primary_video'] = 'required|mimes:mp4,ogx,oga,ogv,ogg,webm';
             $rules['package'] = 'required';
             $rules['placement'] = 'required';
