@@ -52,9 +52,11 @@ class IspController extends Controller
     public function update(ISP $isp, Request $request)
     {
         $rules = $this->rules();
+
         if($request->name == $isp->name) {
             $rules['name'] = 'required';
         }
+
         $request->validate($rules);
         $isp->update($request->all());
         flash("ISP updated");
