@@ -10,6 +10,7 @@ use App\Package;
 use App\Placement;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class Campaign extends Model
@@ -132,5 +133,20 @@ class Campaign extends Model
     public function calculateActualHourlyFrequency()
     {
         return app(HourlyPlaylist::class)->calculateFrequency($this);
+    }
+
+    public function renew()
+    {
+        $renewedObject = $this->replicate();
+        $renewedObject->starting_date = $this->ending_date->addDay(1)->startOfDay();
+        $renewedObject->ending_date = $renewedObject->starting_date->addMonths($renewedObject->duration_month)->endOfDay();
+        $renewedObject->title = 'Renewed ('. ($renewedObject->starting_date->format('M'). ' to ' . $renewedObject->ending_date->format('M')) .') - ' . $this->title;
+        $renewedObject->renewed_from = $this->id;
+        $renewedObject->save();
+
+        $this->auto_renew = false;
+        $this->save();
+
+        Log::info("Campaign renewed from $this->id to $renewedObject->id");
     }
 }
