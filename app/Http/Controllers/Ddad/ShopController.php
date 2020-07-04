@@ -17,9 +17,16 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $this->viewData['shops'] = Shop::all();
+        if($request->zone_id) {
+            $this->viewData['zone'] = Zone::findOrFail($request->zone_id);
+            $query = $this->viewData['zone']->shops();
+        } else {
+            $query = Shop::query();
+        }
+
+        $this->viewData['shops'] = $query->get();
         $this->viewData['zones'] = Zone::all();
         return view('ddad.shops.index', $this->viewData);
     }

@@ -18,10 +18,16 @@
                 <div class="st_card_body">
                     <div class="st_data_table_wrap st_fixed_height1">
                         <div class="st_data_table_btn_group">
+                            <div class="st_data_table_btn">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" value="0" id="zone-all" name="zone" class="custom-control-input" @if(!request()->zone_id) checked @endif>
+                                    <label class="custom-control-label" for="zone-a" >All</label>
+                                </div>
+                            </div>
                             @foreach($zones as $zone)
                                 <div class="st_data_table_btn">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="zone-a" name="zone" class="custom-control-input">
+                                        <input type="radio" value="{{ $zone->id }}" id="zone-{{ $zone->id }}" name="zone" class="custom-control-input" @if(request()->zone_id== $zone->id) checked @endif>
                                         <label class="custom-control-label" for="zone-a" >{{ $zone->name }}</label>
                                     </div>
                                 </div>
@@ -102,3 +108,11 @@
     </div>
     <div class="st_height_25 st_height_lg_25"></div>
 @endsection
+
+@push('script')
+    <script type="text/javascript">
+        $('[name=zone]').click(function() {
+            window.location.href = "{{ route('shops.index') }}?zone_id=" + $(this).val();
+        })
+    </script>
+@endpush
