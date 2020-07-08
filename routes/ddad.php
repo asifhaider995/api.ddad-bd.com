@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function() {
 
 
 
+    Route::get('accounting/index', 'AccountingController@index')->name('accounting.index');
     Route::get('shops', 'ShopController@index')->name('shops.index');
     Route::get('shops/create', 'ShopController@create')->name('shops.create');
     Route::post('shops/', 'ShopController@store')->name('shops.store');

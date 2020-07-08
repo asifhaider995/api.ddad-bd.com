@@ -52,12 +52,12 @@
                     </ul>
                 </li>
 
-{{--                <li class="st_side_nav_item">--}}
-{{--                    <a href="" class="st_side_nav_link">--}}
-{{--                        <span class="st_side_nav_icon"><i class="material-icons-outlined">local_atm</i></span>--}}
-{{--                        <span class="st_side_nav_text">Accounts & Billing</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="st_side_nav_item">
+                    <a href="{{ route('accounting.index') }}" class="st_side_nav_link @if(request()->is('ddad/accounting*')) active @endif">
+                        <span class="st_side_nav_icon"><i class="material-icons-outlined">local_atm</i></span>
+                        <span class="st_side_nav_text">Accounts & Billing</span>
+                    </a>
+                </li>
                 <li class="st_side_nav_item">
                     <a href="{{ route('users.index') }}" class="st_side_nav_link @if(request()->is('ddad/users*')) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">people</i></span>

@@ -109,7 +109,12 @@ class CampaignController extends Controller
 
             $campaign->primary_queue = $request->primary_queue;
             $campaign->secondary_queue = $request->secondary_queue;
-            $campaign->actual_price = $request->actual_price;
+
+            if($request->actual_price < $campaign->receivedAmount) {
+                flash("Sorry ! Actual price not updated. You cannot set actual price less than {$campaign->receivedAmount} because you already have received this amount for this campaign")->error()->important();
+            } else {
+                $campaign->actual_price = (int) $request->actual_price;
+            }
 
         } else {
             $campaign->client_id = Auth::id();
@@ -128,6 +133,10 @@ class CampaignController extends Controller
         $campaign->ending_date = $campaign->starting_date->addMonths($campaign->duration_month)->endOfDay();
         $campaign->auto_renew = (boolean) $request->auto_renew;
         $campaign->save();
+
+        if($request->actual_price < $campaign->receivedAmount) {
+            return redirect()->route('campaigns.edit', $campaign);
+        }
 
         flash('Campaign successfully updated')->success();
         return redirect()->route('campaigns.index');

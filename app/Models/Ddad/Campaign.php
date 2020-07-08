@@ -149,4 +149,9 @@ class Campaign extends Model
 
         Log::info("Campaign renewed from $this->id to $renewedObject->id");
     }
+
+    public function getReceivedAmountAttribute()
+    {
+        return $this->payments->sum('amount');
+    }
 }
