@@ -33,8 +33,12 @@
                                                 <label for="primary-video" class="custom-file-upload">
                                                     <i class="fa fa-cloud-upload"></i> Select campaign Video
                                                 </label>
-                                                <input id="primary-video" name="primary_video" value="{{ old('primary_video') }}" type="file" required/>
+                                                <input id="primary-video" name="primary_video" value="{{ old('primary_video') }}" type="file"/>
                                             </div>
+
+                                            @error('primary_video')
+                                                <div class="st_error_message">{{ $message }}</div>
+                                            @enderror
 
 
                                             @if(\Auth::user()->isAdmin())
@@ -149,7 +153,7 @@
                                         <select name="placement" class="form-control" required>
                                             <option value="">Please select placement</option>
                                             @foreach($placements as $placement)
-                                                <option value="{{ $placement }}">
+                                                <option value="{{ $placement }}" @if(old('placement') == $placement) selected @endif>
                                                     {{ $placement->name }} {{ $placement->duration }} sec
                                                 </option>
                                             @endforeach
