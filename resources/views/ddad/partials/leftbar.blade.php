@@ -9,7 +9,7 @@
 
             @if(Auth::user()->isAdmin())
                 <li class="st_side_nav_item">
-                    <a href="{{ route('dashboard.index') }}" class="st_side_nav_link active">
+                    <a href="{{ route('dashboard.index') }}" class="st_side_nav_link @if(request()->is(['ddad/dashboard', 'ddad/index'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">dashboard</i></span>
                         <span class="st_side_nav_text">Dashboard</span>
                     </a>
@@ -22,7 +22,7 @@
             </li>
             @else
                 <li class="st_side_nav_item">
-                    <a href="{{ route('campaigns.index') }}" class="st_side_nav_link">
+                    <a href="{{ route('campaigns.index') }}" class="st_side_nav_link @if(request()->is(['campaigns*'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
                         <span class="st_side_nav_text">My campaigns</span>
                     </a>
@@ -33,20 +33,20 @@
 
             @if(Auth::user()->isAdmin())
                 <li class="st_side_nav_item">
-                    <a href="{{ route('campaigns.index') }}" class="st_side_nav_link">
+                    <a href="{{ route('campaigns.index') }}" class="st_side_nav_link @if(request()->is(['ddad/campaigns*'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
                         <span class="st_side_nav_text">Campaigns</span>
                     </a>
                 </li>
 
                 <li class="st_side_nav_item st_side_nav_has_children">
-                    <a href="#" class="st_side_nav_link">
+                    <a href="#" class="st_side_nav_link @if(request()->is(['ddad/shops*', 'ddad/devices*'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">devices</i></span>
                         <span class="st_side_nav_text">Shops & Devices</span>
                         <i class="st_right st_submenu_arrow"><span class="st_submenu_arrow_in"></span></i>
                         <span class="badge badge-danger st_right"></span>
                     </a>
-                    <ul class="st_side_nav_submenu">
+                    <ul class="st_side_nav_submenu" @if(request()->is(['ddad/shops*', 'ddad/devices*'])) style="display: block" @endif>
                         <li><a href="{{ route('shops.index') }}" class="st_side_nav_link">Shops</a></li>
                         <li><a href="{{ route('devices.index') }}" class="st_side_nav_link">Devices</a></li>
                     </ul>
@@ -59,20 +59,20 @@
 {{--                    </a>--}}
 {{--                </li>--}}
                 <li class="st_side_nav_item">
-                    <a href="{{ route('users.index') }}" class="st_side_nav_link">
+                    <a href="{{ route('users.index') }}" class="st_side_nav_link @if(request()->is('ddad/users*')) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">people</i></span>
                         <span class="st_side_nav_text">Clients & Users</span>
                     </a>
                 </li>
                 <li class="st_side_nav_item">
-                    <a href="{{ route('zones.index') }}" class="st_side_nav_link">
+                    <a href="{{ route('zones.index') }}" class="st_side_nav_link  @if(request()->is('ddad/zone*')) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">map</i></span>
                         <span class="st_side_nav_text">Zone Management</span>
                     </a>
                 </li>
 
                 <li class="st_side_nav_item">
-                    <a href="{{ route('isps.index') }}" class="st_side_nav_link">
+                    <a href="{{ route('isps.index') }}" class="st_side_nav_link @if(request()->is('ddad/isps*')) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">router</i></span>
                         <span class="st_side_nav_text">ISP List</span>
                     </a>
