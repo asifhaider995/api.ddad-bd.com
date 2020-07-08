@@ -84,7 +84,7 @@
                                                 <label for="company_name">Company name</label>
                                                 <input type="text" name="company_name" class="form-control @error('st_level_up') is-invalid @enderror" id="st_level_up" value="{{ old('company_name') }}" >
 
-                                                @error('st_level_up')
+                                                @error('company_name')
                                                     <div class="st_error_message">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -168,7 +168,8 @@
 
 @push('script')
     <script type="text/javascript">
-        $('.remove-allocated').click(function() {
+        $('#is_client_no').click(function() {
+            alert($(this).checked());
         })
     </script>
 @endpush

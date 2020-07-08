@@ -31,10 +31,21 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules());
+        $rules = $this->rules();
+        $rules['password'] = 'confirmed|nullable|min:8';
+        if($request->is_client == 'yes') {
+            $rules['company_name'] = $rules['company_name'] . '|unique:users,company_name';
+        }
+
+        $request->validate($rules);
 
         $user = new User($request->all());
-        $user->is_client = $request->is_client == 'yes';
+        if($request->is_client == 'yes') {
+            $user->is_client = true;
+        } else {
+            $user->is_client = false;
+            $user->company_name = "DDAD";
+        }
         $user->is_verified = true;
         $user->password = bcrypt($request->password);
         $user->save();
@@ -77,6 +88,7 @@ class UserController extends Controller
     {
         $rules = $this->rules();
         $rules['password'] = 'confirmed|nullable|min:8';
+        $rules['company_name'] = $rules['company_name'] .($user->company_name != $request->company_name ? '|unique:users,company_name' : '');
         $request->validate($rules);
         $user->fill($request->all());
         if($request->password) {
