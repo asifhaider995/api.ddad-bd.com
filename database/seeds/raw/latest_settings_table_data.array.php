@@ -83,4 +83,22 @@ return array (
     'updated_at' => '2020-04-22T18:12:21.000000Z',
     'deleted_at' => NULL,
   ),
+
+    6 =>  array (
+        'name' => 'loop_sync_content_url',
+        'title' => 'Loop sync content url',
+        'subtitle' => 'Upload content in campaign then stop this campaign only add video url here',
+        'type' => 'text',
+        'value' => 'http://ddad.test/storage/campaigns/2/videos/pAxo8kQPtKZbWeGwL8FpdwK4j4t0K71HcL4nOB9b.mp4',
+        'data' =>
+            array (
+                'placeholder' => NULL,
+                'max_length' => NULL,
+                'min_length' => NULL,
+                'is_required' => true,
+            ),
+        'created_at' => '2020-06-06T00:58:06.000000Z',
+        'updated_at' => '2020-06-06T00:58:06.000000Z',
+        'deleted_at' => NULL,
+    ),
 );

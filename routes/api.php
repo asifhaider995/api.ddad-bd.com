@@ -19,5 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('campaigns/index', 'Api\CampaignController@index');
-Route::get('campaigns/contents', 'Api\CampaignController@contentList');
-Route::post('campaigns', 'Api\CampaignController@store');
+Route::post('campaigns', 'Api\CampaignController@saveCampaignPlay');
+Route::any('audience', 'Api\CampaignController@saveAudience');
