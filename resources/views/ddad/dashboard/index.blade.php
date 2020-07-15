@@ -12,6 +12,38 @@
         </div>
     </div>
     <div class="st_height_15 st_height_lg_15"></div>
+
+
+
+    <div class="card mt-3 mb-3">
+
+        <div class="card-header">
+            Audience testing.
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td>DeviceSerial</td>
+                    <td>Ping time</td>
+                    <td>Audience</td>
+                </tr>
+
+                @foreach(\App\Models\Audience::latest()->take(10)->get() as $audience)
+                    <tr>
+                        <td>{{ $audience->detector_serial }}</td>
+                        <td>{{ formateDate($audience->created_at, true) }}</td>
+                        <td>{{ $audience->number_of_audience }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="st_height_15 st_height_lg_15"></div>
     <div class="card mt-3 mb-3">
 
         <div class="card-header">
