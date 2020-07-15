@@ -23,6 +23,7 @@
         <div class="card-body">
             <table class="table table-bordered">
                 <tr>
+                    <td>PingNumber</td>
                     <td>DeviceSerial</td>
                     <td>Ping time</td>
                     <td>Audience</td>
@@ -30,6 +31,7 @@
 
                 @foreach(\App\Models\Audience::latest()->take(10)->get() as $audience)
                     <tr>
+                        <td>{{ $audience->id }}</td>
                         <td>{{ $audience->detector_serial }}</td>
                         <td>{{ formateDate($audience->created_at, true) }}</td>
                         <td>{{ $audience->number_of_audience }}</td>
