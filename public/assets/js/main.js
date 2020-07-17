@@ -49,6 +49,7 @@
         dataTableInit();
         checkMarkInit();
         overlayScrollbarsInit();
+        modalVideo();
         $('[data-toggle="tooltip"]').tooltip()
         $('.dataTables_length select').selectpicker();
 
@@ -57,7 +58,10 @@
           liveSearch: true
         });
 
-      
+      $(".st_stock_point").each(function() {
+        let buletColor = $(this).data("stock-color");
+        $(this).css("background-color", buletColor);
+      });
   
       });
 
@@ -71,11 +75,11 @@
       --------------------------------------------------------------*/
       function headerInit() {
         $('.st_nav').append('<span class="st_munu_toggle"><span></span></span>');
-        $('.st_menu_item_has_children').append('<span class="tw-munu-dropdown-toggle"></span>');
+        $('.st_menu_item_has_children').append('<span class="st_munu-dropdown-toggle"></span>');
         $('.st_munu_toggle').on('click', function() {
-          $(this).toggleClass("tw-toggle-active").siblings('.st_nav_list').slideToggle();;
+          $(this).toggleClass("st_toggle-active").siblings('.st_nav_list').slideToggle();;
         });
-        $('.tw-munu-dropdown-toggle').on('click', function() {
+        $('.st_munu-dropdown-toggle').on('click', function() {
           $(this).toggleClass('active').siblings('ul').slideToggle();
         });
         // Header Gap
@@ -126,9 +130,9 @@
       #. Progress Bar
       --------------------------------------------------------------*/
       function progressBarInit() {
-        $('.tw-progressbar').each(function() {
+        $('.st_progressbar').each(function() {
           var progressPercentage = $(this).data('progress') + "%";
-          $(this).find('.tw-progressbar-in').css('width', progressPercentage);
+          $(this).find('.st_progressbar-in').css('width', progressPercentage);
         });
       }
 
@@ -258,12 +262,6 @@
       }
     })
 
-
-
-
-
-
-
   }
 
   /*--------------------------------------------------------------
@@ -286,7 +284,7 @@
           }
         }
       });
-      $('#st_dataTable').wrap('<div class="st_dataTableWraqp"></div>')
+      $('#st_dataTable').wrap('<div class="st_dataTableWraqp st_overlay_scroll"></div>')
     }
   }
 
@@ -306,6 +304,25 @@
     $('.st_check_mark_all .st_last').on('click', function() {
       $('.st_check_mark').removeClass('active').parents('tr').removeClass('active');
     })
+  }
+
+  /*--------------------------------------------------------------
+    #. Video Modal
+  --------------------------------------------------------------*/
+  function modalVideo() {
+    $(document).on('click', '.st-video-open', function(e) {
+      e.preventDefault();
+      var video = $(this).attr('href');
+      $('.st-video-popup-container iframe').attr('src', video);
+      $('.st-video-popup').addClass('active');
+
+    });
+    $('.st-video-popup-close, .st-video-popup-layer').on('click', function(e) {
+      $('.st-video-popup').removeClass('active');
+      $('html').removeClass('overflow-hidden');
+      $('.st-video-popup-container iframe').attr('src', 'about:blank')
+      e.preventDefault();
+    });
   }
 
 

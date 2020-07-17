@@ -7,7 +7,7 @@
         </div>
         <div class="st_page_header_right">
             <a href="{{ route('dashboard.index') }}" class="btn btn-primary">
-                View overview
+                Back
             </a>
         </div>
     </div>

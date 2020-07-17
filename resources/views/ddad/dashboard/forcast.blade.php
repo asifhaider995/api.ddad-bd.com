@@ -6,8 +6,8 @@
             <h1 class="st_page_header_title">Today's overview</h1>
         </div>
         <div class="st_page_header_right">
-            <a href="{{ route('dashboard.playlist') }}" class="btn btn-primary">
-                View playlist
+            <a href="{{ route('dashboard.index') }}" class="btn btn-primary">
+                Back
             </a>
         </div>
     </div>

@@ -61,7 +61,7 @@
 @include('ddad.partials.leftbar');
 
 <!-- Start Content -->
-<div class="tw-content st_style1">
+<div class="st_content st_style1">
     <div class="container-fluid">
         @include('flash::message')
         @yield('content')
