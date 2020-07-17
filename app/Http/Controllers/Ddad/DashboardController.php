@@ -14,13 +14,13 @@ use Illuminate\Routing\Controller as BaseController;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function forcast(Request $request)
     {
         $this->viewData['availability'] = new Availability();
         $today = $request->date ? Carbon::createFromFormat('Y-m-d', $request->date) : now();
         $this->viewData['campaigns'] = Campaign::between($today->clone()->startOfDay(), $today->clone()->endOfDay())->where('status', 'approved')->orderBy('primary_queue')->get();
 
-        return view('ddad.dashboard.index',$this->viewData);
+        return view('ddad.dashboard.forcast',$this->viewData);
     }
 
 
@@ -30,4 +30,9 @@ class DashboardController extends Controller
         return view('ddad.dashboard.playlist',$this->viewData);
     }
 
+
+    public function index(Request $request)
+    {
+        return view('ddad.dashboard.index', $this->viewData);
+    }
 }
