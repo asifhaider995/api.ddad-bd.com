@@ -21,26 +21,37 @@
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Reprot</h2>
                         </div>
-                        <div class="st_card_head_right">
-                            <a href="#" class="st_card_head_btn">View All</a>
-                        </div>
                     </div>
                     <div class="st_card_body">
                         <div class="st_height_25 st_height_lg_25"></div>
                         <div class="st_padd_lr_25">
                             <div class="st_card_nav st_style1">
-                                <a href="#" class="active">All</a>
-                                <a href="#">Zone A</a>
-                                <a href="#">Zone B</a>
-                                <a href="#">Zone C</a>
-                                <a href="#">Zone D</a>
-                                <a href="#">Zone E</a>
-                                <a href="#">Zone F</a>
-                                <a href="#">Zone G</a>
-                                <a href="#">Zone H</a>
-                                <a href="#">Zone I</a>
-                                <a href="#">Zone J</a>
+                                <a href="{{ route('dashboard.index') }}" class="@if(!$zone) active @endif">All</a>
+                                @foreach($zones as $z)
+                                    <a class="@if(optional($zone)->id == $z->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $z->id]) }}">{{ $z->name }}</a>
+                                @endforeach
                             </div>
+
+                            @if($zone)
+
+                                <div class="st_height_5 st_height_lg_5"></div>
+                                <div class="st_card_nav st_style1" style="overflow-x: scroll">
+                                    @foreach($zone->locations as $l)
+                                        <a class="@if(optional($location)->id == $l->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $l->id]) }}">{{ $l->name }}</a>
+                                    @endforeach
+                                </div>
+
+                                @if($location)
+                                    <div class="st_height_5 st_height_lg_5"></div>
+                                    <div class="st_card_nav st_style1" style="overflow-x: scroll">
+                                        @foreach($location->shops as $s)
+                                            <a class="@if(optional($shop)->id == $s->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $location->id, 'shop_id' => $s->id]) }}">{{ $s->name }}</a>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @endif
+
+
                             <div class="st_height_25 st_height_lg_25"></div>
                             <div class="st_chart_box st_style1">
                                 <div class="st_chart_box_left">
@@ -49,12 +60,14 @@
                                     <div class="st_chart_wrap st_style2">
                                         <div class="st_chart_wrap_left">
                                             <div class="st_chart_nav st_style1">
-                                                <a href="#">Hourly</a>
-                                                <a href="#">Daily</a>
-                                                <a href="#">Weekly</a>
+                                                @foreach(['hourly','daily','weekly','monthly'] as $rb)
+                                                    <a class="@if(in_array(request()->rb, ['daily','weekly','monthly'])) @if(request()->rb == $rb) active @endif @elseif($rb == 'hourly') active @endif" href="{{ route('dashboard.index', ['zone_id' => optional($zone)->id, 'location_id' => optional($location)->id, 'shop_id' => optional($shop)->id, 'rb'=> $rb]) }}">{{ ucfirst($rb) }}</a>
+                                                @endforeach
                                             </div>
-                                            <div style="height:145px;">
-                                                <canvas  id="st_chart5_4"></canvas>
+                                            <div style="overflow-y: scroll; max-width: 100%">
+                                                <div style="height:250px; width:600px">
+                                                    <canvas  id="st_chart5_4"></canvas>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="st_chart_wrap_right">
@@ -146,226 +159,49 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <div class="st_table_media st_style1">
-                                        <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                            <img src="{{ asset('assets/img/products/product3.png') }}" alt="icon">
-                                        </a>
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">ALL (15/20)</a></h2>
+                                @foreach($campaigns as $campaign)
+                                    <tr>
+                                    <td>
+                                        <div class="st_table_media st_style1">
+                                            <a href="#" class="st_table_media_img st_box_md st_radius_5">
+                                                <img src="{{ asset('assets/img/products/product3.png') }}" alt="icon">
+                                            </a>
+                                            <div class="st_table_media_info">
+                                                <h2 class="st_media_title"><a href="#">{{ $campaign->title }}</a></h2>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
+                                    </td>
+                                    <td>
+                                        <div class="st_table_media st_style1 st_type1">
+                                            <div class="st_table_media_info">
+                                                <h2 class="st_media_title"><a href="#">{{ intval($campaign->getTotalPlayedTime()/ 60) }}</a></h2>
+                                                <div class="st_media_subtitle">OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
+                                    </td>
+                                    <td>
+                                        <div class="st_table_media st_style1 st_type1">
+                                            <div class="st_table_media_info">
+                                                <h2 class="st_media_title"><a href="#">{{ $campaign->getTotalFrequency() }}</a></h2>
+                                                <div class="st_media_subtitle">OF {{ $campaign->getTotalPurchasedFrequency() }}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_text">90000</div>
-                                </td>
-                                <td>
-                                    <span class="st_text_badge st_text_badge_success">Active</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="st_table_media st_style1">
-                                        <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                            <img src="{{ asset('assets/img/products/new-product.jpg') }}" alt="icon">
-                                        </a>
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">FRESH</a></h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_text">90000</div>
-                                </td>
-                                <td>
-                                    <span class="st_text_badge st_text_badge_success">Active</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="st_table_media st_style1">
-                                        <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                            <img src="{{ asset('assets/img/products/product2.png') }}" alt="icon">
-                                        </a>
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">NABISCO</a></h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_text">90000</div>
-                                </td>
-                                <td>
-                                    <span class="st_text_badge st_text_badge_success">Active</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="st_table_media st_style1">
-                                        <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                            <img src="{{ asset('assets/img/products/product1.png') }}" alt="icon">
-                                        </a>
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">COCACOLA</a></h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_text">90000</div>
-                                </td>
-                                <td>
-                                    <span class="st_text_badge st_text_badge_success">Active</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="st_table_media st_style1">
-                                        <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                            <img src="{{ asset('assets/img/products/new-product.jpg') }}" alt="icon">
-                                        </a>
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">FRESH</a></h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_media st_style1 st_type1">
-                                        <div class="st_table_media_info">
-                                            <h2 class="st_media_title"><a href="#">110</a></h2>
-                                            <div class="st_media_subtitle">OF 900</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="st_table_text">90000</div>
-                                </td>
-                                <td>
-                                    <span class="st_text_badge st_text_badge_success">Active</span>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <div class="st_table_text">{{ $campaign->totalVisit() }}</div>
+                                    </td>
+                                    <td>
+                                        @include('ddad.campaigns._status', ['status' => $campaign->status])
+                                    </td>
+                                </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
-                        <div class="st_height_15 st_height_lg_15"></div>
-                        <nav aria-label="Page navigation" class="st_padd_lr_25">
-                            <ul class="pagination justify-content-end">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <i class="material-icons">keyboard_arrow_left</i>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <i class="material-icons">keyboard_arrow_right</i>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div><!-- .col -->
             <div class="col-lg-4">
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_video_block st_style1">
-                        <img src="{{ asset('assets/img/products/new-product.jpg') }}" alt="">
-                        <a href="https://www.youtube.com/embed/jRcfE2xxSAw?autoplay=1" class="st-play-btn st-style1 st-video-open">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 336 336" xml:space="preserve">
-                  <g><path d="M286.8,49.2C256.4,18.8,214.4,0,168,0C121.6,0,79.6,18.8,49.2,49.2C18.8,79.6,0,121.6,0,168c0,46.4,18.8,88.4,49.2,118.8
-                      C79.6,317.2,121.6,336,168,336c46.4,0,88.4-18.8,118.8-49.2C317.2,256.4,336,214.4,336,168C336,121.6,317.2,79.6,286.8,49.2z
-                       M272.4,272.4c-26.8,26.8-63.6,43.2-104.4,43.2s-77.6-16.4-104.4-43.2C37.2,245.6,20.4,208.8,20.4,168S36.8,90.4,63.6,63.6
-                      C90.4,36.8,127.2,20.4,168,20.4s77.6,16.4,104.4,43.2c26.8,26.8,43.2,63.6,43.2,104.4S298.8,245.6,272.4,272.4z"></path>
-                  </g>
-                                <g><path d="M261.2,156c-0.8-0.8-2-2.4-3.2-4c-0.4-0.4-0.4-0.4-0.8-0.8c-1.2-1.2-2.4-2-4-2.8l-59.2-34c0,0-0.4,0-0.4-0.4L134,79.6
-                      c-5.2-3.2-11.2-3.6-16.8-2.4c-5.6,1.6-10.4,5.2-13.6,10.4c-1.2,1.6-1.6,3.6-2.4,5.2c-0.4,1.2-0.4,2.8-0.8,4.4c0,0.4,0,1.2,0,1.6
-                      V168v68.8c0,6,2.4,11.6,6.4,15.6s9.6,6.4,15.6,6.4c2,0,4.4-0.4,6.4-1.2s4-1.6,5.6-2.8l58.8-34l0.8-0.4l59.2-34
-                      c0.4,0,0.4-0.4,0.8-0.4c4.8-3.2,8.4-8,9.6-13.2C265.2,167.2,264.4,161.2,261.2,156z M244,168.4c0,0.4-0.4,0.8-0.8,0.8h-0.4
-                      L184,203.6l-0.4,0.4l-58.8,34c-0.4,0-0.4,0.4-0.8,0.4c0,0-0.4,0-0.4,0.4h-0.4c-0.4,0-0.8-0.4-1.2-0.4c-0.4-0.4-0.4-0.8-0.4-1.2
-                      V168V99.2v-0.4v-0.4c0.4-0.4,0.8-0.8,1.2-0.8c0.4,0,0.8,0,1.2,0l59.2,34l0.4,0.4l59.6,34.4l0.4,0.4l0.4,0.4
-                      C244,167.6,244,168,244,168.4z"></path>
-                                </g>
-                </svg>
-                            <span class="st-video-animaiton"><span></span></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="st_height_30 st_height_lg_30"></div>
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
@@ -559,10 +395,10 @@
         var myChart1 = new Chart(ctx1, {
             type: "line",
             data: {
-                labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
+                labels: {!! json_encode($xaxix) !!},
                 datasets: [{
-                    label: "Bandwidth Stats",
-                    data: [58.5, 180.1, 110.5, 300.2, 250.5, 400.7],
+                    label: "Audience",
+                    data: {!! json_encode($yaxix) !!},
                     backgroundColor: "transparent",
                     borderColor: $blue,
                     borderWidth: 3,

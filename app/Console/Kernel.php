@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\RenewCampaign;
+use App\Console\Commands\StoreTodaysPlaylist;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         RenewCampaign::class,
+        StoreTodaysPlaylist::class
     ];
 
     /**
@@ -26,7 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('inspire')->hourly();
-         $schedule->command('inspire')->hourly();
+         $schedule->command('campaigns:renew')->dailyAt('5:00:00');
+         $schedule->command('campaigns:store-todays-playlist')->dailyAt('5:00:00');
     }
 
     /**

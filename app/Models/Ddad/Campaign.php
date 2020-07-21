@@ -5,11 +5,13 @@ namespace App\Models\Ddad;
 use App\Ddad\Payment;
 use App\HourlyPlaylist;
 use App\Models\Location;
+use App\Models\PlayTime;
 use App\Models\User;
 use App\Package;
 use App\Placement;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -153,5 +155,54 @@ class Campaign extends Model
     public function getReceivedAmountAttribute()
     {
         return $this->payments->sum('amount');
+    }
+
+    public function getTotalPurchasedPlaytime()
+    {
+        return $this->package->duration * $this->getRunningDay();
+    }
+
+    public function getTotalPlayedTime()
+    {
+        return $this->playTimes()->where('play_time', '<', now())->sum('duration');
+    }
+
+    public function getTotalPurchasedFrequency()
+    {
+        return $this->dailyFrequency  * $this->getRunningDay();
+    }
+
+
+    public function getTotalFrequency()
+    {
+        return $this->playTimes()->where('play_time', '<', now())->count();
+    }
+
+    public function getRunningDay()
+    {
+        return $this->starting_date->diffInDays($this->ending_date);
+    }
+
+
+    public function playTimes()
+    {
+        return $this->hasMany(PlayTime::class);
+    }
+
+    public function totalVisit()
+    {
+        $locationIds = $this->locations->pluck('id')->join(',');
+        $end = now()->lt($this->ending_date) ? now() : $this->ending_date;
+        $sql = "SELECT sum(number_of_audience) as total_audience FROM audiences where shop_id in(SElECT id as s_id from shops where location_id in($locationIds)) && created_at > '$this->starting_date' && created_at < '$end'";
+
+        $result = DB::select(DB::raw($sql));
+        $totalAudience = (int) $result[0]->total_audience;
+
+        $campaignTotalPlayedTime = $this->getTotalPlayedTime();
+        $totalCampaignPlayedTime = PlayTime::where('play_time','>', $this->starting_date)->where('play_time', "<", $end)->sum('duration');
+
+        $campaignTotalAudience = ($campaignTotalPlayedTime/$totalCampaignPlayedTime) * $totalAudience;
+
+        return $campaignTotalAudience;
     }
 }
