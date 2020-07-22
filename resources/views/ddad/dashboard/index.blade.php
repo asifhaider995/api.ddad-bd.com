@@ -30,39 +30,36 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($campaigns as $campaign)
-                                <tr>
+                            @foreach($campaigns as $c)
+                                <tr style="cursor: pointer" class="clickable-row" data-href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">
                                     <td>
                                         <div class="st_table_media st_style1">
-                                            <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                                <img src="{{ asset('assets/img/products/product3.png') }}" alt="icon">
-                                            </a>
                                             <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ $campaign->title }}</a></h2>
+                                                <h2 class="st_media_title"><a href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">{{ $c->title }}</a></h2>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="st_table_media st_style1 st_type1">
                                             <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ intval($campaign->getTotalPlayedTime()/ 60) }}</a></h2>
-                                                <div class="st_media_subtitle">OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</div>
+                                                <h2 class="st_media_title"><a href="#">{{ intval($c->getTotalPlayedTime()/ 60) }}</a></h2>
+                                                <div class="st_media_subtitle">OF {{ intval($c->getTotalPurchasedPlaytime()) }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="st_table_media st_style1 st_type1">
                                             <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ $campaign->getTotalFrequency() }}</a></h2>
-                                                <div class="st_media_subtitle">OF {{ $campaign->getTotalPurchasedFrequency() }}</div>
+                                                <h2 class="st_media_title"><a href="#">{{ $c->getTotalFrequency() }}</a></h2>
+                                                <div class="st_media_subtitle">OF {{ $c->getTotalPurchasedFrequency() }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="st_table_text">{{ $campaign->totalVisit() }}</div>
+                                        <div class="st_table_text">{{ $c->totalVisit() }}</div>
                                     </td>
                                     <td>
-                                        @include('ddad.campaigns._status', ['status' => $campaign->status])
+                                        @include('ddad.campaigns._status', ['status' => $c->status])
                                     </td>
                                 </tr>
                             @endforeach
@@ -76,7 +73,11 @@
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
-                            <h2 class="st_card_title">Reprot</h2>
+                            <h2 class="st_card_title">Reprot
+                                @if($campaign)
+                                    of {{ $campaign->title }}
+                                @endif
+                            </h2>
                         </div>
                     </div>
                     <div class="st_card_body">
@@ -130,12 +131,12 @@
                                         <div class="st_chart_wrap_right">
                                             <div class="st_chart_counter st_style1 st_green_box st_radius_5">
                                                 <h3 class="st_chart_counter_title">TOTAL VISITS</h3>
-                                                <div class="st_chart_counter_number">2100</div>
+                                                <div class="st_chart_counter_number">{{ $totalVisit }}</div>
                                             </div>
                                             <div class="st_height_10 st_height_lg_10"></div>
                                             <div class="st_chart_counter st_style1 st_orange_box st_radius_5">
                                                 <h3 class="st_chart_counter_title">AVERAGE VISITS</h3>
-                                                <div class="st_chart_counter_number">2100</div>
+                                                <div class="st_chart_counter_number">{{ $averageVisit }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +173,7 @@
                                         </div>
                                         <div class="st_iconbox_meta">
                                             <div class="st_iconbox_title">Forecasted total audience</div>
-                                            <div class="st_iconbox_number st_purple_color">2100</div>
+                                            <div class="st_iconbox_number st_purple_color">{{ $forcastedTotal }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -546,6 +547,11 @@
             })
         }
 
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
 
     </script>
 @endpush

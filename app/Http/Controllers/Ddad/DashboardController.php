@@ -57,16 +57,44 @@ class DashboardController extends Controller
         $this->viewData['shop'] = Shop::find($request->shop_id);
 
         //Number of tv
+        $this->viewData['campaign'] = Campaign::find($request->campaign_id);
         $this->viewData['campaignIds'] = $request->campaign_id ? [$request->campaign_id] : $this->viewData['campaigns']->pluck('id');
         $this->viewData['shopIds'] = $this->getShopIds($this->viewData['zone'], $this->viewData['location'], $this->viewData['shop']);
         $this->viewData['numberOfTv'] = $this->getNumberOfTv($this->viewData['shopIds']);
-
 
         //Line chart
         $rb = in_array($request->rb, ['hourly', 'weekly', 'daily', 'monthly']) ? $request->rb : 'hourly';
         $this->viewData['range'] = $this->getTimeRange($rb);
         $this->viewData['xaxix'] = $this->getXAxix($rb, $this->viewData['range'])->toArray();
         $this->viewData['yaxix'] = $this->getYAxix($this->viewData['range'], $this->viewData['shopIds']);
+
+
+        //Calculate Total visit, Average vist, Forcasted total
+        if($this->viewData['campaign']) {
+            $this->viewData['totalVisit'] = $this->viewData['campaign']->totalVisit($this->viewData['shopIds']);
+            $temp = $this->viewData['campaign']->ending_date->lt(now()) ? $this->viewData['campaign']->ending_date : now();
+            $alreadyRunInDays = $this->viewData['campaign']->starting_date->diffInDays($temp) + 1;
+            $this->viewData['averageVisit'] = (int)  $this->viewData['totalVisit'] / $alreadyRunInDays;
+            $this->viewData['forcastedTotal'] = $this->viewData['averageVisit'] * $this->viewData['campaign']->getRunningDay();
+        } else {
+            $this->viewData['totalVisit'] = $this->viewData['campaigns']->map(function($campaign) {
+                return $campaign->totalVisit($this->viewData['shopIds']);
+            })->sum();
+
+            $alreadyRunInDays = $this->viewData['campaigns']->map(function($campaign) {
+                $temp = $campaign->ending_date->lt(now()) ? $campaign->ending_date : now();
+                $alreadyRunInDays = $campaign->starting_date->diffInDays($temp) + 1;
+                return $alreadyRunInDays;
+            })->sum();
+            $this->viewData['averageVisit'] = $alreadyRunInDays ? (int)  $this->viewData['totalVisit'] / $alreadyRunInDays : 0;
+            $totalCampaign = $this->viewData['campaigns']->count();
+
+            $this->viewData['forcastedTotal'] = $totalCampaign ?
+                $this->viewData['averageVisit'] * $this->viewData['campaigns']->map(function($campaign) {
+                    return $campaign->getRunningDay();
+                })->sum() / $totalCampaign
+                : 0;
+        }
 
         return view('ddad.dashboard.index', $this->viewData);
     }

@@ -189,20 +189,40 @@ class Campaign extends Model
         return $this->hasMany(PlayTime::class);
     }
 
-    public function totalVisit()
+    public function totalVisit($shopIds = null)
     {
-        $locationIds = $this->locations->pluck('id')->join(',');
         $end = now()->lt($this->ending_date) ? now() : $this->ending_date;
-        $sql = "SELECT sum(number_of_audience) as total_audience FROM audiences where shop_id in(SElECT id as s_id from shops where location_id in($locationIds)) && created_at > '$this->starting_date' && created_at < '$end'";
+        $dailyAudiences = [];
 
-        $result = DB::select(DB::raw($sql));
-        $totalAudience = (int) $result[0]->total_audience;
+        $start= $this->starting_date->clone()->startOfDay();
+        $end = $end->endOfDay();
 
-        $campaignTotalPlayedTime = $this->getTotalPlayedTime();
-        $totalCampaignPlayedTime = PlayTime::where('play_time','>', $this->starting_date)->where('play_time', "<", $end)->sum('duration');
+        while($start->lt($end)) {
+            $tempEnd = $start->clone()->endOfDay();
 
-        $campaignTotalAudience = ($campaignTotalPlayedTime/$totalCampaignPlayedTime) * $totalAudience;
+            $shopIdsStr = $locationIdsStr = null;
+            if(is_array($shopIds)) {
+                $shopIdsStr = join(',', $shopIds);
+                $sql = "SELECT sum(number_of_audience) as total_audience FROM audiences where shop_id in($shopIdsStr) && created_at > '$start' && created_at < '$tempEnd'";
+            } else{
+                $locationIdsStr = $this->locations->pluck('id')->join(',');
+                $sql = "SELECT sum(number_of_audience) as total_audience FROM audiences where shop_id in(SElECT id as s_id from shops where location_id in($locationIdsStr)) && created_at > '$start' && created_at < '$tempEnd'";
+            }
 
-        return $campaignTotalAudience;
+            if($shopIdsStr || $locationIdsStr) {
+                $result = DB::select(DB::raw($sql));
+                $totalAudience = (int) $result[0]->total_audience;
+            } else {
+                $totalAudience = 0;
+            }
+
+            $campaignTotalPlayedTime = $this->getTotalPlayedTime();
+            $totalCampaignPlayedTime = PlayTime::where('play_time','>=', $start)->where('play_time', "<=", $tempEnd)->sum('duration');
+            $totalCampaignPlayedTime = $totalCampaignPlayedTime < 1 ? 1 : $totalCampaignPlayedTime;
+
+            $dailyAudiences[] = ($campaignTotalPlayedTime/$totalCampaignPlayedTime) * $totalAudience;
+            $start->addDay();
+        }
+        return array_sum($dailyAudiences);
     }
 }
