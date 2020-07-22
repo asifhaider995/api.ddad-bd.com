@@ -43,72 +43,162 @@ class DashboardController extends Controller
         $today = $request->date ? Carbon::createFromFormat('Y-m-d', $request->date) : now();
         $campaignQuery = Campaign::between($today->clone()->startOfDay(), $today->clone()->endOfDay())->where('status', 'approved')->orderBy('primary_queue');
 
-//        if(!Auth::user()->isAdmin()) {
-//            $campaignQuery->where('client_id', Auth::user()->id());
-//        }
+        if(!Auth::user()->isAdmin()) {
+            $campaignQuery->where('client_id', Auth::user()->id());
+        }
 
-        $this->viewData['campaigns'] = $campaignQuery->get();
+        $this->viewData['campaigns'] = $campaignQuery->get()->filter(function($campaign) {
+            return $campaign->status == 'approved';
+        });
+
         $this->viewData['zones'] = Zone::all();
         $this->viewData['zone'] = Zone::find($request->zone_id);
         $this->viewData['location'] = Location::find($request->location_id);
         $this->viewData['shop'] = Shop::find($request->shop_id);
 
+        //Number of tv
+        $this->viewData['campaignIds'] = $request->campaign_id ? [$request->campaign_id] : $this->viewData['campaigns']->pluck('id');
+        $this->viewData['shopIds'] = $this->getShopIds($this->viewData['zone'], $this->viewData['location'], $this->viewData['shop']);
+        $this->viewData['numberOfTv'] = $this->getNumberOfTv($this->viewData['shopIds']);
+
 
         //Line chart
-        $rb = in_array($request->rb, ['hourly', 'weakly', 'daily', 'monthly']) ? $request->rb : 'hourly';
-        $this->viewData['xaxix'] = $this->getXAxix($rb);
-        $this->viewData['yaxix'] = $this->getYAxix($rb, $this->viewData['xaxix']);
+        $rb = in_array($request->rb, ['hourly', 'weekly', 'daily', 'monthly']) ? $request->rb : 'hourly';
+        $this->viewData['range'] = $this->getTimeRange($rb);
+        $this->viewData['xaxix'] = $this->getXAxix($rb, $this->viewData['range'])->toArray();
+        $this->viewData['yaxix'] = $this->getYAxix($this->viewData['range'], $this->viewData['shopIds']);
 
         return view('ddad.dashboard.index', $this->viewData);
     }
 
-    private function getYAxix($rb, $xaxix)
-    {
-        $results = [];
-        switch($rb) {
-            default: $df = '%h %p'; break;
-            case 'daily': $df = '%d'; break;
-            case 'monthly':$df = '%b'; break;
-            case 'weakly':$df = '%a'; break;
+    public function getShopIds($zone, $location, $shop) {
+        if($shop) {
+            return [ $shop->id ];
+        } else if($location) {
+            return $location->shops->pluck('id')->toArray();
+        } else if($zone){
+            return $zone->shops->pluck('id')->toArray();
         }
+        return Shop::all()->pluck('id');
+    }
 
-        foreach($xaxix as $xa) {
-            $query =  Audience::where(\DB::raw("DATE_FORMAT(created_at, '$df')"), $xa);
+
+    public function getNumberOfTv($shopIds)
+    {
+        $shops = Shop::whereIn('id', $shopIds)->get();
+        $totalTv = $shops->filter(function($shop) {
+            return $shop->device;
+        })->count();
+        $workingTv = $shops->filter(function($shop) {
+            return $shop->device && $shop->device->android_imei && $shop->device->tv_serial && !$shop->device->tvAlerts();
+        })->count();
+
+        return [$totalTv, $workingTv];
+    }
+
+    private function getYAxix($timeRange, $shops, $campaigns = null)
+    {
+        $maximum = $timeRange->count() - 1;
+        $results = [];
+
+        for($i = 0; $i < $maximum; $i++) {
+            $end = $timeRange[$i + 1];
+            $query = Audience::where('created_at', '>',  $timeRange[$i])
+                ->where('created_at', '<', $end->gt(now()) ? now() : $end);
+
+            if(is_array($campaigns)) {
+                $query->whereIn('campaign_id', $campaigns);
+            }
+
+            $query->whereIn('shop_id', $shops);
+
             $results[] = $query->sum('number_of_audience');
-        }
+
+            if($end->gt(now())) {
+                break;
+            }
+        };
 
         return $results;
     }
 
-    private function getXAxix($rb)
+    public function getXAxix($rb, $timeRange)
+    {
+        switch($rb) {
+            default:
+                $result = $timeRange->map(function($start) {
+                    return $start->format('h a');
+                });
+                $result->shift();
+                $result->prepend(now()->startOfDay()->addHour(7)->format('H a'));
+                break;
+            case 'daily':
+                $result = $timeRange->map(function($start) {
+                    return $start->format('d D');
+                });
+                break;
+            case 'monthly':
+                $result = $timeRange->map(function($start) {
+                    return $start->format('F');
+                });
+                break;
+            case 'weekly':
+                $i = 1;
+                $result = $timeRange->map(function($start) use(&$i) {
+                    return "Week " . ($i++);
+                });
+                break;
+        }
+        $result->pop();
+        return $result;
+    }
+
+    private function getTimeRange($rb)
     {
         $results = [];
 
         switch($rb) {
             default:
-                $range = CarbonPeriod::create('2018-01-01 07:00am', '1 hour', '2018-01-01 11:00pm');
-                foreach($range as $month)
-                    $results[] = $month->format('h A');
+                $results[] = now()->startOfDay();
+                $start = now()->startOfDay()->addHour(8);
+                $end = now()->startOfDay()->addHour(23);
+                while($start->lt($end)) {
+                    $results[] = $start->clone();
+                    $start->addHour();
+                }
+                $results[] = now()->startOfDay()->addDay();
                 break;
 
             case 'daily':
-                $range = CarbonPeriod::create('2018-01-01', '1 day', '2018-01-31');
-                foreach($range as $month)
-                    $results[] = $month->format('d');
+                $start = now()->startOfMonth();
+                $end = now()->startOfMonth()->addMonth();
+                while($start->lt($end)) {
+                    $results[] = $start->clone();
+                    $start->addDay();
+                }
+                $results[] = $end;
                 break;
-            case 'monthly':
-                $range = CarbonPeriod::create('2018-01-01', '1 month', '2018-12-31');
-                foreach($range as $month)
-                    $results[] = $month->format('M');
 
+            case 'monthly':
+                $start = now()->startOfYear();
+                $end = now()->startOfYear()->addYear();
+                while($start->lt($end)) {
+                    $results[] = $start->clone();
+                    $start->addMonth();
+                }
+                $results[] = $end;
                 break;
-            case 'weakly':
-                $range = CarbonPeriod::create('2018-01-06', '1 day', '2018-01-12');
-                foreach($range as $month)
-                    $results[] = $month->format('D');
+            case 'weekly':
+                $start = now()->startOfMonth();
+                $end = now()->startOfMonth()->addMonth();
+                while($start->lt($end)) {
+                    $results[] = $start->clone();
+                    $start->addWeek();
+                }
+                $results[] = $end;
                 break;
         }
 
-        return $results;
+        return collect($results);
     }
 }

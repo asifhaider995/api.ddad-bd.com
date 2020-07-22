@@ -18,7 +18,7 @@ class Device extends Model
 
     public function tvAlerts()
     {
-        return rand(0,2);
+        return $this->androidAlerts();
     }
 
     public function androidAlerts()

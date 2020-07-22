@@ -15,7 +15,64 @@
         </div>
         <div class="st_height_30 st_height_lg_30"></div>
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
+
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                    <div class="st_card_body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Campaigns</th>
+                                <th>Total payment (mins)</th>
+                                <th>Frequency</th>
+                                <th>Total visits</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($campaigns as $campaign)
+                                <tr>
+                                    <td>
+                                        <div class="st_table_media st_style1">
+                                            <a href="#" class="st_table_media_img st_box_md st_radius_5">
+                                                <img src="{{ asset('assets/img/products/product3.png') }}" alt="icon">
+                                            </a>
+                                            <div class="st_table_media_info">
+                                                <h2 class="st_media_title"><a href="#">{{ $campaign->title }}</a></h2>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="st_table_media st_style1 st_type1">
+                                            <div class="st_table_media_info">
+                                                <h2 class="st_media_title"><a href="#">{{ intval($campaign->getTotalPlayedTime()/ 60) }}</a></h2>
+                                                <div class="st_media_subtitle">OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="st_table_media st_style1 st_type1">
+                                            <div class="st_table_media_info">
+                                                <h2 class="st_media_title"><a href="#">{{ $campaign->getTotalFrequency() }}</a></h2>
+                                                <div class="st_media_subtitle">OF {{ $campaign->getTotalPurchasedFrequency() }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="st_table_text">{{ $campaign->totalVisit() }}</div>
+                                    </td>
+                                    <td>
+                                        @include('ddad.campaigns._status', ['status' => $campaign->status])
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="st_height_25 st_height_lg_25"></div>
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
@@ -136,7 +193,7 @@
                                         </div>
                                         <div class="st_iconbox_meta">
                                             <div class="st_iconbox_title">Active TV</div>
-                                            <div class="st_iconbox_number st_green_color">14/15</div>
+                                            <div class="st_iconbox_number st_green_color">{{ $numberOfTv[1] }}/{{ $numberOfTv[0] }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -145,62 +202,9 @@
                         <div class="st_height_20 st_height_lg_20"></div>
                     </div>
                 </div>
-                <div class="st_height_30 st_height_lg_30"></div>
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_card_body">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Campaigns</th>
-                                <th>Total payment (mins)</th>
-                                <th>Frequency</th>
-                                <th>Total visits</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($campaigns as $campaign)
-                                    <tr>
-                                    <td>
-                                        <div class="st_table_media st_style1">
-                                            <a href="#" class="st_table_media_img st_box_md st_radius_5">
-                                                <img src="{{ asset('assets/img/products/product3.png') }}" alt="icon">
-                                            </a>
-                                            <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ $campaign->title }}</a></h2>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="st_table_media st_style1 st_type1">
-                                            <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ intval($campaign->getTotalPlayedTime()/ 60) }}</a></h2>
-                                                <div class="st_media_subtitle">OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="st_table_media st_style1 st_type1">
-                                            <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ $campaign->getTotalFrequency() }}</a></h2>
-                                                <div class="st_media_subtitle">OF {{ $campaign->getTotalPurchasedFrequency() }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="st_table_text">{{ $campaign->totalVisit() }}</div>
-                                    </td>
-                                    <td>
-                                        @include('ddad.campaigns._status', ['status' => $campaign->status])
-                                    </td>
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div><!-- .col -->
+        </div>
+        <div class="row">
             <div class="col-lg-4">
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
@@ -240,86 +244,89 @@
                         </table>
                     </div>
                 </div>
-                <div class="st_height_30 st_height_lg_30"></div>
+            </div>
+            <div class="col-lg-4">
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_card_head">
-                        <div class="st_card_head_left">
-                            <h2 class="st_card_title">Location performance</h2>
-                        </div>
-                    </div>
-                    <div class="st_card_body">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Location</th>
-                                <th>Visits</th>
-                                <th>Progress</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>KALABA</td>
-                                <td>879</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_orange_bg " style="width: 50%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>DHANM</td>
-                                <td>852</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_purple_bg " style="width: 80%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="st_card_head">
+                    <div class="st_card_head_left">
+                        <h2 class="st_card_title">Location performance</h2>
                     </div>
                 </div>
-                <div class="st_height_30 st_height_lg_30"></div>
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_card_head">
-                        <div class="st_card_head_left">
-                            <h2 class="st_card_title">Shop Performance</h2>
-                        </div>
-                    </div>
-                    <div class="st_card_body">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Location</th>
-                                <th>Visits</th>
-                                <th>Progress</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>SHOP 1</td>
-                                <td>568</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_teal_bg " style="width: 50%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>SHOP 2</td>
-                                <td>256</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_pink_bg " style="width: 80%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="st_card_body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Visits</th>
+                            <th>Progress</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>KALABA</td>
+                            <td>879</td>
+                            <td>
+                                <div class="st_table_progress st_style1">
+                                    <div class="progress st_orange_bg " style="width: 50%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DHANM</td>
+                            <td>852</td>
+                            <td>
+                                <div class="st_table_progress st_style1">
+                                    <div class="progress st_purple_bg " style="width: 80%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card_head">
+                    <div class="st_card_head_left">
+                        <h2 class="st_card_title">Shop Performance</h2>
+                    </div>
+                </div>
+                <div class="st_card_body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Visits</th>
+                            <th>Progress</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>SHOP 1</td>
+                            <td>568</td>
+                            <td>
+                                <div class="st_table_progress st_style1">
+                                    <div class="progress st_teal_bg " style="width: 50%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SHOP 2</td>
+                            <td>256</td>
+                            <td>
+                                <div class="st_table_progress st_style1">
+                                    <div class="progress st_pink_bg " style="width: 80%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
         </div>
+
         <div class="st_height_50 st_height_lg_50"></div>
 
 @endsection
