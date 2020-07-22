@@ -18,7 +18,7 @@
             <div class="col-lg-12">
 
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_card_body">
+                    <div class="st_card_body" style="max-height: 210px; overflow-y:scroll">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -90,16 +90,18 @@
                                 @endforeach
                             </div>
 
-                            @if($zone)
+                            @if($zone )
 
                                 <div class="st_height_5 st_height_lg_5"></div>
                                 <div class="st_card_nav st_style1" style="overflow-x: scroll">
                                     @foreach($zone->locations as $l)
-                                        <a class="@if(optional($location)->id == $l->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $l->id]) }}">{{ $l->name }}</a>
+                                        @if(in_array($l->id, $locationIds))
+                                            <a class="@if(optional($location)->id == $l->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $l->id]) }}">{{ $l->name }}</a>
+                                        @endif
                                     @endforeach
                                 </div>
 
-                                @if($location)
+                                @if($location && Auth::user()->isAdmin())
                                     <div class="st_height_5 st_height_lg_5"></div>
                                     <div class="st_card_nav st_style1" style="overflow-x: scroll">
                                         @foreach($location->shops as $s)
@@ -142,7 +144,7 @@
                                     </div>
                                 </div><!-- .st_chart_box_left -->
                                 <div class="st_chart_box_right">
-                                    <div class="st_chart_title st_style1">Rate of audience in Zone A</div>
+                                    <div class="st_chart_title st_style1">{{ $title }}</div>
                                     <div class="st_height_10 st_height_lg_10"></div>
                                     <div class="st_chart_wrap st_style1" style="height:175px;">
                                         <canvas  id="st_chart3_1"></canvas>
@@ -354,6 +356,7 @@
         var $teal = "#5AC8FA";
         var $yellow = "#FFCC00";
         var $gray = "#8E8E93";
+           $gray = "#f3f3f3";
         // Base Color
         var $white = "#fff";
         var $black = "#000";
@@ -503,11 +506,11 @@
                 type: "doughnut",
                 data: {
                     datasets: [{
-                        data: [40, 60],
-                        backgroundColor: [$blue, $orange],
+                        data: [{{ $perform }}, {{ 100  - $perform }}],
+                        backgroundColor: [$orange, $gray],
                         borderWidth: 3,
                     }],
-                    labels: ["Item1 ", "Item2 "]
+                    labels: ["Performance", "NotPerform"]
                 },
                 options: {
                     cutoutPercentage: 75,

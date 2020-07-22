@@ -50,8 +50,24 @@ class DashboardController extends Controller
         $this->viewData['campaigns'] = $campaignQuery->get()->filter(function($campaign) {
             return $campaign->status == 'approved';
         });
+        if(Auth::user()->isAdmin()) {
+            $this->viewData['zones'] = Zone::all();
+            $this->viewData['locationIds'] = Location::all()->pluck('id')->toArray();
+        } else {
+            $temp = $this->viewData['campaigns']->pluck('locations')->map(function($l) {
+                return $l->pluck('id')->toArray();
+            })->toArray();
 
-        $this->viewData['zones'] = Zone::all();
+            $temp2 = $this->viewData['campaigns']->pluck('locations')->map(function($l) {
+                return $l->pluck('zone_id')->toArray();
+            })->toArray();
+
+            $this->viewData['locationIds'] = array_unique(array_merge(...$temp));
+            $this->viewData['zoneIds'] = array_unique(array_merge(...$temp2));
+
+            $this->viewData['zones'] = Zone::whereIn('id', $this->viewData['zoneIds'])->get();
+        }
+
         $this->viewData['zone'] = Zone::find($request->zone_id);
         $this->viewData['location'] = Location::find($request->location_id);
         $this->viewData['shop'] = Shop::find($request->shop_id);
@@ -76,7 +92,8 @@ class DashboardController extends Controller
             $alreadyRunInDays = $this->viewData['campaign']->starting_date->diffInDays($temp) + 1;
             $this->viewData['averageVisit'] = (int)  $this->viewData['totalVisit'] / $alreadyRunInDays;
             $this->viewData['forcastedTotal'] = $this->viewData['averageVisit'] * $this->viewData['campaign']->getRunningDay();
-        } else {
+        }
+        else {
             $this->viewData['totalVisit'] = $this->viewData['campaigns']->map(function($campaign) {
                 return $campaign->totalVisit($this->viewData['shopIds']);
             })->sum();
@@ -94,6 +111,56 @@ class DashboardController extends Controller
                     return $campaign->getRunningDay();
                 })->sum() / $totalCampaign
                 : 0;
+        }
+
+        // Performance calculation
+        if(($this->viewData['location'] || $this->viewData['zone'] || $this->viewData['shop']) && $this->viewData['shopIds']) {
+
+            switch($rb) {
+                case 'hourly':
+                        $start = now()->startOfHour();
+                        $end   = now()->endOfHour();
+                    break;
+
+                case 'monthly':
+                    $start = now()->startOfMonth();
+                    $end   = now()->endOfMonth();
+                    break;
+
+                case 'weekly':
+                    $start = now()->startOfWeek();
+                    $end   = now()->endOfWeek();
+                    break;
+
+                case 'daily':
+                        $start = now()->startOfDay();
+                        $end = now()->endOfDay();
+                    break;
+            }
+
+            $totalAudienceQuery = Audience::where('created_at', '>=', $start)->where('created_at', '<=', $end);
+            $performanceAudienceQuery = Audience::where('created_at', '>=', $start)->where('created_at', '<=', $end);
+            if($this->viewData['campaign']) {
+                $totalAudienceQuery->where('campaign_id', $this->viewData['campaign']);
+                $performanceAudienceQuery->where('campaign_id', $this->viewData['campaign']);
+            }
+            $performanceAudienceQuery->whereIn('shop_id', $this->viewData['shopIds']);
+
+            $performanceAudience = $performanceAudienceQuery->sum('number_of_audience');
+            $totalAudience       = $totalAudienceQuery->sum('number_of_audience');
+
+            $this->viewData['perform'] = (int) ($totalAudience ? $performanceAudience * 100 / $totalAudience : 0);
+            $this->viewData['perform'] = min(100, max($this->viewData['perform'], 0));
+            if($this->viewData['shop']) {
+                $this->viewData['title'] = "Rate of audience in " . $this->viewData['shop']->name;
+            } elseif($this->viewData['location']){
+                $this->viewData['title'] = "Rate of audience in " . $this->viewData['location']->name;
+            }else {
+                $this->viewData['title'] = "Rate of audience in " . $this->viewData['zone']->name;
+            }
+        } else {
+            $this->viewData['perform'] = 0;
+            $this->viewData['title'] = "";
         }
 
         return view('ddad.dashboard.index', $this->viewData);
