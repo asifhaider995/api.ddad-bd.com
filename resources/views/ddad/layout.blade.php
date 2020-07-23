@@ -77,7 +77,7 @@
                 </div>
                 <div class="st_footer_right">
                     <div class="st_footer_nav">
-                        <a href="#">Developed by Laralink Tech Ltd</a>
+                        <a href="https://laralink.com">Developed by Laralink Limited</a>
                     </div>
                 </div>
             </div>

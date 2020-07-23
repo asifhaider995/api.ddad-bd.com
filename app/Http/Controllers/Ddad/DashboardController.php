@@ -163,7 +163,67 @@ class DashboardController extends Controller
             $this->viewData['title'] = "Not available";
         }
 
+
+
+        //Calculate performance
+        $this->viewData['zonePerformances'] = $this->getZonePerformances();
+        $this->viewData['locationPerformances'] = $this->getLocationPerformances();
+        $this->viewData['shopPerformances'] = $this->getShopPerformances();
+
         return view('ddad.dashboard.index', $this->viewData);
+    }
+
+
+    private function getZonePerformances()
+    {
+        $temp = Zone::all()->map(function($zone){
+            $shopIds = $zone->shops->pluck('id');
+            return [
+                'visits' => Audience::whereIn('shop_id', $shopIds)->where('created_at', ">", now()->startOfMonth())->where('created_at', '<', now()->endOfMonth())->sum('number_of_audience'),
+                'zone'   => $zone
+            ];
+        });
+        $tempMax = $temp->max('visits') ?: 1;
+
+        return $temp->map(function($performance) use($tempMax) {
+            $performance['percentage'] = intval(($performance['visits']/$tempMax) * 100);
+            return $performance;
+        })->sortByDesc('percentage');
+    }
+
+
+    private function getLocationPerformances()
+    {
+        $temp = Location::all()->map(function($location){
+            $shopIds = $location->shops->pluck('id');
+            return [
+                'visits' => Audience::whereIn('shop_id', $shopIds)->where('created_at', ">", now()->startOfMonth())->where('created_at', '<', now()->endOfMonth())->sum('number_of_audience'),
+                'location'   => $location
+            ];
+        });
+        $tempMax = $temp->max('visits') ?: 1;
+
+        return $temp->map(function($performance) use($tempMax) {
+            $performance['percentage'] = intval(($performance['visits']/$tempMax) * 100);
+            return $performance;
+        })->sortByDesc('percentage');
+    }
+
+
+    private function getShopPerformances()
+    {
+        $temp = Shop::all()->map(function($shop){
+            return [
+                'visits' => Audience::where('shop_id', $shop->id)->where('created_at', ">", now()->startOfMonth())->where('created_at', '<', now()->endOfMonth())->sum('number_of_audience'),
+                'shop'   => $shop
+            ];
+        });
+        $tempMax = $temp->max('visits') ?: 1;
+
+        return $temp->map(function($performance) use($tempMax) {
+            $performance['percentage'] = intval(($performance['visits']/$tempMax) * 100);
+            return $performance;
+        })->sortByDesc('percentage');
     }
 
     public function getShopIds($zone, $location, $shop) {

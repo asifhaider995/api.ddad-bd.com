@@ -216,8 +216,13 @@
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Zone performance</h2>
                         </div>
+                        <div class="st_card_head_right colps">
+                            <a href="#" class="show-full-list">
+                                <span class="material-icons">keyboard_arrow_down</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="st_card_body">
+                    <div class="st_card_body performance-table clp">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -227,24 +232,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Zone A</td>
-                                <td>500</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_blue_bg " style="width: 50%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Zone B</td>
-                                <td>500</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_green_bg " style="width: 80%"></div>
-                                    </div>
-                                </td>
-                            </tr>
+                                @foreach($zonePerformances as $performance)
+                                    <tr>
+                                        <td>{{ $performance['zone']->name }}</td>
+                                        <td>{{ $performance['visits'] }}</td>
+                                        <td>
+                                            <div class="st_table_progress st_style1">
+                                                <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -256,8 +254,13 @@
                     <div class="st_card_head_left">
                         <h2 class="st_card_title">Location performance</h2>
                     </div>
+                    <div class="st_card_head_right colps">
+                        <a href="#" class="show-full-list">
+                            <span class="material-icons">keyboard_arrow_down</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="st_card_body">
+                <div class="st_card_body performance-table clp">
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -267,24 +270,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>KALABA</td>
-                            <td>879</td>
-                            <td>
-                                <div class="st_table_progress st_style1">
-                                    <div class="progress st_orange_bg " style="width: 50%"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>DHANM</td>
-                            <td>852</td>
-                            <td>
-                                <div class="st_table_progress st_style1">
-                                    <div class="progress st_purple_bg " style="width: 80%"></div>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach($locationPerformances as $performance)
+                            <tr>
+                                <td>{{ $performance['location']->name }}</td>
+                                <td>{{ $performance['visits'] }}</td>
+                                <td>
+                                    <div class="st_table_progress st_style1">
+                                        <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -296,8 +293,13 @@
                     <div class="st_card_head_left">
                         <h2 class="st_card_title">Shop Performance</h2>
                     </div>
+                    <div class="st_card_head_right colps">
+                        <a href="#" class="show-full-list">
+                            <span class="material-icons">keyboard_arrow_down</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="st_card_body">
+                <div class="st_card_body performance-table clp">
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -307,24 +309,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>SHOP 1</td>
-                            <td>568</td>
-                            <td>
-                                <div class="st_table_progress st_style1">
-                                    <div class="progress st_teal_bg " style="width: 50%"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>SHOP 2</td>
-                            <td>256</td>
-                            <td>
-                                <div class="st_table_progress st_style1">
-                                    <div class="progress st_pink_bg " style="width: 80%"></div>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach($shopPerformances as $performance)
+                            <tr>
+                                <td>{{ $performance['shop']->name }}</td>
+                                <td>{{ $performance['visits'] }}</td>
+                                <td>
+                                    <div class="st_table_progress st_style1">
+                                        <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -538,6 +533,13 @@
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
+            });
+
+            $('.show-full-list').click(function (event) {
+                event.preventDefault();
+                $(this).toggleClass('active');
+
+                $(this).closest('.st_card_head').siblings('.performance-table').toggleClass('clp')
             });
         });
 
