@@ -160,7 +160,7 @@ class DashboardController extends Controller
             }
         } else {
             $this->viewData['perform'] = 0;
-            $this->viewData['title'] = "";
+            $this->viewData['title'] = "Not available";
         }
 
         return view('ddad.dashboard.index', $this->viewData);

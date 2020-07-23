@@ -4706,6 +4706,11 @@ select.form-control[multiple] {
     line-height: 1.6em;
     padding: 2px 8px;
     border-left: 1px solid #e1e4e8; }
+.st_chart_nav.st_style1 a.active{
+    background-color: #5856D6;
+    color: #fff;
+    border-radius: 3px;
+}
     .st_chart_nav.st_style1 a:first-child {
       border-left: 0; }
 
