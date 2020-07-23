@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="st_card_body">
-                        <div class="st_height_25 st_height_lg_25"></div>
+                        <div class="st_height_15 st_height_lg_15"></div>
                         <div class="st_padd_lr_25">
                             <div class="st_card_nav st_style1">
                                 <a href="{{ route('dashboard.index') }}" class="@if(!$zone) active @endif">All</a>
@@ -92,7 +92,6 @@
 
                             @if($zone )
 
-                                <div class="st_height_5 st_height_lg_5"></div>
                                 <div class="st_card_nav st_style1" style="overflow-x: scroll">
                                     @foreach($zone->locations as $l)
                                         @if(in_array($l->id, $locationIds))
@@ -102,7 +101,6 @@
                                 </div>
 
                                 @if($location && Auth::user()->isAdmin())
-                                    <div class="st_height_5 st_height_lg_5"></div>
                                     <div class="st_card_nav st_style1" style="overflow-x: scroll">
                                         @foreach($location->shops as $s)
                                             <a class="@if(optional($shop)->id == $s->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $location->id, 'shop_id' => $s->id]) }}">{{ $s->name }}</a>
@@ -144,10 +142,14 @@
                                     </div>
                                 </div><!-- .st_chart_box_left -->
                                 <div class="st_chart_box_right">
-                                    <div class="st_chart_title st_style1">{{ $title }}</div>
+                                    <div class="st_chart_title st_style1">RATE OF AUDIENCE</div>
                                     <div class="st_height_10 st_height_lg_10"></div>
                                     <div class="st_chart_wrap st_style1" style="height:175px;">
                                         <canvas  id="st_chart3_1"></canvas>
+                                        <div class="st_doughnut_center">
+                                            <div class="st_doughnut_percentage">{{ $perform }}%</div>
+                                            <div class="st_doughnut_title">{{ $title }}</div>
+                                        </div>
                                     </div>
                                 </div><!-- .st_chart_box_right -->
                             </div>
@@ -528,24 +530,7 @@
                         animateScale: true,
                         animateRotate: true
                     },
-                    tooltips: {
-                        displayColors: false,
-                        mode: "nearest",
-                        intersect: false,
-                        position: "nearest",
-                        xPadding: 8,
-                        yPadding: 8,
-                        caretPadding: 8,
-                        backgroundColor: $white,
-                        cornerRadius: 4,
-                        titleFontSize: 13,
-                        titleFontStyle: "normal",
-                        bodyFontSize: 13,
-                        titleFontColor: $black1,
-                        bodyFontColor: $black2,
-                        borderWidth: 1,
-                        borderColor: $black4
-                    }
+                    tooltips: false
                 }
             })
         }

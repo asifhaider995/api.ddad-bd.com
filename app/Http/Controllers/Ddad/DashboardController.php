@@ -90,7 +90,7 @@ class DashboardController extends Controller
             $this->viewData['totalVisit'] = $this->viewData['campaign']->totalVisit($this->viewData['shopIds']);
             $temp = $this->viewData['campaign']->ending_date->lt(now()) ? $this->viewData['campaign']->ending_date : now();
             $alreadyRunInDays = $this->viewData['campaign']->starting_date->diffInDays($temp) + 1;
-            $this->viewData['averageVisit'] = (int)  $this->viewData['totalVisit'] / $alreadyRunInDays;
+            $this->viewData['averageVisit'] = (int)  ($this->viewData['totalVisit'] / $alreadyRunInDays);
             $this->viewData['forcastedTotal'] = $this->viewData['averageVisit'] * $this->viewData['campaign']->getRunningDay();
         }
         else {
@@ -103,7 +103,7 @@ class DashboardController extends Controller
                 $alreadyRunInDays = $campaign->starting_date->diffInDays($temp) + 1;
                 return $alreadyRunInDays;
             })->sum();
-            $this->viewData['averageVisit'] = $alreadyRunInDays ? (int)  $this->viewData['totalVisit'] / $alreadyRunInDays : 0;
+            $this->viewData['averageVisit'] = $alreadyRunInDays ? (int)  ($this->viewData['totalVisit'] / $alreadyRunInDays) : 0;
             $totalCampaign = $this->viewData['campaigns']->count();
 
             $this->viewData['forcastedTotal'] = $totalCampaign ?
@@ -152,11 +152,11 @@ class DashboardController extends Controller
             $this->viewData['perform'] = (int) ($totalAudience ? $performanceAudience * 100 / $totalAudience : 0);
             $this->viewData['perform'] = min(100, max($this->viewData['perform'], 0));
             if($this->viewData['shop']) {
-                $this->viewData['title'] = "Rate of audience in " . $this->viewData['shop']->name;
+                $this->viewData['title'] =  $this->viewData['shop']->name;
             } elseif($this->viewData['location']){
-                $this->viewData['title'] = "Rate of audience in " . $this->viewData['location']->name;
+                $this->viewData['title'] = $this->viewData['location']->name;
             }else {
-                $this->viewData['title'] = "Rate of audience in " . $this->viewData['zone']->name;
+                $this->viewData['title'] = $this->viewData['zone']->name;
             }
         } else {
             $this->viewData['perform'] = 0;
