@@ -16,7 +16,6 @@
         <div class="st_height_30 st_height_lg_30"></div>
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_body" style="max-height: 210px; overflow-y:scroll">
                         <table class="table table-hover">
@@ -68,8 +67,8 @@
                         </table>
                     </div>
                 </div>
-
-                <div class="st_height_25 st_height_lg_25"></div>
+            </div><!-- .col -->
+            <div class="col-lg-8">
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
@@ -92,7 +91,7 @@
 
                             @if($zone )
 
-                                <div class="st_card_nav st_style1" style="overflow-x: scroll">
+                                <div class="st_card_nav st_style1">
                                     @foreach($zone->locations as $l)
                                         @if(in_array($l->id, $locationIds))
                                             <a class="@if(optional($location)->id == $l->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $l->id]) }}">{{ $l->name }}</a>
@@ -110,7 +109,7 @@
                             @endif
 
 
-                            <div class="st_height_25 st_height_lg_25"></div>
+                            <div class="st_height_20 st_height_lg_20"></div>
                             <div class="st_chart_box st_style1">
                                 <div class="st_chart_box_left">
                                     <div class="st_chart_title st_style1">Visits</div>
@@ -122,19 +121,18 @@
                                                     <a class="@if(in_array(request()->rb, ['daily','weekly','monthly'])) @if(request()->rb == $rb) active @endif @elseif($rb == 'hourly') active @endif" href="{{ route('dashboard.index', ['zone_id' => optional($zone)->id, 'location_id' => optional($location)->id, 'shop_id' => optional($shop)->id, 'rb'=> $rb]) }}">{{ ucfirst($rb) }}</a>
                                                 @endforeach
                                             </div>
-                                            <div style="overflow-y: scroll; max-width: 100%">
-                                                <div style="height:250px; width:600px">
+                                            <div>
+                                                <div style="height:150px">
                                                     <canvas  id="st_chart5_4"></canvas>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="st_chart_wrap_right">
-                                            <div class="st_chart_counter st_style1 st_green_box st_radius_5">
+                                            <div class="st_chart_counter st_style1 st_purple_box st_radius_5">
                                                 <h3 class="st_chart_counter_title">TOTAL VISITS</h3>
                                                 <div class="st_chart_counter_number">{{ $totalVisit }}</div>
                                             </div>
-                                            <div class="st_height_10 st_height_lg_10"></div>
-                                            <div class="st_chart_counter st_style1 st_orange_box st_radius_5">
+                                            <div class="st_chart_counter st_style1 st_purple_box st_radius_5">
                                                 <h3 class="st_chart_counter_title">AVERAGE VISITS</h3>
                                                 <div class="st_chart_counter_number">{{ $averageVisit }}</div>
                                             </div>
@@ -204,12 +202,76 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="st_height_20 st_height_lg_20"></div>
+                        <div class="st_height_15 st_height_lg_15"></div>
                     </div>
                 </div>
-            </div><!-- .col -->
-        </div>
-        <div class="row">
+            </div>
+            <div class="col-lg-4">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                    <div class="st_card_head">
+                        <div class="st_card_head_left">
+                            <h2 class="st_card_title">Campaign progress</h2>
+                        </div>
+                    </div>
+                    <div class="st_card_body performance-table clp st_padd_lr_25">
+                        <div class="st_height_40 st_height_lg_30"></div>
+                        <div class="st_campaign_progress">
+                            <div class="st_campaign_progress_icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg>
+                            </div>
+                            <div class="st_table_progress st_style1">
+                                <div class="progress st_blue_bg" style="width: 50%"></div>
+                            </div>
+                            <div class="st_progress_per">50%</div>
+                        </div>
+                        <div class="st_height_40 st_height_lg_30"></div>
+                    </div>
+                </div>
+                <div class="st_height_30 st_height_lg_30"></div>
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                    <div class="st_card_head">
+                        <div class="st_card_head_left">
+                            <h2 class="st_card_title">Campaign progress</h2>
+                        </div>
+                    </div>
+                    <div class="st_card_body performance-table clp st_padd_lr_25">
+                        <div class="st_height_40 st_height_lg_30"></div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="st_sp_progress">
+                                    <div class="st_sp_progress_subtitle">TIME (S)</div>
+                                    <h3 class="st_sp_progress_title">110 <span>OF 900</span></h3>
+                                    <div class="st_table_progress st_style1">
+                                        <div class="progress st_gradient1" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="st_sp_progress">
+                                    <div class="st_sp_progress_subtitle">FREQUENCY</div>
+                                    <h3 class="st_sp_progress_title">110 <span>OF 900</span></h3>
+                                    <div class="st_table_progress st_style1">
+                                        <div class="progress st_gradient1" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="st_sp_progress">
+                                    <div class="st_sp_progress_subtitle">COST CONSUMPTION</div>
+                                    <h3 class="st_sp_progress_title">110 <span>OF 900</span></h3>
+                                    <div class="st_table_progress st_style1">
+                                        <div class="progress st_gradient1" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="st_cost_per_min">Cost Per Minute<span>100 BDT</span></div>
+                        <div class="st_height_40 st_height_lg_30"></div>
+                    </div>
+                </div>
+
+
+            </div>
             <div class="col-lg-4">
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
@@ -398,8 +460,8 @@
 
 
     // Chart Style5_4
-    if ($.exists("#st_chart5_4")) {
-        var ctx1 = document.querySelector("#st_chart5_4").getContext('2d');
+    if ($.exists(".st_gray_bg #st_chart5_4")) {
+        var ctx1 = document.querySelector(".st_gray_bg #st_chart5_4").getContext('2d');
         var myChart1 = new Chart(ctx1, {
             type: "line",
             data: {
@@ -408,7 +470,7 @@
                     label: "Audience",
                     data: {!! json_encode($yaxix) !!},
                     backgroundColor: "transparent",
-                    borderColor: $blue,
+                    borderColor: "#3EDAD8",
                     borderWidth: 3,
                     lineTension: 0,
                     pointBackgroundColor: $white,
@@ -490,22 +552,159 @@
         });
     }
 
-
+    // Chart Dark Style5_4
+    if ($.exists(".st_dark_bg #st_chart5_4")) {
+        var ctx1 = document.querySelector(".st_dark_bg #st_chart5_4").getContext('2d');
+        var myChart1 = new Chart(ctx1, {
+            type: "line",
+            data: {
+                labels: {!! json_encode($xaxix) !!},
+                datasets: [{
+                    label: "Audience",
+                    data: {!! json_encode($yaxix) !!},
+                    backgroundColor: "transparent",
+                    borderColor: "#3EDAD8",
+                    borderWidth: 3,
+                    lineTension: 0,
+                    pointBackgroundColor: $white,
+                    pointDotRadius: 10
+                }]
+            },
+            options: {
+                title: {
+                    display: false
+                },
+                legend: {
+                    display: false
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: false,
+                tooltips: {
+                    displayColors: false,
+                    mode: "nearest",
+                    intersect: false,
+                    position: "nearest",
+                    xPadding: 8,
+                    yPadding: 8,
+                    caretPadding: 8,
+                    backgroundColor: $white,
+                    cornerRadius: 4,
+                    titleFontSize: 13,
+                    titleFontStyle: "normal",
+                    bodyFontSize: 13,
+                    titleFontColor: $black1,
+                    bodyFontColor: $black2,
+                    borderWidth: 1,
+                    borderColor: $black4,
+                    callbacks: {
+                        // use label callback to return the desired label
+                        label: function(tooltipItem, data) {
+                            return tooltipItem.xLabel + ": " + tooltipItem.yLabel + "k";
+                        },
+                        // remove title
+                        title: function(tooltipItem, data) {
+                            return;
+                        }
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontColor: "rgba(255, 255, 255, 0.4)",
+                            padding: 15,
+                            beginAtZero: true,
+                            autoSkip: false,
+                            maxTicksLimit: 4
+                        },
+                        gridLines: {
+                            color: "rgba(255, 255, 255, 0.1)",
+                            zeroLineWidth: 1,
+                            zeroLineColor: "rgba(255, 255, 255, 0.1)",
+                            drawBorder: false,
+                            tickMarkLength: 0
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontColor: "rgba(255, 255, 255, 1)",
+                            padding: 5,
+                            beginAtZero: true,
+                            autoSkip: false,
+                            maxTicksLimit: 4
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 10,
+                        bottom: 0
+                    }
+                }
+            }
+        });
+    }
 
 
 
 
 
         // Chart Style3_1
-        if ($.exists("#st_chart3_1")) {
-            var ctx2 = document.querySelector("#st_chart3_1");
+        if ($.exists(".st_gray_bg #st_chart3_1")) {
+            var ctx2 = document.querySelector(".st_gray_bg #st_chart3_1");
             var myChart2 = new Chart(ctx2, {
                 type: "doughnut",
                 data: {
                     datasets: [{
                         data: [{{ $perform }}, {{ 100  - $perform }}],
-                        backgroundColor: [$orange, $gray],
-                        borderWidth: 3,
+                        backgroundColor: ["#3EDAD8", $gray],
+                        borderWidth: 0,
+                    }],
+                    labels: ["Performance", "NotPerform"]
+                },
+                options: {
+                    cutoutPercentage: 75,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false,
+                        position: "top"
+                    },
+                    title: {
+                        display: false,
+                        text: "Technology"
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    },
+                    tooltips: false
+                }
+            })
+        }
+
+        // Chart Style3_1
+        if ($.exists(".st_dark_bg #st_chart3_1")) {
+            var ctx2 = document.querySelector(".st_dark_bg #st_chart3_1");
+            var myChart2 = new Chart(ctx2, {
+                type: "doughnut",
+                data: {
+                    datasets: [{
+                        data: [{{ $perform }}, {{ 100  - $perform }}],
+                        backgroundColor: ["#3EDAD8", "#00AECA"],
+                        borderWidth: 0,
                     }],
                     labels: ["Performance", "NotPerform"]
                 },

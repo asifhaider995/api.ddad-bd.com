@@ -414,3 +414,31 @@ hr {
         }
     }
 }
+
+
+.st_card_body.performance-table.clp tbody tr{
+    display:none
+}
+.st_card_body.performance-table.clp tbody tr:first-child,
+.st_card_body.performance-table.clp tbody tr:last-child
+{
+    display:table-row;
+}
+
+.colps.st_card_head_right {
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+}
+.show-full-list{
+    font-size: 30px;
+}
+.show-full-list.active {
+    transform: rotate(180deg);
+    transition: all 0.3s ease;
+}
+
+.st_card_body.performance-table {
+    max-height: 250px;
+    overflow-y: scroll;
+}
