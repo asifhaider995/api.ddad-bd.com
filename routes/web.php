@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')->name('abc');
-Route::view('/home', 'home')->name('home')->middleware('auth');
+Route::redirect('/', '/login');
+Route::redirect('/home', '/ddad/dashboard');
 
-
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::middleware(['web', 'auth'])
     ->prefix('configuration')

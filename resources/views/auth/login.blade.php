@@ -37,11 +37,11 @@
                     <input class="custom-control-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                     <label class="custom-control-label" for="remember">Remember me</label>
                 </div>
-                @if (Route::has('password.request'))
-                    <a class="st_form_link" href="{{ route('password.request') }}">
-                        {{ __('Forgot Your Password?') }}
-                    </a>
-                @endif
+{{--                @if (Route::has('password.request'))--}}
+{{--                    <a class="st_form_link" href="{{ route('password.request') }}">--}}
+{{--                        {{ __('Forgot Your Password?') }}--}}
+{{--                    </a>--}}
+{{--                @endif--}}
             </div>
             <button type="submit" class="btn btn-primary btn-lg w-100">Log In</button>
 
