@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Ddad\Campaign;
 use App\Models\Setting;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class RenewCampaign extends Command
 {
@@ -40,8 +41,14 @@ class RenewCampaign extends Command
     public function handle()
     {
         $renewableCampaigns = Campaign::where('status', 'approved')->where('auto_renew', 1)->where('ending_date', '<', now())->get();
+        $msg = sprintf("Renewing %d campaign", $renewableCampaigns->count());
+        Log::info($msg);
+        $this->info($msg);
         foreach($renewableCampaigns as $renewableCampaign) {
             $renewableCampaign->renew();
+            $msg = sprintf("Renewing Campaign:[%s], %s", $renewableCampaign->id, $renewableCampaign->title));
+            $this->info($msg);
+            Log::info($msg);
         }
     }
 }
