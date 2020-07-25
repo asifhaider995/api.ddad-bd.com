@@ -50,5 +50,9 @@ class RenewCampaign extends Command
             $this->info($msg);
             Log::info($msg);
         }
+
+        $msg = "Campaign renew finished";
+        Log::info($msg);
+        $this->info($msg);
     }
 }

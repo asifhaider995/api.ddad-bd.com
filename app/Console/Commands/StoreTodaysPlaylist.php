@@ -43,6 +43,10 @@ class StoreTodaysPlaylist extends Command
      */
     public function handle()
     {
+        $msg = "Today's playlist already generated";
+        Log::info($msg);
+        $this->info($msg);
+
         if(PlayTime::whereDate('created_at', Carbon::today())->count()) {
             Log::info("Today's playlist already generated");
             $this->info("Today's playlist already generated");
@@ -62,5 +66,10 @@ class StoreTodaysPlaylist extends Command
             }
             $sec+= $play['duration'];
         }
+
+
+        $msg = "Today's playlist generation finished";
+        Log::info($msg);
+        $this->info($msg);
     }
 }
