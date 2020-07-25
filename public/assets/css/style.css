@@ -7261,7 +7261,7 @@ select.form-control[multiple] option {
 }
 .st_cost_per_min {
     text-align: center;
-    font-size: 22px;
+    font-size: 17px;
     text-transform: uppercase;
     font-weight: 600;
     display: flex;

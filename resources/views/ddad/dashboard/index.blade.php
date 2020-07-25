@@ -7,7 +7,6 @@
             </div>
             <div class="st_page_header_right">
                 <div class="st_page_header_btn_group">
-                    <a href="#" class="btn change-to-dark btn-outline-light st_icon_btn change-mode"><i class="material-icons">refresh</i><span>Dark mode</span></a>
                     <a href="{{ route('dashboard.forcast') }}" class="btn btn-outline-light"><i class="material-icons-outlined">analytics</i>Today</a>
                     <a href="{{ route('dashboard.playlist') }}" class="btn btn-primary"><i class="material-icons-outlined">queue_music</i>Playlist</a>
                 </div>
@@ -89,7 +88,7 @@
                                 <div class="st_chart_box_right">
                                     <div class="st_chart_title st_style1">RATE OF AUDIENCE</div>
                                     <div class="st_height_10 st_height_lg_10"></div>
-                                    <div class="st_chart_wrap st_style1" style="height:175px;">
+                                    <div class="st_chart_wrap st_style1" style="height:120px;">
                                         <canvas  id="st_chart3_1"></canvas>
                                         <div class="st_doughnut_center">
                                             <div class="st_doughnut_percentage">{{ $perform }}%</div>
@@ -208,14 +207,15 @@
 
             </div>
             <div class="col-lg-4">
+                @if($campaign)
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Campaign progress</h2>
                         </div>
                     </div>
-                    <div class="st_card_body performance-table clp st_padd_lr_25">
-                        <div class="st_height_40 st_height_lg_30"></div>
+                    <div class="st_card_body st_padd_lr_25">
+                        <div class="st_height_15 st_height_lg_15"></div>
                         <div class="st_campaign_progress">
                             <div class="st_campaign_progress_icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg>
@@ -225,18 +225,8 @@
                             </div>
                             <div class="st_progress_per">50%</div>
                         </div>
-                        <div class="st_height_40 st_height_lg_30"></div>
-                    </div>
-                </div>
-                <div class="st_height_30 st_height_lg_30"></div>
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_card_head">
-                        <div class="st_card_head_left">
-                            <h2 class="st_card_title">Campaign progress</h2>
-                        </div>
-                    </div>
-                    <div class="st_card_body performance-table clp st_padd_lr_25">
-                        <div class="st_height_40 st_height_lg_30"></div>
+                        <div class="st_height_15 st_height_lg_15"></div>
+<hr>                    <div class="st_height_15 st_height_lg_15"></div>
                         <div class="row">
                             <div class="col-4">
                                 <div class="st_sp_progress">
@@ -267,11 +257,12 @@
                             </div>
                         </div>
                         <div class="st_cost_per_min">Cost Per Minute<span>100 BDT</span></div>
-                        <div class="st_height_40 st_height_lg_30"></div>
+                        <div class="st_height_20 st_height_lg_20"></div>
                     </div>
                 </div>
-
                 <div class="st_height_15 st_height_lg_15"></div>
+                @endif
+
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
@@ -396,7 +387,9 @@
 
 @push('header')
 <style type="text/css">
-
+    .st_dark_bg table{
+        background-color: #111;
+    }
 </style>
 @endpush
 
@@ -709,7 +702,7 @@
                 data: {
                     datasets: [{
                         data: [{{ $perform }}, {{ 100  - $perform }}],
-                        backgroundColor: ["#3EDAD8", "#00AECA"],
+                        backgroundColor: ["#3EDAD8", "#eee"],
                         borderWidth: 0,
                     }],
                     labels: ["Performance", "NotPerform"]
@@ -745,20 +738,6 @@
                 $(this).toggleClass('active');
 
                 $(this).closest('.st_card_head').siblings('.performance-table').toggleClass('clp')
-            });
-
-            $('.change-mode').click(function() {
-                var todark = $(this).hasClass('change-to-dark');
-                if(todark) {
-                    $('body').addClass('st_dark_bg');
-                    $('body').removeClass('st_gray_bg');
-                    $('span', this).text('Light mode')
-                } else {
-                    $('body').addClass('st_gray_bg');
-                    $('body').removeClass('st_dark_bg');
-                    $('span', this).text('Dark mode')
-                }
-                $(this).toggleClass('change-to-dark')
             });
         });
 

@@ -22,7 +22,7 @@
     @stack('header')
 </head>
 
-<body class="st_gray_bg">
+<body class="@if(request()->routeIs('dashboard.index')) st_side_nav_minimize st_dashboard {{ setting_get('dashboard_mode') }} @endif">
 <!-- Start Header Section -->
 <header class="st_site_header st_style1 st_sticky_header">
     <div class="st_main_header">

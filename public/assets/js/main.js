@@ -4,8 +4,8 @@
 
     /*
     |--------------------------------------------------------------------------
-    | Template Name: 
-    | Author: 
+    | Template Name:
+    | Author:
     | Developer: Tamjid Bin Murtoza;
     | Version: 1.0.0
     |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@
         let buletColor = $(this).data("stock-color");
         $(this).css("background-color", buletColor);
       });
-  
+
       });
 
       $(window).on("resize", function() {});
@@ -100,6 +100,7 @@
         });
 
         $('.st_side_toggle').on('click', function() {
+            if(!$('body').hasClass('st_dashboard'))
           $('body').removeClass('st_side_nav_active').toggleClass('st_side_nav_minimize');
         });
 
@@ -280,7 +281,7 @@
           "lengthMenu": "_MENU_",
           paginate: {
             next: '<i class="material-icons">keyboard_arrow_right</i>',
-            previous: '<i class="material-icons">keyboard_arrow_left</i>'  
+            previous: '<i class="material-icons">keyboard_arrow_left</i>'
           }
         }
       });
