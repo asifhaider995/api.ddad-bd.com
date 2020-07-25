@@ -15,59 +15,6 @@
         </div>
         <div class="st_height_30 st_height_lg_30"></div>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                    <div class="st_card_body" style="max-height: 210px; overflow-y:scroll">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Campaigns</th>
-                                <th>Total payment (mins)</th>
-                                <th>Frequency</th>
-                                <th>Total visits</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($campaigns as $c)
-                                <tr style="cursor: pointer" class="clickable-row" data-href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">
-                                    <td>
-                                        <div class="st_table_media st_style1">
-                                            <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">{{ $c->title }}</a></h2>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="st_table_media st_style1 st_type1">
-                                            <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ intval($c->getTotalPlayedTime()/ 60) }}</a></h2>
-                                                <div class="st_media_subtitle">OF {{ intval($c->getTotalPurchasedPlaytime()) }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="st_table_media st_style1 st_type1">
-                                            <div class="st_table_media_info">
-                                                <h2 class="st_media_title"><a href="#">{{ $c->getTotalFrequency() }}</a></h2>
-                                                <div class="st_media_subtitle">OF {{ $c->getTotalPurchasedFrequency() }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="st_table_text">{{ $c->totalVisit() }}</div>
-                                    </td>
-                                    <td>
-                                        @include('ddad.campaigns._status', ['status' => $c->status])
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div><!-- .col -->
             <div class="col-lg-8">
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
 {{--                    <div class="st_card_head">--}}
@@ -205,6 +152,60 @@
                         <div class="st_height_15 st_height_lg_15"></div>
                     </div>
                 </div>
+                <div class="st_height_15 st_height_lg_15"></div>
+
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                        <div class="st_card_body">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Campaigns</th>
+                                    <th>Total payment (mins)</th>
+                                    <th>Frequency</th>
+                                    <th>Total visits</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($campaigns as $c)
+                                    <tr style="cursor: pointer" class="clickable-row" data-href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">
+                                        <td>
+                                            <div class="st_table_media st_style1">
+                                                <div class="st_table_media_info">
+                                                    <h2 class="st_media_title"><a href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">{{ $c->title }}</a></h2>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="st_table_media st_style1 st_type1">
+                                                <div class="st_table_media_info">
+                                                    <h2 class="st_media_title"><a href="#">{{ intval($c->getTotalPlayedTime()/ 60) }}</a></h2>
+                                                    <div class="st_media_subtitle">OF {{ intval($c->getTotalPurchasedPlaytime()) }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="st_table_media st_style1 st_type1">
+                                                <div class="st_table_media_info">
+                                                    <h2 class="st_media_title"><a href="#">{{ $c->getTotalFrequency() }}</a></h2>
+                                                    <div class="st_media_subtitle">OF {{ $c->getTotalPurchasedFrequency() }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="st_table_text">{{ $c->totalVisit() }}</div>
+                                        </td>
+                                        <td>
+                                            @include('ddad.campaigns._status', ['status' => $c->status])
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
             </div>
             <div class="col-lg-4">
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
@@ -270,9 +271,7 @@
                     </div>
                 </div>
 
-
-            </div>
-            <div class="col-lg-4">
+                <div class="st_height_15 st_height_lg_15"></div>
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
@@ -294,98 +293,100 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($zonePerformances as $performance)
-                                    <tr>
-                                        <td>{{ $performance['zone']->name }}</td>
-                                        <td>{{ $performance['visits'] }}</td>
-                                        <td>
-                                            <div class="st_table_progress st_style1">
-                                                <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach($zonePerformances as $performance)
+                                <tr>
+                                    <td>{{ $performance['zone']->name }}</td>
+                                    <td>{{ $performance['visits'] }}</td>
+                                    <td>
+                                        <div class="st_table_progress st_style1">
+                                            <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                <div class="st_card_head">
-                    <div class="st_card_head_left">
-                        <h2 class="st_card_title">Location performance</h2>
-                    </div>
-                    <div class="st_card_head_right colps">
-                        <a href="#" class="show-full-list">
-                            <span class="material-icons">keyboard_arrow_down</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="st_card_body performance-table clp">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Location</th>
-                            <th>Visits</th>
-                            <th>Progress</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($locationPerformances as $performance)
-                            <tr>
-                                <td>{{ $performance['location']->name }}</td>
-                                <td>{{ $performance['visits'] }}</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </div>
-            <div class="col-lg-4">
+
+                <div class="st_height_15 st_height_lg_15"></div>
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
-                <div class="st_card_head">
-                    <div class="st_card_head_left">
-                        <h2 class="st_card_title">Shop Performance</h2>
+                    <div class="st_card_head">
+                        <div class="st_card_head_left">
+                            <h2 class="st_card_title">Location performance</h2>
+                        </div>
+                        <div class="st_card_head_right colps">
+                            <a href="#" class="show-full-list">
+                                <span class="material-icons">keyboard_arrow_down</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="st_card_head_right colps">
-                        <a href="#" class="show-full-list">
-                            <span class="material-icons">keyboard_arrow_down</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="st_card_body performance-table clp">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Location</th>
-                            <th>Visits</th>
-                            <th>Progress</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($shopPerformances as $performance)
+                    <div class="st_card_body performance-table clp">
+                        <table class="table table-hover">
+                            <thead>
                             <tr>
-                                <td>{{ $performance['shop']->name }}</td>
-                                <td>{{ $performance['visits'] }}</td>
-                                <td>
-                                    <div class="st_table_progress st_style1">
-                                        <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
-                                    </div>
-                                </td>
+                                <th>Location</th>
+                                <th>Visits</th>
+                                <th>Progress</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($locationPerformances as $performance)
+                                <tr>
+                                    <td>{{ $performance['location']->name }}</td>
+                                    <td>{{ $performance['visits'] }}</td>
+                                    <td>
+                                        <div class="st_table_progress st_style1">
+                                            <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+
+
+                <div class="st_height_15 st_height_lg_15"></div>
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                    <div class="st_card_head">
+                        <div class="st_card_head_left">
+                            <h2 class="st_card_title">Shop Performance</h2>
+                        </div>
+                        <div class="st_card_head_right colps">
+                            <a href="#" class="show-full-list">
+                                <span class="material-icons">keyboard_arrow_down</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="st_card_body performance-table clp">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Visits</th>
+                                <th>Progress</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($shopPerformances as $performance)
+                                <tr>
+                                    <td>{{ $performance['shop']->name }}</td>
+                                    <td>{{ $performance['visits'] }}</td>
+                                    <td>
+                                        <div class="st_table_progress st_style1">
+                                            <div class="progress st_blue_bg" style="width: {{ $performance['percentage'] }}%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -393,6 +394,11 @@
 
 @endsection
 
+@push('header')
+<style type="text/css">
+
+</style>
+@endpush
 
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>

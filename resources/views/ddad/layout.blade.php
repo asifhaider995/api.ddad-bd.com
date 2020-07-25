@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/dataTable/css/jquery.dataTables.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/ddad.css') }}" />
+    @stack('header')
 </head>
 
 <body class="st_gray_bg">
