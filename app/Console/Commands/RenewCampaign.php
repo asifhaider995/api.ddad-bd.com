@@ -46,7 +46,7 @@ class RenewCampaign extends Command
         $this->info($msg);
         foreach($renewableCampaigns as $renewableCampaign) {
             $renewableCampaign->renew();
-            $msg = sprintf("Renewing Campaign:[%s], %s", $renewableCampaign->id, $renewableCampaign->title));
+            $msg = sprintf("Renewing Campaign:[%s], %s", $renewableCampaign->id, $renewableCampaign->title);
             $this->info($msg);
             Log::info($msg);
         }
