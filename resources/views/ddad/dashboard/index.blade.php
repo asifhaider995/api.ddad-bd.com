@@ -7,7 +7,7 @@
             </div>
             <div class="st_page_header_right">
                 <div class="st_page_header_btn_group">
-                    <!-- <a href="#" class="btn btn-outline-light st_icon_btn"><i class="material-icons">refresh</i></a> -->
+                    <a href="#" class="btn change-to-dark btn-outline-light st_icon_btn change-mode"><i class="material-icons">refresh</i><span>Dark mode</span></a>
                     <a href="{{ route('dashboard.forcast') }}" class="btn btn-outline-light"><i class="material-icons-outlined">analytics</i>Today</a>
                     <a href="{{ route('dashboard.playlist') }}" class="btn btn-primary"><i class="material-icons-outlined">queue_music</i>Playlist</a>
                 </div>
@@ -739,6 +739,20 @@
                 $(this).toggleClass('active');
 
                 $(this).closest('.st_card_head').siblings('.performance-table').toggleClass('clp')
+            });
+
+            $('.change-mode').click(function() {
+                var todark = $(this).hasClass('change-to-dark');
+                if(todark) {
+                    $('body').addClass('st_dark_bg');
+                    $('body').removeClass('st_gray_bg');
+                    $('span', this).text('Light mode')
+                } else {
+                    $('body').addClass('st_gray_bg');
+                    $('body').removeClass('st_dark_bg');
+                    $('span', this).text('Dark mode')
+                }
+                $(this).toggleClass('change-to-dark')
             });
         });
 
