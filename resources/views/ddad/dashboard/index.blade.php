@@ -15,7 +15,7 @@
         <div class="st_height_30 st_height_lg_30"></div>
         <div class="row">
             <div class="col-lg-8">
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card st_style1 st_border st_double_border st_boxshadow st_radius_5">
 {{--                    <div class="st_card_head">--}}
 {{--                        <div class="st_card_head_left">--}}
 {{--                            <h2 class="st_card_title">Reprot--}}
@@ -88,7 +88,7 @@
                                 <div class="st_chart_box_right">
                                     <div class="st_chart_title st_style1">RATE OF AUDIENCE</div>
                                     <div class="st_height_10 st_height_lg_10"></div>
-                                    <div class="st_chart_wrap st_style1" style="height:120px;">
+                                    <div class="st_chart_wrap st_style1" style="height:170px;">
                                         <canvas  id="st_chart3_1"></canvas>
                                         <div class="st_doughnut_center">
                                             <div class="st_doughnut_percentage">{{ $perform }}%</div>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="st_height_15 st_height_lg_15"></div>
 
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
                         <div class="st_card_body">
                             <table class="table table-hover">
                                 <thead>
@@ -208,7 +208,7 @@
             </div>
             <div class="col-lg-4">
                 @if($campaign)
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Campaign progress</h2>
@@ -263,7 +263,7 @@
                 <div class="st_height_15 st_height_lg_15"></div>
                 @endif
 
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Zone performance</h2>
@@ -274,7 +274,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="st_card_body performance-table clp">
+                    <div class="st_card_body performance-table clp st_overlay_scroll">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -302,7 +302,7 @@
 
 
                 <div class="st_height_15 st_height_lg_15"></div>
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Location performance</h2>
@@ -313,7 +313,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="st_card_body performance-table clp">
+                    <div class="st_card_body performance-table clp st_overlay_scroll">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -342,7 +342,7 @@
 
 
                 <div class="st_height_15 st_height_lg_15"></div>
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
                     <div class="st_card_head">
                         <div class="st_card_head_left">
                             <h2 class="st_card_title">Shop Performance</h2>
@@ -353,7 +353,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="st_card_body performance-table clp">
+                    <div class="st_card_body performance-table clp st_overlay_scroll">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -384,14 +384,6 @@
         <div class="st_height_50 st_height_lg_50"></div>
 
 @endsection
-
-@push('header')
-<style type="text/css">
-    .st_dark_bg table{
-        background-color: #111;
-    }
-</style>
-@endpush
 
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
@@ -668,7 +660,7 @@
                 data: {
                     datasets: [{
                         data: [{{ $perform }}, {{ 100  - $perform }}],
-                        backgroundColor: ["#3EDAD8", $gray],
+                        backgroundColor: ["#3EDAD8", "#00AECA"],
                         borderWidth: 0,
                     }],
                     labels: ["Performance", "NotPerform"]
@@ -702,7 +694,7 @@
                 data: {
                     datasets: [{
                         data: [{{ $perform }}, {{ 100  - $perform }}],
-                        backgroundColor: ["#3EDAD8", "#eee"],
+                        backgroundColor: ["#3EDAD8", "#00AECA"],
                         borderWidth: 0,
                     }],
                     labels: ["Performance", "NotPerform"]
