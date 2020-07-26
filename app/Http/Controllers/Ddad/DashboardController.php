@@ -79,7 +79,7 @@ class DashboardController extends Controller
         $this->viewData['numberOfTv'] = $this->getNumberOfTv($this->viewData['shopIds']);
 
         //Line chart
-        $rb = in_array($request->rb, ['hourly', 'weekly', 'daily', 'monthly']) ? $request->rb : 'hourly';
+        $this->viewData['rc'] = $rb = in_array($request->rb, ['hourly', 'weekly', 'daily', 'monthly']) ? $request->rb : 'hourly';
         $this->viewData['range'] = $this->getTimeRange($rb);
         $this->viewData['xaxix'] = $this->getXAxix($rb, $this->viewData['range'])->toArray();
         $this->viewData['yaxix'] = $this->getYAxix($this->viewData['range'], $this->viewData['shopIds']);

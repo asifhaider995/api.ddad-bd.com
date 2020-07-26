@@ -436,7 +436,7 @@
         }]
         var scalesXaxes = [{
             ticks: {
-                fontSize: 14,
+                fontSize: {{ $rc == 'daily' ? 8 : 14}},
                 fontColor: "rgba(0, 0, 0, 0.4)",
                 padding: 5,
                 beginAtZero: true,
@@ -619,7 +619,7 @@
                     }],
                     xAxes: [{
                         ticks: {
-                            fontSize: 14,
+                            fontSize: {{ $rc == 'daily' ? 8 : 14}},
                             fontColor: "rgba(255, 255, 255, 1)",
                             padding: 5,
                             beginAtZero: true,
