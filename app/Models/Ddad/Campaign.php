@@ -216,10 +216,9 @@ class Campaign extends Model
                 $totalAudience = 0;
             }
 
-            $campaignTotalPlayedTime = $this->getTotalPlayedTime();
+            $campaignTotalPlayedTime = PlayTime::where('play_time','>=', $start)->where('play_time', "<=", $tempEnd)->where('campaign_id', $this->id)->sum('duration');
             $totalCampaignPlayedTime = PlayTime::where('play_time','>=', $start)->where('play_time', "<=", $tempEnd)->sum('duration');
             $totalCampaignPlayedTime = $totalCampaignPlayedTime < 1 ? 1 : $totalCampaignPlayedTime;
-
             $dailyAudiences[] = ($campaignTotalPlayedTime/$totalCampaignPlayedTime) * $totalAudience;
             $start->addDay();
         }
