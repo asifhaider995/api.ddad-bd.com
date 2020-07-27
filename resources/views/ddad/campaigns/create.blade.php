@@ -41,7 +41,7 @@
                                             @enderror
 
 
-                                            @if(\Auth::user()->isAdmin() && fasle)
+                                            @if(\Auth::user()->isAdmin() && false)
                                                 @php
                                                     $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
                                                 @endphp
