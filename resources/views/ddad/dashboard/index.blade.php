@@ -88,7 +88,7 @@
                                 <div class="st_chart_box_right">
                                     <div class="st_chart_title st_style1">RATE OF AUDIENCE</div>
                                     <div class="st_height_10 st_height_lg_10"></div>
-                                    <div class="st_chart_wrap st_style1" style="height:170px;">
+                                    <div class="st_chart_wrap st_style1" style="height:140px; width: 140px;">
                                         <canvas  id="st_chart3_1"></canvas>
                                         <div class="st_doughnut_center">
                                             <div class="st_doughnut_percentage">{{ $perform }}%</div>
@@ -660,7 +660,7 @@
                 data: {
                     datasets: [{
                         data: [{{ $perform }}, {{ 100  - $perform }}],
-                        backgroundColor: ["#3EDAD8", "#00AECA"],
+                        backgroundColor: ["#3edad8", "#eaeaea"],
                         borderWidth: 0,
                     }],
                     labels: ["Performance", "NotPerform"]
@@ -694,7 +694,7 @@
                 data: {
                     datasets: [{
                         data: [{{ $perform }}, {{ 100  - $perform }}],
-                        backgroundColor: ["#3EDAD8", "#00AECA"],
+                        backgroundColor: ["#3edad8", "#3a3d41"],
                         borderWidth: 0,
                     }],
                     labels: ["Performance", "NotPerform"]

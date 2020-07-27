@@ -6558,8 +6558,13 @@ select.form-control[multiple] option {
 }
 
 .st_chart_box.st_style1 .st_chart_box_right {
-    width: 200px;
+    width: 150px;
     flex: none;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .st_chart_title.st_style1 {
@@ -7242,7 +7247,8 @@ select.form-control[multiple] option {
 }
 
 .st_chart_box_left {
-    flex: 1;
+    flex: none;
+    width: calc(100% - 160px);
 }
 
 .st_sp_progress {
@@ -7427,6 +7433,12 @@ select.form-control[multiple] option {
 }
 .st_dark_bg .os-theme-dark>.os-scrollbar:hover>.os-scrollbar-track>.os-scrollbar-handle {
     background: #fff;
+}
+.st_dark_bg .table a {
+    color: #3edad8;
+}
+.st_dark_bg .table a:hover {
+    text-decoration: underline;
 }
 
 /*======================================End Dark Version======================================*/
