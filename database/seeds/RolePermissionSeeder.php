@@ -8,7 +8,7 @@ class RolePermissionSeeder extends Seeder
 {
     protected $roles = [
         'admin',
-        'customer',
+        'client',
     ];
 
     protected $permissions = [

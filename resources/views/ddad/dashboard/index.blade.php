@@ -31,7 +31,7 @@
                             <div class="st_card_nav st_style1">
                                 <a href="{{ route('dashboard.index') }}" class="@if(!$zone) active @endif">All</a>
                                 @foreach($zones as $z)
-                                    <a class="@if(optional($zone)->id == $z->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $z->id]) }}">{{ $z->name }}</a>
+                                    <a class="@if(optional($zone)->id == $z->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $z->id, 'campaign_id' => optional($campaign)->id]) }}">{{ $z->name }}</a>
                                 @endforeach
                             </div>
 
@@ -40,7 +40,7 @@
                                 <div class="st_card_nav st_style1">
                                     @foreach($zone->locations as $l)
                                         @if(in_array($l->id, $locationIds))
-                                            <a class="@if(optional($location)->id == $l->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $l->id]) }}">{{ $l->name }}</a>
+                                            <a class="@if(optional($location)->id == $l->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $l->id,  'campaign_id' => optional($campaign)->id]) }}">{{ $l->name }}</a>
                                         @endif
                                     @endforeach
                                 </div>
@@ -48,7 +48,7 @@
                                 @if($location && Auth::user()->isAdmin())
                                     <div class="st_card_nav st_style1" style="overflow-x: scroll">
                                         @foreach($location->shops as $s)
-                                            <a class="@if(optional($shop)->id == $s->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'location_id' => $location->id, 'shop_id' => $s->id]) }}">{{ $s->name }}</a>
+                                            <a class="@if(optional($shop)->id == $s->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $zone->id, 'campaign_id' => optional($campaign)->id, 'location_id' => $location->id, 'shop_id' => $s->id]) }}">{{ $s->name }}</a>
                                         @endforeach
                                     </div>
                                 @endif
@@ -159,7 +159,7 @@
                                 <thead>
                                 <tr>
                                     <th>Campaigns</th>
-                                    <th>Total payment (mins)</th>
+                                    <th>Total playtime (mins)</th>
                                     <th>Frequency</th>
                                     <th>Total visits</th>
                                     <th>Status</th>
@@ -167,7 +167,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($campaigns as $c)
-                                    <tr style="cursor: pointer" class="clickable-row" data-href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">
+                                    <tr style="cursor: pointer; {{ $c->id == optional($campaign)->id ? 'background-color:#333': '' }}" class="clickable-row " data-href="{{ route('dashboard.index', ['campaign_id' => $c->id == optional($campaign)->id ? null : $c->id]) }}">
                                         <td>
                                             <div class="st_table_media st_style1">
                                                 <div class="st_table_media_info">
@@ -221,9 +221,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg>
                             </div>
                             <div class="st_table_progress st_style1">
-                                <div class="progress st_blue_bg" style="width: 50%"></div>
+                                <div class="progress st_blue_bg" style="width: {{ $progress = $temp = $campaign->progress()->progressByTimeline() }}%"></div>
                             </div>
-                            <div class="st_progress_per">50%</div>
+                            <div class="st_progress_per">{{ $temp }}%</div>
                         </div>
                         <div class="st_height_15 st_height_lg_15"></div>
 <hr>                    <div class="st_height_15 st_height_lg_15"></div>
@@ -231,32 +231,32 @@
                             <div class="col-4">
                                 <div class="st_sp_progress">
                                     <div class="st_sp_progress_subtitle">TIME (S)</div>
-                                    <h3 class="st_sp_progress_title">110 <span>OF 900</span></h3>
+                                    <h3 class="st_sp_progress_title">{{ intval($campaign->getTotalPlayedTime()/ 60) }} <span>OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</span></h3>
                                     <div class="st_table_progress st_style1">
-                                        <div class="progress st_gradient1" style="width: 50%"></div>
+                                        <div class="progress st_gradient1" style="width: {{ $campaign->progress()->progressByPlaytime() }}%"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="st_sp_progress">
                                     <div class="st_sp_progress_subtitle">FREQUENCY</div>
-                                    <h3 class="st_sp_progress_title">110 <span>OF 900</span></h3>
+                                    <h3 class="st_sp_progress_title">{{ $campaign->getTotalFrequency()  }} <span>OF {{ $campaign->getTotalPurchasedFrequency() }}</span></h3>
                                     <div class="st_table_progress st_style1">
-                                        <div class="progress st_gradient1" style="width: 50%"></div>
+                                        <div class="progress st_gradient1" style="width: {{ $campaign->progress()->progressByFrequency() }}%"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="st_sp_progress">
                                     <div class="st_sp_progress_subtitle">COST CONSUMPTION</div>
-                                    <h3 class="st_sp_progress_title">110 <span>OF 900</span></h3>
+                                    <h3 class="st_sp_progress_title">{{ (int) $campaign->progress()->costConsumption() }} <span>OF {{ (int) $campaign->actual_price }}</span></h3>
                                     <div class="st_table_progress st_style1">
-                                        <div class="progress st_gradient1" style="width: 50%"></div>
+                                        <div class="progress st_gradient1" style="width: {{ $progress }}%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="st_cost_per_min">Cost Per Minute<span>100 BDT</span></div>
+                        <div class="st_cost_per_min">Cost Per Minute<span>{{ $campaign->progress()->costPerMinutes() }} BDT</span></div>
                         <div class="st_height_20 st_height_lg_20"></div>
                     </div>
                 </div>

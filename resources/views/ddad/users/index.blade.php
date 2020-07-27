@@ -51,7 +51,6 @@
                             <th>Company<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span>
                             </th>
                             <th>Role<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                            <th>Approved<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span>
                             </th>
                             <th>Campaigns<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span>
                             </th>
@@ -67,13 +66,6 @@
                                 <td>{{ $user->full_name }}</td>
                                 <td>{{ $user->company_name }}</td>
                                 <td>{{ $user->is_client ? 'Client' : "Admin" }}</td>
-                                <td>
-                                    @if($user->is_verified)
-                                        <span class="text-success material-icons">check</span>
-                                    @else
-                                        <span class="text-danger material-icons">warning</span>
-                                    @endif
-                                </td>
                                 <td>{{ $user->number_of_campaigns ?: 0 }}</td>
                                 <td>{{ $user->mobile_number }}</td>
                                 <td>

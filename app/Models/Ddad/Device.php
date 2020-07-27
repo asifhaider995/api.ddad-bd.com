@@ -2,6 +2,9 @@
 
 namespace App\Models\Ddad;
 
+use App\Models\Audience;
+use App\Models\CampaignPlay;
+use App\Models\PlayTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Device extends Model
@@ -23,12 +26,12 @@ class Device extends Model
 
     public function androidAlerts()
     {
-        return rand(0,2);
+        return $this->detector_serial && !CampaignPlay::where('android_imei', $this->android_imei)->where('created_at', now()->subMinute(5))->exists();
     }
 
     public function detectorAlerts()
     {
-        return rand(0,2);
+        return $this->detector_serial && !Audience::where('detector_serial', $this->detector_serial)->where('created_at', now()->subMinute(60))->exists();
     }
 
     public function shop()

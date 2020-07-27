@@ -41,7 +41,7 @@
                                             </div>
 
 
-                                            @if(\Auth::user()->isAdmin())
+                                            @if(\Auth::user()->isAdmin() && false)
                                                 @php
                                                     $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
                                                 @endphp
@@ -68,29 +68,29 @@
 
 
 
-                                    <div class="preview">
-                                        <div class="title">Image</div>
-                                        <div class="body">
-                                            <div class="secondary-video-preview-box">
-                                                <span class="remove remove-secondary-video">Remove</span>
-                                                <video class="secondary-video-box" src="{{ $campaign->secondary_src }}" style=" width: 100%; height: auto;" controls>
-                                                    Your browser does not support the video tag.
-                                                </video>
-                                            </div>
-                                            <div class="secondary-video-upload-box upload-box">
-                                                <label for="secondary-video" class="custom-file-upload">
-                                                    <i class="fa fa-cloud-upload"></i> Select campaign Video
-                                                </label>
-                                                <input id="secondary-video" name="secondary_video" value="{{ old('secondary_video') }}" type="file"/>
-                                            </div>
+{{--                                    <div class="preview">--}}
+{{--                                        <div class="title">Image</div>--}}
+{{--                                        <div class="body">--}}
+{{--                                            <div class="secondary-video-preview-box">--}}
+{{--                                                <span class="remove remove-secondary-video">Remove</span>--}}
+{{--                                                <video class="secondary-video-box" src="{{ $campaign->secondary_src }}" style=" width: 100%; height: auto;" controls>--}}
+{{--                                                    Your browser does not support the video tag.--}}
+{{--                                                </video>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="secondary-video-upload-box upload-box">--}}
+{{--                                                <label for="secondary-video" class="custom-file-upload">--}}
+{{--                                                    <i class="fa fa-cloud-upload"></i> Select campaign Video--}}
+{{--                                                </label>--}}
+{{--                                                <input id="secondary-video" name="secondary_video" value="{{ old('secondary_video') }}" type="file"/>--}}
+{{--                                            </div>--}}
 
 
-                                            @if(\Auth::user()->isAdmin())
-                                                @php
-                                                    $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
-                                                @endphp
+{{--                                            @if(\Auth::user()->isAdmin())--}}
+{{--                                                @php--}}
+{{--                                                    $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);--}}
+{{--                                                @endphp--}}
 
-                                                <input type="hidden" name="secondary_queue" value="1">
+{{--                                                <input type="hidden" name="secondary_queue" value="1">--}}
 {{--                                                <div style="padding: 15px; padding-bottom: 0px">--}}
 {{--                                                    <div class="st_level_up form-group active1">--}}
 {{--                                                        <label for="title">Queue position*</label>--}}
@@ -105,12 +105,12 @@
 {{--                                                        @enderror--}}
 {{--                                                    </div>--}}
 {{--                                                </div>--}}
-                                            @endif
+{{--                                            @endif--}}
 
-                                        </div>
-                                    </div>
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="st_height_25 st_height_lg_25"></div>
+{{--                                    <div class="st_height_25 st_height_lg_25"></div>--}}
 
                                 </div>
 

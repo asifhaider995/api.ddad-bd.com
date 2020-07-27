@@ -15,12 +15,11 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(ZoneSeeder::class);
-        $this->call(DeviceSeeder::class);
-        $this->call(ISPSeeder::class);
-        return 1;
-        $this->call(ShopSeeder::class);
-        $this->call(AndroidBoxSeeder::class);
-        $this->call(DetectorSeeder::class);
+//        $this->call(DeviceSeeder::class);
+//        $this->call(ISPSeeder::class);
+//        $this->call(ShopSeeder::class);
+//        $this->call(AndroidBoxSeeder::class);
+//        $this->call(DetectorSeeder::class);
         $this->call(TVSeeder::class);
     }
 }

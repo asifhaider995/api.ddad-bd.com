@@ -2,30 +2,58 @@
 
 namespace App;
 
-use App\Models\Ddad\Shop;
+use App\Models\Ddad\Campaign;
 
-class Placement
+class CampaignProgress
 {
-    protected $string;
-    public function __construct($string)
+    protected $campaign;
+    public function __construct(Campaign $campaign)
     {
-        $this->string = trim($string);
-        $values = explode(',', $this->string);
-        $this->name = $values[0] ?? 'Unnamed';
-        $this->duration = (int)($values[1] ?? 0);
+        $this->campaign = $campaign;
     }
 
-    public static function all()
+    public function progressByTimeline()
     {
-        $values = array_filter(explode("\n", setting_get('placements')));
+        $totalDay = ($this->campaign->starting_date)->diffInDays($this->campaign->ending_date);
+        $runingDay = $this->campaign->starting_date->diffInDays(now());
 
-        return collect($values)->map(function($str) {
-            return new static($str);
-        });
+        $percentage = (int) (($runingDay / $totalDay) * 100);
+        return min(100, $percentage);
     }
 
-    public function __toString()
+    public function progressByPlaytime()
     {
-        return $this->string;
+        $ab = $this->campaign->getTotalPlayedTime() / 60;
+        $cd = $this->campaign->getTotalPurchasedPlaytime();
+        $cd = $cd < 1 ? 1 : $cd;
+        $percentage = (int) (($ab / $cd) * 100);
+        return min(100, $percentage);
     }
+
+
+    public function progressByFrequency()
+    {
+        $ab = $this->campaign->getTotalFrequency();
+        $cd = $this->campaign->getTotalPurchasedFrequency();
+        $cd = $cd < 1 ? 1 : $cd;
+        $percentage = (int) (($ab / $cd) * 100);
+        return min(100, $percentage);
+    }
+
+    public function costConsumption()
+    {
+        $totalDay = ($this->campaign->starting_date)->diffInDays($this->campaign->ending_date);
+        $runingDay = $this->campaign->starting_date->diffInDays(now());
+
+        return $this->campaign->actual_price * ($runingDay / $totalDay);
+    }
+
+    public function costPerMinutes()
+    {
+        $played = $this->campaign->playTimes()->sum('duration') / 60;
+        $cd = $this->campaign->getTotalPurchasedPlaytime();
+        $perMinCost= $this->campaign->actual_price / $cd;
+        return (int)( $perMinCost * $played);
+    }
+
 }

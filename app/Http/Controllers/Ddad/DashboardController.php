@@ -5,10 +5,12 @@ use App\Availability;
 use App\HourlyPlaylist;
 use App\Http\Controllers\Controller;
 use App\Models\Audience;
+use App\Models\CampaignPlay;
 use App\Models\Ddad\Campaign;
 use App\Models\Ddad\Shop;
 use App\Models\Ddad\Zone;
 use App\Models\Location;
+use App\Models\PlayTime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -140,10 +142,13 @@ class DashboardController extends Controller
 
             $totalAudienceQuery = Audience::where('created_at', '>=', $start)->where('created_at', '<=', $end);
             $performanceAudienceQuery = Audience::where('created_at', '>=', $start)->where('created_at', '<=', $end);
-            if($this->viewData['campaign']) {
-                $totalAudienceQuery->where('campaign_id', $this->viewData['campaign']);
-                $performanceAudienceQuery->where('campaign_id', $this->viewData['campaign']);
-            }
+//            if($this->viewData['campaign']) {
+//                $totalAudienceQuery->where('campaign_id', $this->viewData['campaign']->id);
+//                $performanceAudienceQuery->where('campaign_id', $this->viewData['campaign']->id);
+////                $cT = PlayTime::where('play_time', '>=', $start)->where('campaign_id', $this->id)->where('play_time', '<=', $end)->sum('duration');
+////                $tt = PlayTime::where('play_time', '>=', $start)->where('play_time', '<=', $end)->sum('duration');
+////
+//            }
             $performanceAudienceQuery->whereIn('shop_id', $this->viewData['shopIds']);
 
             $performanceAudience = $performanceAudienceQuery->sum('number_of_audience');

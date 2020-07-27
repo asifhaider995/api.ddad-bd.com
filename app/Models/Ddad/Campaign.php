@@ -2,6 +2,7 @@
 
 namespace App\Models\Ddad;
 
+use App\CampaignProgress;
 use App\Ddad\Payment;
 use App\HourlyPlaylist;
 use App\Models\Location;
@@ -222,6 +223,11 @@ class Campaign extends Model
             $dailyAudiences[] = ($campaignTotalPlayedTime/$totalCampaignPlayedTime) * $totalAudience;
             $start->addDay();
         }
-        return array_sum($dailyAudiences);
+        return (int) array_sum($dailyAudiences);
+    }
+
+    public function progress()
+    {
+        return new CampaignProgress($this);
     }
 }
