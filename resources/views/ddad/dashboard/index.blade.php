@@ -29,7 +29,7 @@
                         <div class="st_height_15 st_height_lg_15"></div>
                         <div class="st_padd_lr_25">
                             <div class="st_card_nav st_style1">
-                                <a href="{{ route('dashboard.index') }}" class="@if(!$zone) active @endif">All</a>
+                                <a href="{{ route('dashboard.index', ['campaign_id' => optional($campaign)->id]) }}" class="@if(!$zone) active @endif">All</a>
                                 @foreach($zones as $z)
                                     <a class="@if(optional($zone)->id == $z->id) active @endif" href="{{ route('dashboard.index', ['zone_id' => $z->id, 'campaign_id' => optional($campaign)->id]) }}">{{ $z->name }}</a>
                                 @endforeach
