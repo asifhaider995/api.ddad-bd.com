@@ -23,7 +23,7 @@
                         <table id="st_dataTable" class="display">
                             <thead>
                             <tr>
-                                <th title="Video queue">Queue<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+{{--                                <th title="Video queue">Queue<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>--}}
 {{--                                <th type="Image queue">I.Q<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>--}}
                                 <th>Title<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 @if(Auth::user()->isAdmin())
@@ -40,7 +40,7 @@
                             <tbody>
                                 @foreach($campaigns as $campaign)
                                 <tr>
-                                    <td>{{ $campaign->primary_queue ?: '-' }}</td>
+{{--                                    <td>{{ $campaign->primary_queue ?: '-' }}</td>--}}
 {{--                                    <td>{{ $campaign->secondary_queue ?: '-' }}</td>--}}
                                     <td>{{ $campaign->title }}</td>
                                     @if(Auth::user()->isAdmin())
