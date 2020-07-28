@@ -26,12 +26,12 @@ class CampaignRequest extends FormRequest
     {
         $rules = [
             'title' => 'required|max:50',
-            'secondary_video' => 'nullable|mimes:mp4,ogx,oga,ogv,ogg,webm'
+            'secondary_video' => 'nullable'
         ];
 
         if($this->route()->getName() !== 'campaigns.update') {
             $rules['title'] = 'required|max:50|unique:campaigns';
-            $rules['primary_video'] = 'required|mimes:mp4,ogx,oga,ogv,ogg,webm';
+            $rules['primary_video'] = 'required|file';
             $rules['package'] = 'required';
             $rules['placement'] = 'required';
             $rules['starting_date'] = 'required';
