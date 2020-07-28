@@ -54,7 +54,7 @@
                                     <td>{{ $shop->name }}</td>
                                     <td>{{ $shop->location->name }}</td>
 
-                                    @if($shop->device_id)
+                                    @if($shop->device)
                                         <td>
                                             @if($shop->device->androidAlerts())
                                                 <span class="text-danger material-icons">warning</span>
