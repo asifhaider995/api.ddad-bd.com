@@ -46,7 +46,7 @@ class DashboardController extends Controller
         $campaignQuery = Campaign::between($today->clone()->startOfDay(), $today->clone()->endOfDay())->where('status', 'approved')->orderBy('primary_queue');
 
         if(!Auth::user()->isAdmin()) {
-            $campaignQuery->where('client_id', Auth::user()->id;
+            $campaignQuery->where('client_id', Auth::user()->id);
         }
 
         $this->viewData['campaigns'] = $campaignQuery->get()->filter(function($campaign) {
