@@ -26,12 +26,12 @@ class Device extends Model
 
     public function androidAlerts()
     {
-        return $this->android_imei && !CampaignPlay::where('android_imei', $this->android_imei)->where('created_at', now()->subMinute(5))->exists();
+        return $this->android_imei && !CampaignPlay::where('android_imei', $this->android_imei)->where('created_at','>', now()->subMinute(5))->exists();
     }
 
     public function detectorAlerts()
     {
-        return $this->detector_serial && !Audience::where('detector_serial', $this->detector_serial)->where('created_at', now()->subMinute(60))->exists();
+        return $this->detector_serial && !Audience::where('detector_serial', $this->detector_serial)->where('created_at','>', now()->subMinute(60))->exists();
     }
 
     public function shop()
