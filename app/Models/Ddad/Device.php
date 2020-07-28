@@ -26,7 +26,7 @@ class Device extends Model
 
     public function androidAlerts()
     {
-        return $this->detector_serial && !CampaignPlay::where('android_imei', $this->android_imei)->where('created_at', now()->subMinute(5))->exists();
+        return $this->android_imei && !CampaignPlay::where('android_imei', $this->android_imei)->where('created_at', now()->subMinute(5))->exists();
     }
 
     public function detectorAlerts()
