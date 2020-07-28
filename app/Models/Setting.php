@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
@@ -38,8 +39,10 @@ class Setting extends Model
 
 
     public static function pull($key) {
-        $setting = self::find($key);
-        return $setting ? $setting->value : null;
+        return Cache::remember($key, 60*50, function() use($key) {
+            $setting = self::find($key);
+            return $setting ? $setting->value : null;
+        });
     }
 
     public static function set($key, $value)
