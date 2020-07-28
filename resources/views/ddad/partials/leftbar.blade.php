@@ -7,24 +7,24 @@
     <div class="st_side_nav">
         <ul class="st_side_nav_list">
 
-            @if(Auth::user()->isAdmin())
+            @if(!Auth::user()->isAdmin())
                 <li class="st_side_nav_item">
                     <a href="{{ route('dashboard.index') }}" class="st_side_nav_link @if(request()->is(['ddad/dashboard', 'ddad/index'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">dashboard</i></span>
                         <span class="st_side_nav_text">Dashboard</span>
                     </a>
                 </li>
-{{--                <li class="st_side_nav_item">--}}
-{{--                <a href="#" class="st_side_nav_link">--}}
-{{--                    <span class="st_side_nav_icon"><i class="material-icons-outlined">insert_chart</i></span>--}}
-{{--                    <span class="st_side_nav_text">Statistics</span>--}}
-{{--                </a>--}}
-            </li>
-            @else
                 <li class="st_side_nav_item">
                     <a href="{{ route('campaigns.index') }}" class="st_side_nav_link @if(request()->is(['campaigns*'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
                         <span class="st_side_nav_text">My campaigns</span>
+                    </a>
+                </li>
+
+                <li class="st_side_nav_item">
+                    <a href="{{ route('accounting.index') }}" class="st_side_nav_link @if(request()->is('ddad/accounting*')) active @endif">
+                        <span class="st_side_nav_icon"><i class="material-icons-outlined">local_atm</i></span>
+                        <span class="st_side_nav_text">Accounts & Billing</span>
                     </a>
                 </li>
             @endif
@@ -32,6 +32,12 @@
 
 
             @if(Auth::user()->isAdmin())
+                <li class="st_side_nav_item">
+                    <a href="{{ route('dashboard.index') }}" class="st_side_nav_link @if(request()->is(['ddad/dashboard', 'ddad/index'])) active @endif">
+                        <span class="st_side_nav_icon"><i class="material-icons-outlined">dashboard</i></span>
+                        <span class="st_side_nav_text">Dashboard</span>
+                    </a>
+                </li>
                 <li class="st_side_nav_item">
                     <a href="{{ route('campaigns.index') }}" class="st_side_nav_link @if(request()->is(['ddad/campaigns*'])) active @endif">
                         <span class="st_side_nav_icon"><i class="material-icons-outlined">record_voice_over</i></span>
