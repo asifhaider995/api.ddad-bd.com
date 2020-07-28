@@ -9,7 +9,7 @@
                 <div class="st_card_body">
                     <div class="st_data_table_wrap st_fixed_height1">
                         <div class="st_data_table_btn_group text-info">
-                            <h3>Received History</h3>
+                            <h3>Payment History</h3>
                         </div>
                         <table id="st_dataTable" class="display">
                             <thead>
