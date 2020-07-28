@@ -77,7 +77,7 @@ class CampaignController extends Controller
         return   [
             "id" => null,
             'type' => 'video',
-            "src" => setting_get('loop_sync_content'),
+            "src" => setting_get('loop_sync_content_url'),
         ];
     }
 }
