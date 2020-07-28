@@ -94,6 +94,9 @@ class ZoneController extends Controller
 
     public function destroy(Zone $zone)
     {
+        foreach($zone->locations as $location) {
+            $location->delete();
+        }
         $zone->delete();
         flash('Zone deleted successfully!')->success();
         return redirect()->route('zones.index');
