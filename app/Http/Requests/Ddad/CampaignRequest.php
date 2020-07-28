@@ -41,8 +41,8 @@ class CampaignRequest extends FormRequest
 
         if(Auth::user()->isAdmin())
         {
-            $rules['primary_queue'] = 'required_with:primary_video';
-            $rules['secondary_queue'] = 'required_with:secondary_video';
+//            $rules['primary_queue'] = 'required_with:primary_video';
+//            $rules['secondary_queue'] = 'required_with:secondary_video';
             $rules['client_id'] = 'required';
             $rules['package'] = 'required';
             $rules['placement'] = 'required';
