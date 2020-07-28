@@ -32,7 +32,7 @@
                                 <th>AutoRenew<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>Start<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                 <th>End<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
-                                <th>Viwes<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
+{{--                                <th>Viwes<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>--}}
                                 <th>Status<span class="st_filter_btn"><i class="material-icons">arrow_downward</i></span></th>
                                <th>Action</th>
                             </tr>
@@ -56,9 +56,9 @@
                                     <td>{{ formateDate($campaign->starting_date) }}</td>
                                     <td>{{ formateDate($campaign->ending_date) }}</td>
 
-                                    <td>
-                                        {{ $campaign->total_views }}
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        {{ $campaign->total_views }}--}}
+{{--                                    </td>--}}
                                     <td>
                                         @include('ddad.campaigns._status', ['status' => $campaign->status])
                                     </td>
