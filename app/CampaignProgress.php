@@ -73,7 +73,7 @@ class CampaignProgress
 
        $temp = $played * $numberOfTv;
        $temp = $temp > 0 ? $temp : 1;
-       return $this->campaign->actual_price / $temp;
+       return intval($this->campaign->actual_price / $temp);
     }
 
 }
