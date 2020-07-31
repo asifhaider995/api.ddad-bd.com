@@ -30,12 +30,15 @@
                                     @if($payment->paymentable)
                                         <td><a href="{{ route('campaigns.show', $payment->paymentable_id) }}">{{ $payment->paymentable->title }}</a></td>
                                         <td>{{ $payment->paymentable->client->company_name }}</td>
+
+                                        <td>{{ $payment->amount }}</td>
+                                        <td>{{ $payment->dueAmount() }}</td>
                                     @else
                                         <td>Deleted campaign ID - {{ $payment->paymentable_id }}</td>
                                         <td></td>
+                                        <td>{{ $payment->amount }}</td>
+                                        <td>Cannot Calculate</td>
                                     @endif
-                                    <td>{{ $payment->amount }}</td>
-                                    <td>{{ $payment->dueAmount() }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
