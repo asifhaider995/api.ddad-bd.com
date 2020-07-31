@@ -233,7 +233,7 @@
                             <div class="col-4">
                                 <div class="st_sp_progress">
                                     <div class="st_sp_progress_subtitle">TIME (MINS)</div>
-                                    <h3 class="st_sp_progress_title">{{ intval($campaign->getTotalPlayedTime()/ 3600) }} <span>OF {{ intval($campaign->getTotalPurchasedPlaytime() / 60) }}</span></h3>
+                                    <h3 class="st_sp_progress_title">{{ intval($campaign->getTotalPlayedTime()/ 60) }} <span>OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</span></h3>
                                     <div class="st_table_progress st_style1">
                                         <div class="progress st_gradient1" style="width: {{ $campaign->progress()->progressByPlaytime() }}%"></div>
                                     </div>
