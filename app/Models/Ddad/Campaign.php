@@ -223,6 +223,7 @@ class Campaign extends Model
             $dailyAudiences[] = ($campaignTotalPlayedTime/$totalCampaignPlayedTime) * $totalAudience;
             $start->addDay();
         }
+
         return (int) array_sum($dailyAudiences);
     }
 

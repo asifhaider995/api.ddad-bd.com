@@ -123,7 +123,7 @@
                                         </div>
                                         <div class="st_iconbox_meta">
                                             <div class="st_iconbox_title">Forecasted total audience</div>
-                                            <div class="st_iconbox_number st_purple_color">{{ $forcastedTotal }}</div>
+                                            <div class="st_iconbox_number st_purple_color">{{ intval($forcastedTotal) }}</div>
                                         </div>
                                     </div>
                                 </div>
