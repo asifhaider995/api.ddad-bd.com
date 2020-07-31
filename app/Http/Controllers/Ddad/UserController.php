@@ -73,8 +73,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
-        flash("User successfully deleted")->success();
+        if($user->campaigns->isNotEmpty()) {
+            flash("You cannot delete this user because this user created some campaign. First delete these campaigns to delete this user.")->success();
+        } else {
+            $user->delete();
+            flash("User successfully deleted")->success();
+        }
         return redirect()->route('users.index');
     }
 

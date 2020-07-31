@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Ddad\Campaign;
+use App\Models\Ddad\Shop;
 
 class CampaignProgress
 {
@@ -54,6 +55,26 @@ class CampaignProgress
         $cd = $this->campaign->getTotalPurchasedPlaytime();
         $perMinCost= $this->campaign->actual_price / $cd;
         return (int)( $perMinCost * $played);
+    }
+
+    public function costPerMinutesPerTV()
+    {
+       $played =  $this->campaign->playTimes()->sum('duration');
+
+       $shopsHasTV = [];
+       $this->campaign->locations->each(function($location) use($shopsHasTV) {
+           $location->shops->each(function ($shop)use($shopsHasTV)  {
+                if($shop->device) {
+                    $shopsHasTV[] = $shop->id;
+                }
+           });
+       });
+       $numberOfTv = count($shopsHasTV);
+
+       $temp = $played * $numberOfTv;
+       $temp = $temp > 0 ? $temp : 1;
+
+       return $this->campaign->actual_price / $temp;
     }
 
 }

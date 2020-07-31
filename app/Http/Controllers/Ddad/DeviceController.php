@@ -17,11 +17,15 @@ class DeviceController extends Controller
         elseif($request->filter_by == 'allocated') {
             $query->whereHas('shop');
         }
-        elseif($request->filter_by == 'error') {
-            flash("Error detection logic is not implemented yet because its depends on app")->warning()->important();
+
+        $this->viewData['devices'] = $query->get();
+
+        if($request->filter_by == 'error') {
+            $this->viewData['devices']  = $this->viewData['devices'] ->filter(function($item) {
+                return $item->androidAlerts() || $item->detectorAlerts();
+            });
         }
 
-            $this->viewData['devices'] = $query->get();
         return view('ddad.devices.index', $this->viewData);
     }
 
@@ -40,7 +44,7 @@ class DeviceController extends Controller
 
     private function rules()
     {
-        if(request()->route()->getName() !== 'shops.update') {
+        if(request()->route()->getName() !== 'devices.update') {
             return [
                 'android_label' => 'nullable|required_with:android_imei|required_without_all:detector_label,tv_label|unique:devices,android_label',
                 'android_imei' => 'nullable|required_with:android_label|unique:devices,android_imei',

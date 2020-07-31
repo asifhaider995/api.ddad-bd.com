@@ -38,7 +38,7 @@
                                     <h3>{{ Auth::user()->full_name }}</h3>
                                     <span>{{ Auth::user()->is_client? "Client" : "Admin" }}</span>
                                 </div>
-                                <div class="st_toolbox_user_box st_indigo_box st_radius_4"><img src="{{ asset('assets/img/users/user1.jpg') }}" alt="User"></div>
+{{--                                <div class="st_toolbox_user_box st_indigo_box st_radius_4"><img src="{{ asset('assets/img/users/user1.jpg') }}" alt="User"></div>--}}
                             </div>
                             <div class="dropdown-menu dropdown-size-md dropdown-menu-right st_boxshadow">
                                 <a class="dropdown-item" href="#"><i class="material-icons-outlined">account_circle</i>View Profile</a>

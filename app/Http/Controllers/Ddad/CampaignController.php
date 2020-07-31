@@ -144,8 +144,13 @@ class CampaignController extends Controller
 
     public function destroy(Campaign $campaign)
     {
-        $campaign->delete();
-        flash('Campaign deleted successfully!')->success();
+        if($campaign->payments->isEmpty()) {
+            $campaign->delete();
+            flash('Campaign deleted successfully!')->success();
+        }
+         else {
+             flash('You cannot delete this campaign because you have made financial transaction for this campaigns.')->error()->important();
+         }
         return redirect()->route('campaigns.index');
     }
 

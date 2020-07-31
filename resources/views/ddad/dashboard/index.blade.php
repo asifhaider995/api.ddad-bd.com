@@ -2,15 +2,17 @@
 @section('content')
         <div class="st_page_header st_style1">
             <div class="st_page_header_left">
-                <h1 class="st_page_header_title">Overview</h1>
-                <p class="st_page_header_subtitle">Welcome to Dashboard Template.</p>
+                <h1 class="st_page_header_title">Statistics</h1>
+                <p class="st_page_header_subtitle">Welcome to your dashboard.</p>
             </div>
-            <div class="st_page_header_right">
-                <div class="st_page_header_btn_group">
-                    <a href="{{ route('dashboard.forcast') }}" class="btn btn-outline-light"><i class="material-icons-outlined">analytics</i>Today</a>
-                    <a href="{{ route('dashboard.playlist') }}" class="btn btn-primary"><i class="material-icons-outlined">queue_music</i>Playlist</a>
+            @if(Auth::user()->isAdmin())
+                <div class="st_page_header_right">
+                    <div class="st_page_header_btn_group">
+                        <a href="{{ route('dashboard.forcast') }}" class="btn btn-outline-light"><i class="material-icons-outlined">analytics</i>Today</a>
+                        <a href="{{ route('dashboard.playlist') }}" class="btn btn-primary"><i class="material-icons-outlined">queue_music</i>Playlist</a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
         <div class="st_height_30 st_height_lg_30"></div>
         <div class="row">
@@ -64,7 +66,7 @@
                                         <div class="st_chart_wrap_left">
                                             <div class="st_chart_nav st_style1">
                                                 @foreach(['hourly','daily','weekly','monthly'] as $rb)
-                                                    <a class="@if(in_array(request()->rb, ['daily','weekly','monthly'])) @if(request()->rb == $rb) active @endif @elseif($rb == 'hourly') active @endif" href="{{ route('dashboard.index', ['zone_id' => optional($zone)->id, 'location_id' => optional($location)->id, 'shop_id' => optional($shop)->id, 'rb'=> $rb]) }}">{{ ucfirst($rb) }}</a>
+                                                    <a class="@if(in_array(request()->rb, ['daily','weekly','monthly'])) @if(request()->rb == $rb) active @endif @elseif($rb == 'hourly') active @endif" href="{{ route('dashboard.index', ['zone_id' => optional($zone)->id, 'location_id' => optional($location)->id, 'shop_id' => optional($shop)->id, 'rb'=> $rb, 'campaign_id' => optional($campaign)->id]) }}">{{ ucfirst($rb) }}</a>
                                                 @endforeach
                                             </div>
                                             <div>
@@ -153,7 +155,7 @@
                 </div>
                 <div class="st_height_15 st_height_lg_15"></div>
 
-                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
+                <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border"  >
                         <div class="st_card_body">
                             <table class="table table-hover">
                                 <thead>
@@ -186,8 +188,8 @@
                                         <td>
                                             <div class="st_table_media st_style1 st_type1">
                                                 <div class="st_table_media_info">
-                                                    <h2 class="st_media_title"><a href="#">{{ $c->getTotalFrequency() }}</a></h2>
-                                                    <div class="st_media_subtitle">OF {{ $c->getTotalPurchasedFrequency() }}</div>
+                                                    <h2 class="st_media_title"><a href="#">{{ intval($c->getTotalFrequency()) }}</a></h2>
+                                                    <div class="st_media_subtitle">OF {{ intval($c->getTotalPurchasedFrequency()) }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -209,11 +211,11 @@
             <div class="col-lg-4">
                 @if($campaign)
                 <div class="st_card st_style1 st_border st_boxshadow st_radius_5 st_no_border">
-                    <div class="st_card_head">
-                        <div class="st_card_head_left">
-                            <h2 class="st_card_title">Campaign progress</h2>
-                        </div>
-                    </div>
+{{--                    <div class="st_card_head">--}}
+{{--                        <div class="st_card_head_left">--}}
+{{--                            <h2 class="st_card_title">Campaign progress</h2>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="st_card_body st_padd_lr_25">
                         <div class="st_height_15 st_height_lg_15"></div>
                         <div class="st_campaign_progress">
@@ -230,8 +232,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="st_sp_progress">
-                                    <div class="st_sp_progress_subtitle">TIME (S)</div>
-                                    <h3 class="st_sp_progress_title">{{ intval($campaign->getTotalPlayedTime()/ 60) }} <span>OF {{ intval($campaign->getTotalPurchasedPlaytime()) }}</span></h3>
+                                    <div class="st_sp_progress_subtitle">TIME (MINS)</div>
+                                    <h3 class="st_sp_progress_title">{{ intval($campaign->getTotalPlayedTime()/ 3600) }} <span>OF {{ intval($campaign->getTotalPurchasedPlaytime() / 60) }}</span></h3>
                                     <div class="st_table_progress st_style1">
                                         <div class="progress st_gradient1" style="width: {{ $campaign->progress()->progressByPlaytime() }}%"></div>
                                     </div>
@@ -240,7 +242,7 @@
                             <div class="col-4">
                                 <div class="st_sp_progress">
                                     <div class="st_sp_progress_subtitle">FREQUENCY</div>
-                                    <h3 class="st_sp_progress_title">{{ $campaign->getTotalFrequency()  }} <span>OF {{ $campaign->getTotalPurchasedFrequency() }}</span></h3>
+                                    <h3 class="st_sp_progress_title">{{ intval($campaign->getTotalFrequency())  }} <span>OF {{ intval($campaign->getTotalPurchasedFrequency()) }}</span></h3>
                                     <div class="st_table_progress st_style1">
                                         <div class="progress st_gradient1" style="width: {{ $campaign->progress()->progressByFrequency() }}%"></div>
                                     </div>
@@ -256,7 +258,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="st_cost_per_min">Cost Per Minute<span>{{ $campaign->progress()->costPerMinutes() }} BDT</span></div>
+                        <div class="st_cost_per_min">Cost Per Minute<span>{{ $campaign->progress()->costPerMinutesPerTV() }} BDT</span> Per TV</div>
                         <div class="st_height_20 st_height_lg_20"></div>
                     </div>
                 </div>

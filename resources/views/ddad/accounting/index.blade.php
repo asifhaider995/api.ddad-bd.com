@@ -27,8 +27,13 @@
                                 <tr>
                                     <td>{{ formateDate($payment->created_at) }}</td>
                                     <td>{{ $payment->payment_title ?: '-' }}</td>
-                                    <td><a href="{{ route('campaigns.show', $payment->paymentable_id) }}">{{ $payment->paymentable->title }}</a></td>
-                                    <td>{{ $payment->paymentable->client->company_name }}</td>
+                                    @if($payment->paymentable)
+                                        <td><a href="{{ route('campaigns.show', $payment->paymentable_id) }}">{{ $payment->paymentable->title }}</a></td>
+                                        <td>{{ $payment->paymentable->client->company_name }}</td>
+                                    @else
+                                        <td>Deleted campaign ID - {{ $payment->paymentable_id }}</td>
+                                        <td></td>
+                                    @endif
                                     <td>{{ $payment->amount }}</td>
                                     <td>{{ $payment->dueAmount() }}</td>
                                 </tr>
