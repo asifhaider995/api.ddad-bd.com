@@ -61,19 +61,18 @@ class CampaignProgress
     {
        $played =  $this->campaign->playTimes()->sum('duration');
 
-       $shopsHasTV = [];
-       $this->campaign->locations->each(function($location) use($shopsHasTV) {
-           $location->shops->each(function ($shop)use($shopsHasTV)  {
+       $this->shopsHasTV = [];
+       $this->campaign->locations->each(function($location){
+           $location->shops->each(function ($shop)  {
                 if($shop->device) {
-                    $shopsHasTV[] = $shop->id;
+                    $this->shopsHasTV[] = $shop->id;
                 }
            });
        });
-       $numberOfTv = count($shopsHasTV);
+       $numberOfTv = count($this->shopsHasTV);
 
        $temp = $played * $numberOfTv;
        $temp = $temp > 0 ? $temp : 1;
-
        return $this->campaign->actual_price / $temp;
     }
 
