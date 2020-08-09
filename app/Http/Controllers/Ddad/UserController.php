@@ -66,7 +66,7 @@ class UserController extends Controller
             'gender' => 'required',
             'address' => 'required_if:is_client,yes',
             'description' => 'required_if:is_client,yes',
-            'email' => 'required:email',
+            'email' => 'required:email|unique:users,email',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
           ];
     }
@@ -91,6 +91,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $rules = $this->rules();
+        $rules['email'] = $rules['email'] . ',' . $user->email;
         $rules['password'] = 'confirmed|nullable|min:8';
         $rules['company_name'] = $rules['company_name'] .($user->company_name != $request->company_name ? '|unique:users,company_name' : '');
         $request->validate($rules);
