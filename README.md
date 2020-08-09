@@ -1,7 +1,21 @@
-## About Laravel Admin Folder
+#### Required software
+1) PHP 7.2
+2) Composer
+3) Apache
+4) MySQL
+5) Other required package by composer
+
+#### Instalation guideline
+1) Install dependencies running the command `composer install`
+2) Copy `.env.example` to `.env`
+3) Update `.env` veriables(Database, Email, Storage ans others)
+4) Give permission to storage and bootstrap/cache folder
+5) Migrate database `php artisan migrate`
+6) Insert reduired data to database `php adtisan db:seed`
 
 
-## View Folder Structure Overview
+
+##### View Folder Structure Overview
 ```
 resources
     |--views
@@ -13,50 +27,42 @@ resources
     |   |   |--partials
     |   |   |--layout.blade.php
     |   |   |
-    |   |   |--customers
+    |   |   |--payment
     |   |   |   |--index.blade.php
     |   |   |   |--create.blade.php
     |   |   |
-    |   |   |--suppliers
+    |   |   |--campaign
     |   |   |   |--index.blade.php
     |   |   |   |--create.blade.php       
     |    
     |--js
-    |   |--pos.js
+    |   |--ddad.js
     |
     |--sass
-    |   |--pos.sass
+    |   |--ddad.sass
   
 --app
     |--Models
     |   |--User.php
-    |   |--Pos
-    |   |   |--Supplier.php
-    |   |   |--Customer.php
+    |   |--Ddad
+    |   |   |--Campaign.php
+    |   |   |--Payment.php
     |
     |--Providers
-    |   |--PosServiceProvider.blade.php
+    |   |--DdadServiceProvider.blade.php
     |
     |--Http/Controllers
     |   |--Auth
     |   |--Pos
-    |   |   |--SupplierController.php
-    |   |   |--CustomerController.php
+    |   |   |--CampaignController.php
+    |   |   |--DashboardController.php
     
 config
-    |--pos.php
+    |--ddad.php
 
 routes
-    |--pos.php
+    |--ddad.php
 
 
 
 ```
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to _Shahadat_ via [shahadat@laralink.com](mailto:shahadat@laralink.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The **Laralink Admin Fodler** is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
