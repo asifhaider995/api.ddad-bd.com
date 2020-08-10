@@ -105,6 +105,7 @@ class DashboardController extends Controller
                 $alreadyRunInDays = $campaign->starting_date->diffInDays($temp) + 1;
                 return $alreadyRunInDays;
             })->sum();
+
             $this->viewData['averageVisit'] = $alreadyRunInDays ? (int)  ($this->viewData['totalVisit'] / $alreadyRunInDays) : 0;
             $totalCampaign = $this->viewData['campaigns']->count();
 
@@ -117,45 +118,21 @@ class DashboardController extends Controller
 
         // Performance calculation
         if(($this->viewData['location'] || $this->viewData['zone'] || $this->viewData['shop']) && $this->viewData['shopIds']) {
-
-            switch($rb) {
-                case 'hourly':
-                        $start = now()->startOfHour();
-                        $end   = now()->endOfHour();
-                    break;
-
-                case 'monthly':
-                    $start = now()->startOfMonth();
-                    $end   = now()->endOfMonth();
-                    break;
-
-                case 'weekly':
-                    $start = now()->startOfWeek();
-                    $end   = now()->endOfWeek();
-                    break;
-
-                case 'daily':
-                        $start = now()->startOfDay();
-                        $end = now()->endOfDay();
-                    break;
+            $allShopIds = $this->getShopIds(null, null, null);
+            if($this->viewData['campaign']) {
+                $totalAllShopsAudience = $this->viewData['campaign']->totalVisit($allShopIds);
+            } else {
+                $totalAllShopsAudience = $this->viewData['campaigns']->map(function($campaign) use ($allShopIds) {
+                    return $campaign->totalVisit($allShopIds);
+                })->sum();;
             }
+            $totalAllShopsAudience = max($totalAllShopsAudience, 1);
 
-            $totalAudienceQuery = Audience::where('created_at', '>=', $start)->where('created_at', '<=', $end);
-            $performanceAudienceQuery = Audience::where('created_at', '>=', $start)->where('created_at', '<=', $end);
-//            if($this->viewData['campaign']) {
-//                $totalAudienceQuery->where('campaign_id', $this->viewData['campaign']->id);
-//                $performanceAudienceQuery->where('campaign_id', $this->viewData['campaign']->id);
-////                $cT = PlayTime::where('play_time', '>=', $start)->where('campaign_id', $this->id)->where('play_time', '<=', $end)->sum('duration');
-////                $tt = PlayTime::where('play_time', '>=', $start)->where('play_time', '<=', $end)->sum('duration');
-////
-//            }
-            $performanceAudienceQuery->whereIn('shop_id', $this->viewData['shopIds']);
-
-            $performanceAudience = $performanceAudienceQuery->sum('number_of_audience');
-            $totalAudience       = $totalAudienceQuery->sum('number_of_audience');
-
-            $this->viewData['perform'] = (int) ($totalAudience ? $performanceAudience * 100 / $totalAudience : 0);
+            $this->viewData['perform'] = (int) ($this->viewData['totalVisit'] * 100 / $totalAllShopsAudience);
             $this->viewData['perform'] = min(100, max($this->viewData['perform'], 0));
+
+
+
             if($this->viewData['shop']) {
                 $this->viewData['title'] =  $this->viewData['shop']->name;
             } elseif($this->viewData['location']){
