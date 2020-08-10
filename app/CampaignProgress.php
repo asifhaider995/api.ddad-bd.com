@@ -59,7 +59,13 @@ class CampaignProgress
 
     public function costPerMinutesPerTV()
     {
-       $played =  $this->campaign->playTimes()->sum('duration');
+        $runMin = ($this->campaign->getTotalPlayedTime()/ 60);
+
+        $constConsumption = $this->costConsumption();
+
+        $costPerMinAllTV =  $constConsumption / max($runMin, 1);
+
+
 
        $this->shopsHasTV = [];
        $this->campaign->locations->each(function($location){
@@ -69,11 +75,12 @@ class CampaignProgress
                 }
            });
        });
+
        $numberOfTv = count($this->shopsHasTV);
 
-       $temp = $played * $numberOfTv;
-       $temp = $temp > 0 ? $temp : 1;
-       return intval($this->campaign->actual_price / $temp);
+       $costPerMinPerTV =  $costPerMinAllTV /  max($numberOfTv, 1);
+
+       return number_format((float)$costPerMinPerTV, 2, '.', '');
     }
 
 }

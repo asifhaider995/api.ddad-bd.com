@@ -258,7 +258,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="st_cost_per_min">Cost Per Minute<span>{{ $campaign->progress()->costPerMinutesPerTV() }} BDT</span> Per TV</div>
+                        <div class="st_cost_per_min">Cost Per Minute<span>{{  $campaign->progress()->costPerMinutesPerTV() }} BDT</span> Per TV</div>
                         <div class="st_height_20 st_height_lg_20"></div>
                     </div>
                 </div>

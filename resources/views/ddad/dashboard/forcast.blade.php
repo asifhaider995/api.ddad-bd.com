@@ -118,12 +118,12 @@
                         <td>{{ $campaign->package }}</td>
                         <td class="text-center">{{ $campaign->primary_queue }}</td>
                         <td class="text-center">{{ $campaign->slotTime }}</td>
-                        <td class="text-center">{{ $campaign->dailyFrequency }}</td>
-                        <td class="text-center">{{ $campaign->hourlyFrequency }}</td>
+                        <td class="text-center">{{ (int) $campaign->dailyFrequency }}</td>
+                        <td class="text-center">{{ (int)  $campaign->hourlyFrequency }}</td>
                         @php($x = $campaign->calculateActualHourlyFrequency())
-                        <td class="text-center @if($x < $campaign->hourlyFrequency) bg-danger text-white @endif">{{ $x }}</td>
-                        <td class="text-center">{{ $y = $x - $campaign->hourlyFrequency }}</td>
-                        <td class="text-center">{{ $y * $campaign->calculatedDuration }}</td>
+                        <td class="text-center @if($x < $campaign->hourlyFrequency) bg-danger text-white @endif">{{ (int) $x }}</td>
+                        <td class="text-center">{{ (int)  $y = $x - $campaign->hourlyFrequency }}</td>
+                        <td class="text-center">{{ (int)  $y * $campaign->calculatedDuration }}</td>
 
                     </tr>
                 @endforeach
