@@ -56,24 +56,36 @@
 
                                     @if($shop->device)
                                         <td>
-                                            @if($shop->device->androidAlerts())
-                                                <span class="text-danger material-icons">warning</span>
+                                            @if($shop->device->android_label)
+                                                @if($shop->device->androidAlerts())
+                                                    <span class="text-danger material-icons">warning</span>
+                                                @else
+                                                    <span class="text-success material-icons">check</span>
+                                                @endif
                                             @else
-                                                <span class="text-success material-icons">check</span>
+                                                -
                                             @endif
                                         </td>
                                         <td>
-                                            @if($shop->device->detectorAlerts())
-                                                <span class="text-danger material-icons">warning</span>
+                                            @if($shop->device->detector_label)
+                                                @if($shop->device->detectorAlerts())
+                                                    <span class="text-danger material-icons">warning</span>
+                                                @else
+                                                    <span class="text-success material-icons">check</span>
+                                                @endif
                                             @else
-                                                <span class="text-success material-icons">check</span>
+                                                -
                                             @endif
                                         </td>
                                         <td>
-                                            @if($shop->device->tvAlerts())
-                                                <span class="text-danger material-icons">warning</span>
+                                            @if($shop->device->tv_label)
+                                                @if($shop->device->tvAlerts())
+                                                    <span class="text-danger material-icons">warning</span>
+                                                @else
+                                                    <span class="text-success material-icons">check</span>
+                                                @endif
                                             @else
-                                                <span class="text-success material-icons">check</span>
+                                                -
                                             @endif
                                         </td>
                                     @else

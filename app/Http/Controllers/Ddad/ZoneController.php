@@ -62,7 +62,8 @@ class ZoneController extends Controller
     public function detachLocation(Zone $zone, Location $location)
     {
         if($location->campaigns) {
-            flash("You cannot delete this location. Because you have " . $location->campaigns->count() . " campaigns in this location.");
+            flash("You cannot delete this location. Because you have one or more campaigns in this location.")->error();
+            return back();
         }
         $location->zone_id = null;
         $location->save();
