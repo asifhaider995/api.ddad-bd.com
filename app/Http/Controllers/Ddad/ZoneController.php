@@ -61,6 +61,9 @@ class ZoneController extends Controller
 
     public function detachLocation(Zone $zone, Location $location)
     {
+        if($location->campaigns) {
+            flash("You cannot delete this location. Because you have " . $location->campaigns->count() . " campaigns in this location.");
+        }
         $location->zone_id = null;
         $location->save();
         flash("Location removed form the zone");
@@ -95,6 +98,8 @@ class ZoneController extends Controller
     public function destroy(Zone $zone)
     {
         foreach($zone->locations as $location) {
+            flash("You cannot delete this zone because you have " . $location->campaigns->count() . " campaigns in this $location->name.");
+
             $location->delete();
         }
         $zone->delete();
