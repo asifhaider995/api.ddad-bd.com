@@ -16,3 +16,8 @@ yarn-error.log
 
 .DS_Store
 /public/mix-manifest.json
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

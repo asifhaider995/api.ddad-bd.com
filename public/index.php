@@ -55,6 +55,11 @@ $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
 
+if(DB::connection()->getDatabaseName() and $_ENV["APP_DEBUG"] == "true")
+{
+   echo "Connected to database ".DB::connection()->getDatabaseName();
+}
+
 $response->send();
 
 $kernel->terminate($request, $response);
