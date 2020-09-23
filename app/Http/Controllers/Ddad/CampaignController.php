@@ -84,7 +84,7 @@ class CampaignController extends Controller
 
     public function edit(Campaign $campaign)
     {
-        $this->viewData['locations'] = Location::all();
+        $this->viewData['locations'] = Location::whereNotNull('zone_id')->get();
         $this->viewData['campaign'] = $campaign;
         $this->viewData['clients'] = User::clients()->get();
         $this->viewData['packages'] = Package::all();
