@@ -5,7 +5,7 @@ branch-defaults:
 global:
   application_name: api.ddad-bd.com
   branch: master
-  default_ec2_keyname: DEVELOPMENT_SERVER_KEY
+  default_ec2_keyname: aws-eb
   default_platform: PHP 7.4 running on 64bit Amazon Linux 2
   default_region: ap-southeast-1
   include_git_submodules: true
@@ -13,6 +13,6 @@ global:
   platform_name: null
   platform_version: null
   profile: eb-cli
-  repository: api.ddad-bd.com
+  repository: ddad-bd
   sc: git
   workspace_type: Application
